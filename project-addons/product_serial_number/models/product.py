@@ -8,4 +8,9 @@ class ProductTemoplate(models.Model):
     _inherit = 'product.template'
 
     serial_mgmt = fields.Boolean('Manage by serial number')
-  
+    auto_create_lot = fields.Boolean(default=True)
+
+    @api.onchange('serial_mgmt')
+    def _onchange_serial_mgmt(self):
+        if self.serial_mgmt:
+            self.tracking = 'serial'

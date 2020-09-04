@@ -10,10 +10,16 @@
     "summary": "Manage product flow by unique serial number",
     "depends": [
         'product',
-        'stock'
+        'stock',
+        'sale_order_lot_selection',
+        'purchase',
+        'stock_picking_auto_create_lot'
     ],
     "data": [
-        "views/product_view.xml",
+        'security/ir.model.access.csv',
+        'views/product_view.xml',
+        'views/stock_production_lot_view.xml',
+        'views/purchase_view.xml',
     ],
     "installable": True,
 }
