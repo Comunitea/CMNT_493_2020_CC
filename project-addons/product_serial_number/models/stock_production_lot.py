@@ -21,6 +21,8 @@ class ProductionLot(models.Model):
     brand = fields.Char('Brand')
     id_product = fields.Char('ID. Product')
 
+    purchase_line_id = fields.Many2one('purchase.order.line', 'Purchase line')
+
 
 class LotAttributeLine(models.Model):
     """Attributes available on product.template with their selected values in a m2m.

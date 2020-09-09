@@ -8,6 +8,7 @@
             <notebook position="inside">
                 <page string="Product Info.">
                     <group>
+                        <field name="purchase_line_id"/>
                         <field name="standard_price"/>
                         <field name="list_price"/>
                     </group>
@@ -27,6 +28,32 @@
                     </group>
                 </page>
             </notebook>
+        </field>
+    </record>
+
+    <record id="cc_view_production_lot_tree" model="ir.ui.view">
+        <field name="name">cc.stock.production.lot.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="arch" type="xml">
+            <field name="company_id" position="after">
+                <field name="ean13"/>
+                <field name="brand"/>
+                <field name="model"/>
+                <field name="id_product"/>
+                <field name="purchase_line_id"/>
+            </field>
+        </field>
+    </record>
+
+    <record id="cc_search_product_lot_filter" model="ir.ui.view">
+        <field name="name">"cc_search_product_lot_filter</field>
+        <field name="model">stock.production.lot</field>
+        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="arch" type="xml">
+            <filter name="group_by_product" position="after">
+                <filter name="group_by_line" string="Purchase Line" domain="[]" context="{'group_by': 'purchase_line_id'}"/>            
+            </filter>            
         </field>
     </record>
 </odoo>
