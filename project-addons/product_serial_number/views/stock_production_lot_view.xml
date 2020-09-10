@@ -27,6 +27,11 @@
                         </field>
                     </group>
                 </page>
+                <page string="Add Images">
+                    <group >
+                        <field name="multi_image_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2" />
+                    </group>
+                </page>
                 <page string="Images">
                     <group>
                         <field
@@ -38,7 +43,7 @@
                             }"
                             mode="kanban"/>
                     </group>
-                </page>
+                </page>     
             </notebook>
         </field>
     </record>

@@ -104,7 +104,7 @@ class PurchaseOrderLine(models.Model):
 
 
     # To do with product multi image
-    # image_ids = fields.Many2many('ir.attachment', string='Images')
+    multi_image_ids = fields.Many2many('ir.attachment', string='Images')
 
 
     def _prepare_stock_moves(self, picking):
@@ -115,6 +115,31 @@ class PurchaseOrderLine(models.Model):
         if res and self.lot_qty:
             res[0]['product_uom_qty'] = self.lot_qty
         return res
+    
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        if vals.get('multi_image_ids'):
+            res.add_images()
+        return res
+    
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('multi_image_ids'):
+            self.add_images()
+        return res
+    
+    def add_images(self):
+        images = self.env['base_multi_image.image']
+        for pol in self.filtered('multi_image_ids'):
+            for att in pol.multi_image_ids:
+                vals = {
+                    'storage': 'filestore',
+                    'attachment_id': att.id,
+                    'owner_id': pol.id,
+                    'owner_model':'purchase.order.line'
+                }
+                images += self.env['base_multi_image.image'].create(vals)
 
 class PurchaseAttributeLine(models.Model):
     _name = "purchase.attribute.line"

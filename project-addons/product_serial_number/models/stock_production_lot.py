@@ -25,6 +25,35 @@ class ProductionLot(models.Model):
 
     purchase_line_id = fields.Many2one('purchase.order.line', 'Purchase line')
 
+    # To do with product multi image
+    multi_image_ids = fields.Many2many('ir.attachment', string='Images')
+
+
+    @api.model
+    def create(self, vals):
+        res = super().create(vals)
+        if vals.get('multi_image_ids'):
+            res.add_images()
+        return res
+    
+    def write(self, vals):
+        res = super().write(vals)
+        if vals.get('multi_image_ids'):
+            self.add_images()
+        return res
+    
+    def add_images(self):
+        images = self.env['base_multi_image.image']
+        for lot in self.filtered('multi_image_ids'):
+            for att in lot.multi_image_ids:
+                vals = {
+                    'storage': 'filestore',
+                    'attachment_id': att.id,
+                    'owner_id': lot.id,
+                    'owner_model':'stock.production.lot'
+                }
+                images += self.env['base_multi_image.image'].create(vals)
+
 
 class LotAttributeLine(models.Model):
     """Attributes available on product.template with their selected values in a m2m.
