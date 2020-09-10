@@ -17,6 +17,7 @@
                         <field name="brand"/>
                         <field name="model"/>
                         <field name="id_product"/>
+                        <field name="purchase_line_id"/>
                     </group>
                     <group string="Attributes">
                         <field name="attribute_line_ids" widget="one2many" context="{'show_attribute': False}" nolabel="1">

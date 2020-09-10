@@ -34,7 +34,8 @@
                     </field>
                 </page>
                 <page string="Add Images">
-                    <group >
+                    <group>
+                        <button name="copy_image_to_lots" string="Copy image to related lots" type="object" class="oe_link"/>
                         <field name="multi_image_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2" />
                     </group>
                 </page>

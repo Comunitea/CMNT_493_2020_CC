@@ -43,7 +43,6 @@ class ProductionLot(models.Model):
         return res
     
     def add_images(self):
-        images = self.env['base_multi_image.image']
         for lot in self.filtered('multi_image_ids'):
             lot.image_ids.unlink()
             for att in lot.multi_image_ids:
@@ -54,7 +53,7 @@ class ProductionLot(models.Model):
                     'owner_id': lot.id,
                     'owner_model':'stock.production.lot'
                 }
-                images += self.env['base_multi_image.image'].create(vals)
+                self.env['base_multi_image.image'].create(vals)
 
 
 class LotAttributeLine(models.Model):

@@ -130,7 +130,6 @@ class PurchaseOrderLine(models.Model):
         return res
     
     def add_images(self):
-        images = self.env['base_multi_image.image']
         for pol in self.filtered('multi_image_ids'):
             pol.image_ids.unlink()
             for att in pol.multi_image_ids:
@@ -141,7 +140,16 @@ class PurchaseOrderLine(models.Model):
                     'owner_id': pol.id,
                     'owner_model':'purchase.order.line'
                 }
-                images += self.env['base_multi_image.image'].create(vals)
+                self.env['base_multi_image.image'].create(vals)
+    
+    def copy_image_to_lots(self):
+        for pol in self:
+            if pol.lot_ids and pol.multi_image_ids:
+                for lot in pol.lot_ids:
+                    lot.image_ids.unlink()
+                    lot.multi_image_ids = [
+                        (6,0, [att.id for att in pol.multi_image_ids])]
+
 
 class PurchaseAttributeLine(models.Model):
     _name = "purchase.attribute.line"
