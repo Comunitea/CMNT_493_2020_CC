@@ -45,8 +45,10 @@ class ProductionLot(models.Model):
     def add_images(self):
         images = self.env['base_multi_image.image']
         for lot in self.filtered('multi_image_ids'):
+            lot.image_ids.unlink()
             for att in lot.multi_image_ids:
                 vals = {
+                    'name': att.name,
                     'storage': 'filestore',
                     'attachment_id': att.id,
                     'owner_id': lot.id,

@@ -47,6 +47,7 @@
                                     'default_owner_model': 'stock.production.lot',
                                     'default_owner_id': id,
                                 }"
+                                readonly="1"
                                 mode="kanban"/>
                         </group>
                 </page>     

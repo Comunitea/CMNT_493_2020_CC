@@ -132,8 +132,10 @@ class PurchaseOrderLine(models.Model):
     def add_images(self):
         images = self.env['base_multi_image.image']
         for pol in self.filtered('multi_image_ids'):
+            pol.image_ids.unlink()
             for att in pol.multi_image_ids:
                 vals = {
+                    'name': att.name,
                     'storage': 'filestore',
                     'attachment_id': att.id,
                     'owner_id': pol.id,
