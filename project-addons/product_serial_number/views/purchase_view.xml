@@ -33,11 +33,11 @@
                         </tree>
                     </field>
                 </page>
-                <!-- <page string="Images">
+                <page string="Images">
                     <group >
                         <field name="image_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2" />
                     </group>
-                </page> -->
+                </page>
             </xpath>
             <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
                 <field name="lot_qty"/>

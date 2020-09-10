@@ -27,6 +27,18 @@
                         </field>
                     </group>
                 </page>
+                <page string="Images">
+                    <group>
+                        <field
+                            name="image_ids"
+                            nolabel="1"
+                            context="{
+                                'default_owner_model': 'stock.production.lot',
+                                'default_owner_id': id,
+                            }"
+                            mode="kanban"/>
+                    </group>
+                </page>
             </notebook>
         </field>
     </record>

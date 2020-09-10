@@ -5,7 +5,9 @@ from odoo import models, fields, api, _
 
 class ProductionLot(models.Model):
 
-    _inherit = 'stock.production.lot'
+    _name = "stock.production.lot"
+    _inherit =  [_name, "base_multi_image.owner"]
+
 
     standard_price = fields.Float('Cost', digits='Product Price')
     list_price = fields.Float(

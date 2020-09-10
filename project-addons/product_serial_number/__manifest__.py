@@ -13,7 +13,8 @@
         'stock',
         'sale_order_lot_selection',
         'purchase',
-        'stock_picking_auto_create_lot'
+        'stock_picking_auto_create_lot',
+        'base_multi_image'
     ],
     "data": [
         'security/ir.model.access.csv',

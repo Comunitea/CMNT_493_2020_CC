@@ -82,7 +82,8 @@ class PurchaseOrder(models.Model):
 
 class PurchaseOrderLine(models.Model):
 
-    _inherit = 'purchase.order.line'
+    _name = 'purchase.order.line'
+    _inherit =  [_name, "base_multi_image.owner"]
 
     sale_price = fields.Float(
         'Sale Price', default=1.0,
