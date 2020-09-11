@@ -91,7 +91,7 @@ class PurchaseOrderLine(models.Model):
         help="Price at which the product is sold to customers.")
     attribute_line_ids = fields.One2many(
         'purchase.attribute.line', 'purchase_id', 
-        'Product Attributes', copy=True)
+        'Product Attributes', copy=False)
     ean13 = fields.Char('EAN3')
     model = fields.Char('Model')
     brand = fields.Char('Brand')
