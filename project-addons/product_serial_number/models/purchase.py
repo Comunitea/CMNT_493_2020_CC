@@ -130,7 +130,7 @@ class PurchaseOrderLine(models.Model):
         return res
     
     def add_images(self):
-        for pol in self.filtered('multi_image_ids'):
+        for pol in self:
             pol.image_ids.unlink()
             for att in pol.multi_image_ids:
                 vals = {

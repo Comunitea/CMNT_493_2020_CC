@@ -43,7 +43,7 @@ class ProductionLot(models.Model):
         return res
     
     def add_images(self):
-        for lot in self.filtered('multi_image_ids'):
+        for lot in self:
             lot.image_ids.unlink()
             for att in lot.multi_image_ids:
                 vals = {
