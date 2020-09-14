@@ -7,7 +7,7 @@ class ProductTemoplate(models.Model):
 
     _inherit = 'product.template'
 
-    serial_mgmt = fields.Boolean('Manage by serial number')
+    serial_mgmt = fields.Boolean('Manage by serial number', default=True)
     auto_create_lot = fields.Boolean(default=True)
 
     @api.onchange('serial_mgmt')

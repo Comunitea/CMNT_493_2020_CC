@@ -9,6 +9,9 @@ class AccountPayment(models.Model):
 
     @api.model
     def default_get(self, default_fields):
+        """
+        Get the payment fields filled when opening from purchase order
+        """
         res = super().default_get(default_fields)
         active_ids = self._context.get('active_ids') \
             or self._context.get('active_id')
@@ -34,7 +37,7 @@ class AccountPayment(models.Model):
     @api.model
     def _compute_payment_amount(self, invoices, currency, journal, date):
         """
-        Returnb purchase amount total, defsault_get is not enought because
+        Return purchase amount total, default_get is not enought because
         _onchange_currency that overwrites amount
         """
         res = super()._compute_payment_amount(
@@ -50,6 +53,11 @@ class AccountPayment(models.Model):
         return res
         
     def _prepare_payment_moves(self):
+        """
+        Cambio la cuenta contable de los apuntes, cuando venga el pago desde
+        el pedido de compra, buscando el movimiento cuyop debito>0 y poniendo
+        la cuenta de gastos del producto
+        """
         res = super()._prepare_payment_moves()
 
         active_ids = self._context.get('active_ids') \
@@ -57,8 +65,8 @@ class AccountPayment(models.Model):
         active_model = self._context.get('active_model')
         if not active_ids or active_model != 'purchase.order':
             return res
+
         purchase = self.env['purchase.order'].browse(active_ids[0])
-        
         product = purchase.order_line[0].product_id
         new_account = False
         if product.property_account_expense_id:

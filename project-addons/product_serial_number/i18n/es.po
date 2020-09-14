@@ -1,0 +1,251 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* product_serial_number
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-09-14 18:35+0000\n"
+"PO-Revision-Date: 2020-09-14 18:35+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__active
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__active
+msgid "Active"
+msgstr "Activo"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "Add Images"
+msgstr "Añadir imágenes"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "Attach a file"
+msgstr "Adjuntar un fichero"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__attribute_id
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__attribute_id
+msgid "Attribute"
+msgstr "Atributo"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "Attributes"
+msgstr "Atributos"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_product_product__auto_create_lot
+#: model:ir.model.fields,field_description:product_serial_number.field_product_template__auto_create_lot
+msgid "Auto Create Lot"
+msgstr "Crear lote automáticamente"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__brand
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__brand
+msgid "Brand"
+msgstr "Marca"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+msgid "Copy image to related lots"
+msgstr "Copioar imágenes a lotes asociados"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__standard_price
+msgid "Cost"
+msgstr "Coste"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__create_uid
+msgid "Created by"
+msgstr "Creado por"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_date
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__create_date
+msgid "Created on"
+msgstr "Creado en"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__display_name
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__display_name
+msgid "Display Name"
+msgstr "Nombre mostrado"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__ean13
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__ean13
+msgid "EAN3"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__id
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__id
+msgid "ID"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__id_product
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__id_product
+msgid "ID. Product"
+msgstr "ID Producto"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__multi_image_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__multi_image_ids
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "Images"
+msgstr "Imágenes"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line____last_update
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_date
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__lot_id
+msgid "Lot"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_lot_attribute_line
+msgid "Lot Attribute Line"
+msgstr "Atributo lote"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lote/Número de serie"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__lot_ids
+msgid "Lot_ids"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__count_lots
+msgid "Lots"
+msgstr "Lotes"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_product_product__serial_mgmt
+#: model:ir.model.fields,field_description:product_serial_number.field_product_template__serial_mgmt
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_product_template_search_view
+msgid "Manage by serial number"
+msgstr "Gestionar por nº de serie"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__model
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__model
+msgid "Model"
+msgstr "Modelo"
+
+#. module: product_serial_number
+#: model:ir.model.fields,help:product_serial_number.field_purchase_order_line__sale_price
+#: model:ir.model.fields,help:product_serial_number.field_stock_production_lot__list_price
+msgid "Price at which the product is sold to customers."
+msgstr "Precio al cual el producto es vendido a los clientes"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_product_attribute
+msgid "Product Attribute"
+msgstr "Lñinea de atributo"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__attribute_line_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__attribute_line_ids
+msgid "Product Attributes"
+msgstr "Atributos"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+msgid "Product Info"
+msgstr "Información producto"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "Product Info."
+msgstr "Información producto"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__purchase_id
+msgid "Purchase"
+msgstr "Compra"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_purchase_attribute_line
+msgid "Purchase Attribute Line"
+msgstr "Línea de atributo"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Purchase Line"
+msgstr "Línea de compra"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea de pedido de compra"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__purchase_line_id
+msgid "Purchase line"
+msgstr "Línea de compra"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__sale_price
+msgid "Sale Price"
+msgstr "Precio de venta"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__list_price
+msgid "Sales Price"
+msgstr "Precio de venta"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__lot_qty
+msgid "Serial quantity"
+msgstr "Cantidad nº serie"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__value_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__value_ids
+msgid "Values"
+msgstr "Valores"

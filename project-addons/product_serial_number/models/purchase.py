@@ -90,7 +90,7 @@ class PurchaseOrderLine(models.Model):
         digits='Product Price',
         help="Price at which the product is sold to customers.")
     attribute_line_ids = fields.One2many(
-        'purchase.attribute.line', 'purchase_id', 
+        'purchase.attribute.line', 'purchase_line_id', 
         'Product Attributes', copy=False)
     ean13 = fields.Char('EAN3')
     model = fields.Char('Model')
@@ -158,8 +158,8 @@ class PurchaseAttributeLine(models.Model):
     _order = 'attribute_id, id'
 
     active = fields.Boolean(default=True)
-    purchase_id = fields.Many2one(
-        'purchase.order', string="Purchase", ondelete='cascade', 
+    purchase_line_id = fields.Many2one(
+        'purchase.order.line', string="Purchase", 
         required=True, index=True)
     attribute_id = fields.Many2one(
         'product.attribute', string="Attribute", ondelete='restrict',

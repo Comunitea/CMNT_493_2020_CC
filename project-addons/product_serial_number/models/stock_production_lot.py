@@ -73,9 +73,7 @@ class LotAttributeLine(models.Model):
         'product.attribute', string="Attribute", ondelete='restrict',
         required=True, index=True)
     value_ids = fields.Many2many(
-        'product.attribute.value', string="Values", domain="[('attribute_id', '=', attribute_id)]",
+        'product.attribute.value', string="Values",
+        domain="[('attribute_id', '=', attribute_id)]",
         relation='product_attribute_value_lot_attribute_line_rel',
         ondelete='restrict')
-    # product_template_value_ids = fields.One2many(
-    #     'product.template.attribute.value', 'attribute_line_id',
-    #     string="Product Attribute Values")
