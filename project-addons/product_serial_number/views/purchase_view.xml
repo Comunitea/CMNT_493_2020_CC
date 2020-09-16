@@ -12,16 +12,29 @@
             </div>
 
 
+            <!-- Avoid editable in tree view -->
             <xpath expr="//field[@name='order_line']//tree" position="attributes">
                 <attribute name="editable"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']//form//group[1]" position="after">
-                    <group>
+
+            <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
+                <field name="recoverable_sale"/>
+                <field name="deposit_sale"/>
+                <field name="limit_date" attrs="{
+                    'invisible': [('recoverable_sale', '=', False),('deposit_sale', '=', False)],
+                    'required':  ['|', ('recoverable_sale', '!=', False),('deposit_sale', '!=', False)]}"/>
+            </xpath>
+
+            <xpath expr="//field[@name='order_line']//form/group/group[2]" position="after">
+                    <group string="Product Info">
                         <field name="ean13"/>
                         <field name="brand"/>
                         <field name="model"/>
                         <field name="id_product"/>
                         <field name="sale_price"/>
+                        <field name="purchase_price_15"/>
+                        <field name="purchase_price_30"/>
+                        <field name="purchase_price_60"/>
                     </group>
                     <group string="Attributes">
                         <field name="attribute_line_ids" widget="one2many" context="{'show_attribute': False}" nolabel="1">
@@ -57,12 +70,23 @@
                 </page>     
             </xpath>
 
-            <!-- Campos cantidades -->
-            <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
-                <field name="lot_qty"/>
+            <!-- Cantidad de odo standard invisible y usamos lost_Qty -->
+            <xpath expr="//field[@name='order_line']//tree//field[@name='product_qty']" position="replace">
+                <field name="product_qty" invisible="1"/>
+                <field name="lot_qty" string="Quantity"/>
             </xpath>
-            <xpath expr="//field[@name='order_line']//tree//field[@name='product_qty']" position="after">
-                <field name="lot_qty"/>
+
+            <xpath expr="//field[@name='order_line']//form//field[@name='product_qty']" position="replace">
+                <field name="product_qty" invisible="1"/>
+                <field name="lot_qty" string="Quantity"/>
+            </xpath>
+
+            <!-- Campo precio etiqueta génerica -->
+            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="attributes">
+                <attribute name="string">Price</attribute>
+            </xpath>
+            <xpath expr="//field[@name='order_line']//form//field[@name='price_unit']" position="attributes">
+                <attribute name="string">Price</attribute>
             </xpath>
 
         </field>

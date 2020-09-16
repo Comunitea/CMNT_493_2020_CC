@@ -100,11 +100,51 @@ class PurchaseOrderLine(models.Model):
     lot_ids = fields.One2many('stock.production.lot', 'purchase_line_id',
                               'Lot_ids')
     lot_qty = fields.Float(
-        string='Serial quantity', digits='Product Unit of Measure')
-
+        string='Serial quantity', digits='Product Unit of Measure',
+        required=True, default=1.0)
 
     # To do with product multi image
     multi_image_ids = fields.Many2many('ir.attachment', string='Images')
+    
+
+    recoverable_sale = fields.Boolean('Recoverable sale')
+    deposit_sale = fields.Boolean('Deposit Sale')
+    limit_date = fields.Date('Limit date')
+    purchase_price_15 = fields.Float(
+        'Purchase price at 15 days', related="product_id.purchase_price_15")
+    purchase_price_30 = fields.Float(
+        'Purchase price at 30 days', related="product_id.purchase_price_30")
+    purchase_price_60 = fields.Float(
+        'Purchase price at 60 days', related="product_id.purchase_price_60")
+
+    @api.onchange('product_id')
+    def onchange_product_id(self):
+        """
+        Preload attributes
+        """
+        super().onchange_product_id()
+        if self.product_id:
+            attributes = self.product_id.product_tmpl_id.\
+                attribute_line_ids.mapped('attribute_id')
+            if attributes:
+                att_values = []
+                for att in attributes:
+                    vals = {'attribute_id': att.id}
+                    att_values.append((0, 0, vals))
+                self.attribute_line_ids = att_values
+            
+            avg_cost = self.product_id.get_purchase_price_days_ago(15)
+            self.priceunit = avg_cost
+
+    # @api.onchange('product_id')
+    # def _onchange_quantity(self):
+    #     """
+    #     Get average purchase price
+    #     """
+    #     super()._onchange_quantity()
+    #     if self.product_id:            
+    #         avg_cost = self.product_id.get_purchase_price_days_ago(15)
+    #         self.price_unit = avg_cost
 
 
     def _prepare_stock_moves(self, picking):
