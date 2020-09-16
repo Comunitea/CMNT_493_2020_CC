@@ -58,7 +58,8 @@ class PurchaseOrder(models.Model):
                     'brand': line.brand,
                     'id_product': line.id_product,
                     'attribute_line_ids': attribute_line_ids,
-                    'purchase_line_id': line.id
+                    'purchase_line_id': line.id,
+                    'note': line.name
                 }
                 lot_ids.write(vals)
         return res
