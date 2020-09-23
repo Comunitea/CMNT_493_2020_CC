@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <!-- operating.unit inherit form view -->
+        <record id="cc_view_location_form" model="ir.ui.view">
+            <field name="name">cc_view_location_form</field>
+            <field name="model">stock.location</field>
+            <field name="inherit_id" ref="stock.view_location_form"/>
+            <field name="arch" type="xml">
+                <field name="return_location" position="after">
+                    <field name="police"/>
+                    <field name="deposit"/>
+                    <field name="requisation"/>
+                    <field name="safe"/>
+                </field>
+            </field>
+        </record>
+</odoo>
