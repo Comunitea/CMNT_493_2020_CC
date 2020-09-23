@@ -14,13 +14,15 @@
         'sale_order_lot_selection',
         'purchase',
         'stock_picking_auto_create_lot',
-        'base_multi_image'
+        'base_multi_image',
+        'purchase_operating_unit',
     ],
     "data": [
         'security/ir.model.access.csv',
         'views/product_view.xml',
         'views/stock_production_lot_view.xml',
         'views/purchase_view.xml',
+        'views/operating_unit_view.xml',
     ],
     "installable": True,
 }

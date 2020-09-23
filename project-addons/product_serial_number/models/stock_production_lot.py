@@ -31,6 +31,14 @@ class ProductionLot(models.Model):
 
     @api.model
     def create(self, vals):
+        """
+        If operating unit in context get name from lot sequece field
+        """
+        # Naming lot
+        if self._context.get('ou_id'):
+            ou = self.env['operating.unit'].browse(self._context.get('ou_id'))
+            if ou.lot_seq:
+                vals['name'] = ou.lot_seq.next_by_id()
         res = super().create(vals)
         if vals.get('multi_image_ids'):
             res.add_images()
