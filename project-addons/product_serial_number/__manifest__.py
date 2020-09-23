@@ -23,6 +23,7 @@
         'views/stock_production_lot_view.xml',
         'views/purchase_view.xml',
         'views/operating_unit_view.xml',
+        'views/stock_location_view.xml',
     ],
     "installable": True,
 }
