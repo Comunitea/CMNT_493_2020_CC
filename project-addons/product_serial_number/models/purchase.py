@@ -1,6 +1,7 @@
 # © 2020 Comunitea - Javier Colmenero <javier@comunitea.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import models, fields, api, _
+from datetime import datetime, timedelta
 
 
 class PurchaseOrder(models.Model):
@@ -13,6 +14,8 @@ class PurchaseOrder(models.Model):
 
     count_lots = fields.Integer('Lots',
                                 compute='_count_lots')
+    recoverable_sale = fields.Boolean('Recoverable sale')
+    deposit_sale = fields.Boolean('Deposit Sale')
 
     def _create_picking(self):
         """
@@ -34,34 +37,9 @@ class PurchaseOrder(models.Model):
                 lot_ids = line.mapped('move_ids.move_line_ids.lot_id')
                 if not lot_ids:
                     continue
-                attribute_line_ids = []
-                for att in line.attribute_line_ids:
-                    values = {
-                        'attribute_id': att.attribute_id.id,
-                        'value_ids': [(6, 0, [x.id for x in att.value_ids])]
-                    }
-                    attribute_line_ids.append((0, 0, values))
-                
-
-                list_price = line.sale_price
-                standard_price = line.price_unit
-                if line.lot_qty:
-                    list_price = list_price / line.lot_qty
-                    standard_price = standard_price / line.lot_qty
-                
-
-                vals = {
-                    'list_price': list_price,
-                    'standard_price': standard_price,
-                    'ean13': line.ean13,
-                    'model': line.model,
-                    'brand': line.brand,
-                    'id_product': line.id_product,
-                    'attribute_line_ids': attribute_line_ids,
-                    'purchase_line_id': line.id,
-                    'note': line.name
-                }
-                lot_ids.write(vals)
+                vals = line.prepare_lot_vals()
+                if vals:
+                    lot_ids.write(vals)
         return res
     
     def view_lots_button(self):
@@ -108,9 +86,12 @@ class PurchaseOrderLine(models.Model):
     multi_image_ids = fields.Many2many('ir.attachment', string='Images')
     
 
-    recoverable_sale = fields.Boolean('Recoverable sale')
-    deposit_sale = fields.Boolean('Deposit Sale')
+    recoverable_sale = fields.Boolean(
+        'Recoverable sale', related="order_id.recoverable_sale")
+    deposit_sale = fields.Boolean(
+        'Deposit Sale', related="order_id.deposit_sale")
     limit_date = fields.Date('Limit date')
+    police_date = fields.Date('Police date')
     purchase_price_15 = fields.Float(
         'Purchase price at 15 days', related="product_id.purchase_price_15")
     purchase_price_30 = fields.Float(
@@ -131,11 +112,17 @@ class PurchaseOrderLine(models.Model):
                 att_values = []
                 for att in attributes:
                     vals = {'attribute_id': att.id}
+                    att_values.append((6, 0, []))
                     att_values.append((0, 0, vals))
                 self.attribute_line_ids = att_values
             
             avg_cost = self.product_id.get_purchase_price_days_ago(15)
             self.priceunit = avg_cost
+
+            if self.product_id.police:
+                today = datetime.today()
+                self.police_date = today + \
+                    timedelta(days=self.product_id.police_days)
 
     # @api.onchange('product_id')
     # def _onchange_quantity(self):
@@ -190,6 +177,34 @@ class PurchaseOrderLine(models.Model):
                     lot.image_ids.unlink()
                     lot.multi_image_ids = [
                         (6,0, [att.id for att in pol.multi_image_ids])]
+    
+    def prepare_lot_vals(self):
+        self.ensure_one()
+        attribute_line_ids = []
+        for att in self.attribute_line_ids:
+            values = {
+                'attribute_id': att.attribute_id.id,
+                'value_ids': [(6, 0, [x.id for x in att.value_ids])]
+            }
+            attribute_line_ids.append((0, 0, values))
+        list_price = self.sale_price
+        standard_price = self.price_unit
+        if self.lot_qty:
+            list_price = list_price / self.lot_qty
+            standard_price = standard_price / self.lot_qty
+        res = {
+                'list_price': list_price,
+                'standard_price': standard_price,
+                'ean13': self.ean13,
+                'model': self.model,
+                'brand': self.brand,
+                'id_product': self.id_product,
+                'attribute_line_ids': attribute_line_ids,
+                'purchase_line_id': self.id,
+                'note': self.name,
+                'police_date': self.police_date
+            }
+        return res
 
 
 class PurchaseAttributeLine(models.Model):

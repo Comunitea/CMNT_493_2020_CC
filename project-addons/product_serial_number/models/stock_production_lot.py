@@ -27,6 +27,19 @@ class ProductionLot(models.Model):
 
     # To do with product multi image
     multi_image_ids = fields.Many2many('ir.attachment', string='Images')
+    police_date = fields.Date('Police date')
+
+    salable = fields.Boolean('Salable', compute='_compute_salable', store=True)
+
+    # @api.depends('police_date')
+    def _compute_salable(self):
+        print("*****************")
+        for lot in self:
+            res = True
+            if lot.police_date and lot.police_date > fields.Date.today():
+                res = False
+            lot.salable = res
+
 
 
     @api.model

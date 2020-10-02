@@ -5,6 +5,14 @@
         <field name="model">stock.production.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form"/>
         <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <field name="salable"/>
+                <field name="police_date" style="color:Red;" attrs="{'invisible': [('salable', '=', True)]}"/>
+                <field name="police_date" style="color:Green;" attrs="{'invisible': [('salable', '=', False)]}"/>
+                <!-- <field name="police_date" style="color:Green;" attrs="{'invisible': ['|', ('police_date','&gt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]}"/> -->
+                <!-- <field name="police_date" style="color:Red;" attrs="{'invisible': [('police_date','=', False)]}"/> -->
+            </field>
+
             <notebook position="inside">
                 <page string="Product Info.">
                     <group>
@@ -64,6 +72,8 @@
                 <field name="model"/>
                 <field name="id_product"/>
                 <field name="purchase_line_id"/>
+                <field name="police_date"/>
+                <field name="salable"/>
             </field>
         </field>
     </record>
@@ -73,8 +83,17 @@
         <field name="model">stock.production.lot</field>
         <field name="inherit_id" ref="stock.search_product_lot_filter"/>
         <field name="arch" type="xml">
+            <field name="product_id" position="after">
+                <separator/>
+                <filter name="salable" string="Salable" domain="['|', ('police_date','&lt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]" help="Lot available in sales"/>
+                <!-- pUEDE NO FUNCIONAR PORQUE NO SE RECALCULA CON STORE -->
+                <!-- <filter name="salable" string="Salable" domain="[('salable', '=', True)]" help="Lot available in sales"/> -->
+                <filter name="police" string="Police" domain="[('police_date','&gt;', time.strftime('%%Y-%%m-%%d'))]" help="Lots in Police state"/>
+            </field>
+         
             <filter name="group_by_product" position="after">
                 <filter name="group_by_line" string="Purchase Line" domain="[]" context="{'group_by': 'purchase_line_id'}"/>            
+                <filter name="police_date" string="Police date" domain="[]" context="{'group_by': 'police_date'}"/>            
             </filter>            
         </field>
     </record>

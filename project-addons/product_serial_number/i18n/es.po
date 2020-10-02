@@ -294,7 +294,7 @@ msgstr "Cantidad"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__recoverable_sale
 msgid "Recoverable sale"
-msgstr "Venta recuperables"
+msgstr "Venta recuperable"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__police_days

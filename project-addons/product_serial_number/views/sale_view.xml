@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+       <record id="cc_sale_lot_tree_custom" model="ir.ui.view">
+        <field name="name">cc_sale_lot_tree_custom</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale_order_lot_selection.view_order_tree_lot"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath>
+            
+        </field>
+    </record>
+
+</odoo>
