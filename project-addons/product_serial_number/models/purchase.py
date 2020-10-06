@@ -14,8 +14,14 @@ class PurchaseOrder(models.Model):
 
     count_lots = fields.Integer('Lots',
                                 compute='_count_lots')
-    recoverable_sale = fields.Boolean('Recoverable sale')
-    deposit_sale = fields.Boolean('Deposit Sale')
+    
+    cc_type = fields.Selection(
+        [('normal', 'Normal'),
+         ('deposit', 'Deposit'),
+         ('recoverable_sale', 'Recoverable Sale')], 'Purchase usage',
+         default='normal')
+    # recoverable_sale = fields.Boolean('Recoverable sale')
+    # deposit_sale = fields.Boolean('Deposit Sale')
 
     def _create_picking(self):
         """
@@ -57,6 +63,17 @@ class PurchaseOrder(models.Model):
         else:
             action = {'type': 'ir.actions.act_window_close'}
         return action
+    
+    def _get_destination_location(self):
+        self.ensure_one()
+        res = super()._get_destination_location()
+        if self.cc_type in ('recoverable_sale', 'deposit'):
+            loc = self.env['stock.location'].search(
+                [('cc_type', '=', self.cc_type)])
+            if loc:
+                return loc.id
+
+        return res
 
 
 class PurchaseOrderLine(models.Model):
@@ -86,10 +103,11 @@ class PurchaseOrderLine(models.Model):
     multi_image_ids = fields.Many2many('ir.attachment', string='Images')
     
 
-    recoverable_sale = fields.Boolean(
-        'Recoverable sale', related="order_id.recoverable_sale")
-    deposit_sale = fields.Boolean(
-        'Deposit Sale', related="order_id.deposit_sale")
+    # recoverable_sale = fields.Boolean(
+    #     'Recoverable sale', related="order_id.recoverable_sale")
+    # deposit_sale = fields.Boolean(
+    #     'Deposit Sale', related="order_id.deposit_sale")
+    cc_type = fields.Selection(related="order_id.cc_type")
     limit_date = fields.Date('Limit date')
     police_date = fields.Date('Police date')
     purchase_price_15 = fields.Float(
