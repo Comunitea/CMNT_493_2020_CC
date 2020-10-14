@@ -16,6 +16,7 @@
         'stock_picking_auto_create_lot',
         'base_multi_image',
         'purchase_operating_unit',
+        'stock_move_location'
     ],
     "data": [
         'security/ir.model.access.csv',
@@ -23,6 +24,7 @@
         'views/stock_production_lot_view.xml',
         'views/purchase_view.xml',
         'views/sale_view.xml',
+        'views/location_info_view.xml',
         'views/operating_unit_view.xml',
         'views/stock_location_view.xml',
     ],

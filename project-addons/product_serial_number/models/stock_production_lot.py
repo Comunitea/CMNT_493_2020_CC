@@ -30,6 +30,11 @@ class ProductionLot(models.Model):
     police_date = fields.Date('Police date')
 
     salable = fields.Boolean('Salable', compute='_compute_salable', store=True)
+        
+    location_info_id = fields.Many2one('location.info', 'Main Loacation')
+    location_info_ids = fields.Many2many(
+        'location.info', 'stock_location_loc_info_rel', 'loc_id', 'info_id', 
+        string='Alternative Loacation')
 
     # @api.depends('police_date')
     def _compute_salable(self):

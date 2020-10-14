@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    
+    <record id="view_locationinfo_form" model="ir.ui.view">
+        <field name="name">location.info.form</field>
+        <field name="model">location.info</field>
+        <field name="arch" type="xml">
+            <form>
+                <sheet>
+                    <group>
+                        <field name="name"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_location_info_tree" model="ir.ui.view">
+        <field name="name">location.info.tree</field>
+        <field name="model">location.info</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="name"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_location_info_search" model="ir.ui.view">
+        <field name="name">location.info.search</field>
+        <field name="model">location.info</field>
+        <field name="arch" type="xml">
+            <search string="Locations">
+                <field name="name"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_location_info" model="ir.actions.act_window">
+        <field name="name">Info Locations</field>
+        <field name="res_model">location.info</field>
+        <field name="type">ir.actions.act_window</field>
+    </record>
+
+    <menuitem action="action_location_info" id="menu_action_location_info"
+        parent="stock.menu_warehouse_config" sequence="4"/>
+
+</odoo>

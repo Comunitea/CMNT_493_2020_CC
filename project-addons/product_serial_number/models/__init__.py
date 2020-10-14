@@ -3,6 +3,7 @@
 from . import product
 from . import operating_unit
 from . import stock_picking
+from . import location_info
 from . import stock_location
 from . import purchase
 from . import sale

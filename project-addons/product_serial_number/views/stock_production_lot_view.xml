@@ -18,7 +18,9 @@
                     <group>
                         <field name="purchase_line_id"/>
                         <field name="standard_price"/>
-                        <field name="list_price"/>
+                        <field name="list_price"/> 
+                        <field name="location_info_id"/>
+                        <field name="location_info_ids" widget="many2many_tags"/>
                     </group>
                     <group>
                         <field name="ean13"/>
