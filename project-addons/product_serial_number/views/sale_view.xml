@@ -8,8 +8,11 @@
         <field name="inherit_id" ref="sale_order_lot_selection.view_order_tree_lot"/>
         <field name="arch" type="xml">
             <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
-                <attribute name="required">1</attribute>
+                <attribute name="context">{'serial_lot_id': lot_id}</attribute>
             </xpath>
+            <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
+                <attribute name="required">1</attribute>
+            </xpath> -->
             
         </field>
     </record>

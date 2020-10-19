@@ -27,6 +27,7 @@
         'views/location_info_view.xml',
         'views/operating_unit_view.xml',
         'views/stock_location_view.xml',
+        'wizard/transfer_lot_wzd_view.xml',
     ],
     "installable": True,
 }

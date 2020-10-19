@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-14 09:27+0000\n"
-"PO-Revision-Date: 2020-10-14 09:27+0000\n"
+"POT-Creation-Date: 2020-10-19 09:34+0000\n"
+"PO-Revision-Date: 2020-10-19 09:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -43,7 +43,7 @@ msgstr "Añadir imágenes"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__location_info_ids
 msgid "Alternative Loacation"
-msgstr ""
+msgstr "Ubicaciones alternativas"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -72,13 +72,23 @@ msgstr "Auto crear lote"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_operating_unit__lot_seq
 msgid "Auto Lot sequence"
-msgstr ""
+msgstr "Secuencia para lotes"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__brand
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__brand
 msgid "Brand"
 msgstr "Marca"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_transfer_lot
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_transfer_lot
+msgid "Confirm"
+msgstr "Confirmar"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -94,6 +104,7 @@ msgstr "Coste"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__create_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__create_uid
 msgid "Created by"
 msgstr "Creado por"
 
@@ -101,6 +112,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__create_date
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__create_date
 msgid "Created on"
 msgstr "Creado en"
 
@@ -108,12 +120,18 @@ msgstr "Creado en"
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__deposit
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__deposit
 msgid "Deposit"
-msgstr ""
+msgstr "Deposito"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__location_dest_id
+msgid "Dest location"
+msgstr "Ubicación destino"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__display_name
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
 
@@ -127,6 +145,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__id
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__id
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__id
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__id
 msgid "ID"
 msgstr ""
 
@@ -148,7 +167,7 @@ msgstr "Imágenes"
 #: model:ir.actions.act_window,name:product_serial_number.action_location_info
 #: model:ir.ui.menu,name:product_serial_number.menu_action_location_info
 msgid "Info Locations"
-msgstr ""
+msgstr "Ubicación info"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_stock_location
@@ -159,6 +178,7 @@ msgstr "Ubicaciones de inventario"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line____last_update
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd____last_update
 msgid "Last Modified on"
 msgstr ""
 
@@ -166,6 +186,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__write_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__write_uid
 msgid "Last Updated by"
 msgstr ""
 
@@ -173,6 +194,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__write_date
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__write_date
 msgid "Last Updated on"
 msgstr ""
 
@@ -184,12 +206,12 @@ msgstr "Fecha límite"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_location__cc_type
 msgid "Location type"
-msgstr ""
+msgstr "Tipo ubicación"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_location_info_search
 msgid "Locations"
-msgstr ""
+msgstr "Ubicaciones"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__lot_id
@@ -204,7 +226,7 @@ msgstr "Atributo lote"
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Lot available in sales"
-msgstr ""
+msgstr "Lote disponible en ventas"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_stock_production_lot
@@ -224,12 +246,12 @@ msgstr "Lotes"
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Lots in Police state"
-msgstr ""
+msgstr "Lotes en estado policía"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__location_info_id
 msgid "Main Loacation"
-msgstr ""
+msgstr "Ubicación principal"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__serial_mgmt
@@ -253,7 +275,12 @@ msgstr ""
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_operating_unit
 msgid "Operating Unit"
-msgstr ""
+msgstr "Unidad operacional"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__location_id
+msgid "Origin location"
+msgstr "Ubicación origen"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__police
@@ -425,6 +452,11 @@ msgid "Transfer"
 msgstr "Albarán"
 
 #. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_view_transfer_lot
+msgid "Transfer Lot"
+msgstr "Transferir lotes"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__value_ids
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__value_ids
 msgid "Values"
@@ -448,4 +480,9 @@ msgstr ""
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__requisation
 msgid "requisatin"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_transfer_lot_wzd
+msgid "transfer.lot.wzd"
 msgstr ""

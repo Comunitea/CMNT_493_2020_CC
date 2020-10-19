@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_transfer_lot" model="ir.ui.view">
+            <field name="name">Transfer Lot</field>
+            <field name="model">transfer.lot.wzd</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="location_id" domain="[('usage', '=', 'internal')]"/>
+                        <field name="location_dest_id" domain="[('usage', '=', 'internal')]"/>
+                    </group>
+                    <footer>
+                        <button name="confirm" string="Confirm" type="object" class="btn-primary"/>
+                        <button string="Cancel" class="btn-secondary" special="cancel"/>
+                    </footer>
+                </form>
+            </field>
+        </record>
+<!-- 
+        <act_window id="action_view_transfer_lot"
+                multi="True"
+                key2="client_action_multi"
+                name="Transfer Lot"
+                src_model="stock.production.lot"
+                res_model="transfer.lot.wzd"
+                view_mode="form"
+                view_type="form"
+                target="new" /> -->
+
+        <record id="action_view_transfer_lot" model="ir.actions.act_window">
+            <field name="name">Transfer Lot</field>
+            <field name="res_model">transfer.lot.wzd</field>
+            <field name="binding_model_id" ref="stock.model_stock_production_lot"/>
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_transfer_lot"/>
+            <field name="target">new</field>
+        </record>
+
+
+</odoo>
