@@ -11,14 +11,18 @@
     "depends": [
         'product',
         'stock',
-        'sale_order_lot_selection',
+        'sale',
         'purchase',
         'stock_picking_auto_create_lot',
-        'base_multi_image'
+        'base_multi_image',
+        'account_tax_python',
+        'product_serial_number',
     ],
     "data": [
         'security/ir.model.access.csv',
         'views/purchase_view.xml',
+        'views/account_tax_view.xml',
+        'views/account_move_view.xml',
     ],
     "installable": True,
 }
