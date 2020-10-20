@@ -93,7 +93,7 @@ msgstr "Confirmar"
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
 msgid "Copy image to related lots"
-msgstr "Copioar imágenes a lotes asociados"
+msgstr "Copiar imágenes a lotes asociados"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__standard_price
