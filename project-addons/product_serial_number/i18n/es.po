@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-19 09:34+0000\n"
-"PO-Revision-Date: 2020-10-19 09:34+0000\n"
+"POT-Creation-Date: 2020-10-20 16:25+0000\n"
+"PO-Revision-Date: 2020-10-20 16:25+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -204,6 +204,11 @@ msgid "Limit date"
 msgstr "Fecha límite"
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Location"
+msgstr "Ubicación"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_location__cc_type
 msgid "Location type"
 msgstr "Tipo ubicación"
@@ -215,6 +220,7 @@ msgstr "Ubicaciones"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__lot_id
+#: model:ir.model.fields,field_description:product_serial_number.field_sale_order_line__lot_id
 msgid "Lot"
 msgstr "Lote"
 
@@ -222,6 +228,11 @@ msgstr "Lote"
 #: model:ir.model,name:product_serial_number.model_lot_attribute_line
 msgid "Lot Attribute Line"
 msgstr "Atributo lote"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__lot_location_id
+msgid "Lot Location"
+msgstr "Ubicación lote"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
@@ -281,6 +292,12 @@ msgstr "Unidad operacional"
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__location_id
 msgid "Origin location"
 msgstr "Ubicación origen"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/transfer_lot_wzd.py:0
+#, python-format
+msgid "Please, select lots of the same location"
+msgstr "Por favor selecciona lotes de la misma ubicación"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__police

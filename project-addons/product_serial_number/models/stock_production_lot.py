@@ -28,6 +28,7 @@ class ProductionLot(models.Model):
     # To do with product multi image
     multi_image_ids = fields.Many2many('ir.attachment', string='Images')
     police_date = fields.Date('Police date')
+    limit_date = fields.Date('Limit date')
 
     salable = fields.Boolean('Salable', compute='_compute_salable', store=True)
         

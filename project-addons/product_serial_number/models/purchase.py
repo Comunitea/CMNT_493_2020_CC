@@ -135,7 +135,7 @@ class PurchaseOrderLine(models.Model):
                 self.attribute_line_ids = att_values
             
             avg_cost = self.product_id.get_purchase_price_days_ago(15)
-            self.priceunit = avg_cost
+            self.price_unit = avg_cost
 
             if self.product_id.police:
                 today = datetime.today()
@@ -220,7 +220,8 @@ class PurchaseOrderLine(models.Model):
                 'attribute_line_ids': attribute_line_ids,
                 'purchase_line_id': self.id,
                 'note': self.name,
-                'police_date': self.police_date
+                'police_date': self.police_date,
+                'limit_date': self.limit_date
             }
         return res
 
