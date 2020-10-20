@@ -6,6 +6,18 @@ from odoo.exceptions import UserError
 class TransferLotWzd(models.TransientModel):
     _name = "transfer.lot.wzd"
 
+    @api.model
+    def default_get(self, field_list):
+        res = super().default_get(field_list)
+        lots =  self.env['stock.production.lot'].browse(
+            self._context.get('active_ids', []))
+        location = lots.mapped('location_id')
+        if len(location) != 1:
+            raise UserError(_('Please, select lots of the same location'))
+        
+        res['location_id'] = location.id
+        return res
+
     location_id = fields.Many2one(
         'stock.location', 'Origin location', required=True)
     location_dest_id = fields.Many2one(

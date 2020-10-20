@@ -10,6 +10,7 @@ class AccountMove(models.Model):
     _inherit = "account.move"
 
     def _move_autocomplete_invoice_lines_values(self):
+        import ipdb; ipdb.set_trace()
         res = super()._move_autocomplete_invoice_lines_values()
         return res
 
@@ -23,6 +24,11 @@ class AccountInvoiceLine(models.Model):
         readonly=False,
         string="Lot",
     )
+
+    invoice_type = fields.Selection(
+        related='move_id.type', string="Invoice Type",
+        store=True, readonly=True)
+
 
     # def _compute_prod_lot(self):
     #     for line in self:

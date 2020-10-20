@@ -35,7 +35,17 @@ class ProductionLot(models.Model):
     location_info_ids = fields.Many2many(
         'location.info', 'stock_location_loc_info_rel', 'loc_id', 'info_id', 
         string='Alternative Loacation')
+    
+    lot_location_id = fields.Many2one(
+        'stock.location', compute="_compute_location", store=True)
 
+    @api.depends('quant_ids.location_id')
+    def _compute_location(self):
+        print("*****************")
+        for lot in self:
+            lot.lot_location_id = lot.quant_ids.filtered(
+                lambda x: x.quantity > 0).location_id.id
+    
     # @api.depends('police_date')
     def _compute_salable(self):
         print("*****************")

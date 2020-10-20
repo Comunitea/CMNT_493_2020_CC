@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-09-14 18:36+0000\n"
-"PO-Revision-Date: 2020-09-14 18:36+0000\n"
+"POT-Creation-Date: 2020-10-20 16:03+0000\n"
+"PO-Revision-Date: 2020-10-20 16:03+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,57 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invocie_line_tree
+msgid "Disc.%"
+msgstr ""
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
+msgid "Group By"
+msgstr "Agrupado por"
+
+#. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.cc_account_purchase_order_form
 msgid "Instant Payment"
 msgstr "Pago inmediato"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
+msgid "Invoice"
+msgstr "Factura"
+
+#. module: account_custom_cc
+#: model:ir.actions.act_window,name:account_custom_cc.action_invoice_lines_in
+#: model:ir.actions.act_window,name:account_custom_cc.action_invoice_lines_out
+#: model:ir.ui.menu,name:account_custom_cc.menu_invoice_lines_in
+#: model:ir.ui.menu,name:account_custom_cc.menu_invoice_lines_out
+msgid "Invoice Lines"
+msgstr "Líneas de factura"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_move_line__invoice_type
+msgid "Invoice Type"
+msgstr "Tipo factura"
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_move
+msgid "Journal Entries"
+msgstr "Asientos contables"
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_move_line
+msgid "Journal Item"
+msgstr "Apunte contable"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_move_line__lot_id
+msgid "Lot"
+msgstr "Lote"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
+msgid "Partner"
+msgstr "Empresa"
 
 #. module: account_custom_cc
 #: model:ir.model.fields,field_description:account_custom_cc.field_purchase_order__payment_id
@@ -32,6 +80,36 @@ msgid "Payments"
 msgstr "Pagos"
 
 #. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
+msgid "Product"
+msgstr "Producto"
+
+#. module: account_custom_cc
 #: model:ir.model,name:account_custom_cc.model_purchase_order
 msgid "Purchase Order"
 msgstr "Pedido de compra"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_tax__rebu
+msgid "REBU"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_sale_order_line
+msgid "Sales Order Line"
+msgstr "Línea de pedido de venta"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
+msgid "Search Journal Items"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_tax
+msgid "Tax"
+msgstr "Impuesto"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invocie_line_tree
+msgid "Total"
+msgstr ""

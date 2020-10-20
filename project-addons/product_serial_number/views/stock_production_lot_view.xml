@@ -9,6 +9,7 @@
                 <field name="salable"/>
                 <field name="police_date" style="color:Red;" attrs="{'invisible': [('salable', '=', True)]}"/>
                 <field name="police_date" style="color:Green;" attrs="{'invisible': [('salable', '=', False)]}"/>
+                <field name="lot_location_id"/>
                 <!-- <field name="police_date" style="color:Green;" attrs="{'invisible': ['|', ('police_date','&gt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]}"/> -->
                 <!-- <field name="police_date" style="color:Red;" attrs="{'invisible': [('police_date','=', False)]}"/> -->
             </field>
@@ -76,6 +77,7 @@
                 <field name="purchase_line_id"/>
                 <field name="police_date"/>
                 <field name="salable"/>
+                <field name="lot_location_id"/>
             </field>
         </field>
     </record>
@@ -86,6 +88,7 @@
         <field name="inherit_id" ref="stock.search_product_lot_filter"/>
         <field name="arch" type="xml">
             <field name="product_id" position="after">
+                <filter name="lot_location_id"/>       
                 <separator/>
                 <filter name="salable" string="Salable" domain="['|', ('police_date','&lt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]" help="Lot available in sales"/>
                 <!-- pUEDE NO FUNCIONAR PORQUE NO SE RECALCULA CON STORE -->
@@ -96,6 +99,7 @@
             <filter name="group_by_product" position="after">
                 <filter name="group_by_line" string="Purchase Line" domain="[]" context="{'group_by': 'purchase_line_id'}"/>            
                 <filter name="police_date" string="Police date" domain="[]" context="{'group_by': 'police_date'}"/>            
+                <filter name="lot_location_id" string="Location" domain="[]" context="{'group_by': 'lot_location_id'}"/>            
             </filter>            
         </field>
     </record>

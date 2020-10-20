@@ -10,6 +10,8 @@ class SaleOrder(models.Model):
 
     _inherit = 'sale.order.line'
 
+    lot_id = fields.Many2one(required=True)
+
     # Sobrescrita, bloquear lotes no vendibles
     @api.onchange("product_id")
     def _onchange_product_id_set_lot_domain(self):
@@ -34,3 +36,15 @@ class SaleOrder(models.Model):
             available_lot_ids = [quant["lot_id"][0] for quant in quants]
         self.lot_id = False
         return {"domain": {"lot_id": [("id", "in", available_lot_ids)]}}
+
+    # Price unit from lot
+    def _get_display_price(self, product):
+        res = super()._get_display_price(product)
+        if self.lot_id:
+            res = list_price
+        return res
+    
+    @api.onchange("lot_id")
+    def _onchange_lot_id(self):
+        if self.lot_id:
+            self.price_unit = self.lot_id.list_price
