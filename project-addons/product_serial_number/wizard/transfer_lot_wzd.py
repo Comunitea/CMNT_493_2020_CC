@@ -11,7 +11,7 @@ class TransferLotWzd(models.TransientModel):
         res = super().default_get(field_list)
         lots =  self.env['stock.production.lot'].browse(
             self._context.get('active_ids', []))
-        location = lots.mapped('location_id')
+        location = lots.mapped('lot_location_id')
         if len(location) != 1:
             raise UserError(_('Please, select lots of the same location'))
         

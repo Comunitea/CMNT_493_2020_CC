@@ -19,6 +19,7 @@
                 <page string="Product Info.">
                     <group>
                         <field name="purchase_line_id"/>
+                        <field name="cc_type"/>
                         <field name="standard_price"/>
                         <field name="list_price"/> 
                         <field name="location_info_id"/>
@@ -79,6 +80,7 @@
                 <field name="police_date"/>
                 <field name="limit_date"/>
                 <field name="salable"/>
+                <field name="cc_type"/>
                 <field name="lot_location_id"/>
             </field>
         </field>
@@ -104,6 +106,7 @@
                 <filter name="police_date" string="Police date" domain="[]" context="{'group_by': 'police_date'}"/>            
                 <filter name="limit_date" string="Limit date" domain="[]" context="{'group_by': 'limit_date'}"/>            
                 <filter name="lot_location_id" string="Location" domain="[]" context="{'group_by': 'lot_location_id'}"/>            
+                <filter name="cc_type" string="Contract type" domain="[]" context="{'group_by': 'cc_type'}"/>            
             </filter>            
         </field>
     </record>

@@ -1,6 +1,7 @@
 # © 2020 Comunitea - Javier Colmenero <javier@comunitea.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 from odoo import models, fields, api, _
+from odoo.exceptions import UserError
 from datetime import datetime, timedelta
 
 
@@ -74,7 +75,20 @@ class PurchaseOrder(models.Model):
                 return loc.id
 
         return res
-
+    
+    def button_confirm(self):
+        for line in self.mapped('order_line'):
+            if line.police and not line.police_date:
+                raise UserError(
+                    _('El producto {} requiere fecha '
+                      'policía'.format(line.product_id.name)))
+            if line.cc_type in ('recoverable_sale', 'deposit') and not \
+                        line.limit_date:
+                raise UserError(
+                    _('El producto {} requiere fecha '
+                      'límite'.format(line.product_id.name)))
+        res = super().button_confirm()
+        return res
 
 class PurchaseOrderLine(models.Model):
 
@@ -107,7 +121,8 @@ class PurchaseOrderLine(models.Model):
     #     'Recoverable sale', related="order_id.recoverable_sale")
     # deposit_sale = fields.Boolean(
     #     'Deposit Sale', related="order_id.deposit_sale")
-    cc_type = fields.Selection(related="order_id.cc_type")
+    cc_type = fields.Selection(related="order_id.cc_type", store=True)
+    police = fields.Boolean(related="product_id.police", store=True)
     limit_date = fields.Date('Limit date')
     police_date = fields.Date('Police date')
     purchase_price_15 = fields.Float(

@@ -24,6 +24,7 @@ class ProductionLot(models.Model):
     id_product = fields.Char('ID. Product')
 
     purchase_line_id = fields.Many2one('purchase.order.line', 'Purchase line')
+    cc_type = fields.Selection(related="purchase_line_id.cc_type", store=True)
 
     # To do with product multi image
     multi_image_ids = fields.Many2many('ir.attachment', string='Images')

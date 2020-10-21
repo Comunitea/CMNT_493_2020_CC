@@ -12,8 +12,6 @@
             </div>
 
             <field name="company_id" position="after">
-                <!-- <field name="recoverable_sale"/>
-                <field name="deposit_sale"/> -->
                 <field name="cc_type"/>
             </field>
 
@@ -24,16 +22,15 @@
             </xpath>
 
             <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
-                <!-- <field name="recoverable_sale"/>
-                <field name="deposit_sale"/> -->
                 <field name="cc_type"/>
-                <!-- <field name="limit_date" attrs="{
-                    'invisible': [('recoverable_sale', '=', False),('deposit_sale', '=', False)],
-                    'required':  ['|', ('recoverable_sale', '!=', False),('deposit_sale', '!=', False)]}"/> -->
+                <field name="police"/>
+
                 <field name="limit_date" attrs="{
-                    'invisible': [('cc_type', '=', 'normal')],
-                    'required':  [('cc_type', 'in', ('recoverable_sale' 'deposit_sale') )]}"/>
-                <field name="police_date"/>
+                    'required':  [('cc_type', 'in', ('recoverable_sale'))],
+                    'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"/>
+                <field name="police_date" attrs="{
+                    'required':  [('police', '=', True)],
+                    'invisible': [('police', '=', False)]}"/>
             </xpath>
 
             <xpath expr="//field[@name='order_line']//form/group/group[2]" position="after">

@@ -20,6 +20,8 @@
     ],
     "data": [
         'security/ir.model.access.csv',
+        'wizard/transfer_lot_wzd_view.xml',
+        'wizard/recoverable_sale_wzd.xml',
         'views/product_view.xml',
         'views/stock_production_lot_view.xml',
         'views/purchase_view.xml',
@@ -27,7 +29,6 @@
         'views/location_info_view.xml',
         'views/operating_unit_view.xml',
         'views/stock_location_view.xml',
-        'wizard/transfer_lot_wzd_view.xml',
     ],
     "installable": True,
 }

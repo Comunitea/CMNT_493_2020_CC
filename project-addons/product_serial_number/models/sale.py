@@ -41,7 +41,7 @@ class SaleOrder(models.Model):
     def _get_display_price(self, product):
         res = super()._get_display_price(product)
         if self.lot_id:
-            res = list_price
+            res = self.lot_id.list_price
         return res
     
     @api.onchange("lot_id")
