@@ -48,7 +48,7 @@ class ProductionLot(models.Model):
             lot.lot_location_id = lot.quant_ids.filtered(
                 lambda x: x.quantity > 0).location_id.id
     
-    # @api.depends('police_date')
+    @api.depends('police_date', 'limit_date')
     def _compute_salable(self):
         print("*****************")
         for lot in self:

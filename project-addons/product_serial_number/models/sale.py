@@ -27,6 +27,7 @@ class SaleOrder(models.Model):
                     ("product_id", "=", self.product_id.id),
                     ("location_id", "child_of", location.id),
                     ("quantity", ">", 0),
+                    ("reserved_quantity", "<", 1),
                     ("lot_id", "!=", False),
                     ("lot_id.salable", "!=", False),
                 ],

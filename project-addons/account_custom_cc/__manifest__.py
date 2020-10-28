@@ -20,6 +20,7 @@
     ],
     "data": [
         'security/ir.model.access.csv',
+        'data/account_tax_data.xml',
         'views/purchase_view.xml',
         'views/account_tax_view.xml',
         'views/account_move_view.xml',
