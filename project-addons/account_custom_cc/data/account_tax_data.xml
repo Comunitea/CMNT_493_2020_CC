@@ -1,0 +1,104 @@
+<odoo>
+
+    <record id="account_tax_template_s_iva21b_rebu" model="account.tax.template">
+        <field name="description"/> <!-- for resetting the value on existing DBs -->
+        <field name="type_tax_use">sale</field>
+        <field name="name">IVA 21% (REBU Bienes)</field>
+        <field name="chart_template_id" ref="l10n_es.account_chart_template_common"/>
+        <field name="amount" eval="21"/>
+        <field name="rebu" eval="True"/>
+        <field name="price_include" eval="True"/>
+        <field name="amount_type">percent</field>
+        <field name="tax_group_id" ref="l10n_es.tax_group_iva_21"/>
+        <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+                'tag_ids': [ref('l10n_es.mod_303_07')],
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_es.account_common_477'),
+                'tag_ids': [ref('l10n_es.mod_303_09')],
+            }),
+
+        ]"/>
+        <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+                'tag_ids': [ref('l10n_es.mod_303_14_sale')],
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_es.account_common_477'),
+                'tag_ids': [ref('l10n_es.mod_303_15')],
+            }),
+        ]"/>
+    </record>
+
+    <record id="account_tax_template_s_iva10b_rebu" model="account.tax.template">
+        <field name="description"/> <!-- for resetting the value on existing DBs -->
+        <field name="type_tax_use">sale</field>
+        <field name="name">IVA 10% (REBU Bienes)</field>
+        <field name="chart_template_id" ref="l10n_es.account_chart_template_common"/>
+        <field name="amount" eval="10"/>
+        <field name="rebu" eval="True"/>
+        <field name="price_include" eval="True"/>
+        <field name="amount_type">percent</field>
+        <field name="tax_group_id" ref="l10n_es.tax_group_iva_10"/>
+        <field name="invoice_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+                'tag_ids': [ref('l10n_es.mod_303_04')],
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_es.account_common_477'),
+                'tag_ids': [ref('l10n_es.mod_303_06')],
+            }),
+
+        ]"/>
+        <field name="refund_repartition_line_ids" eval="[(5, 0, 0),
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'base',
+                'tag_ids': [ref('l10n_es.mod_303_14_sale')],
+            }),
+
+            (0,0, {
+                'factor_percent': 100,
+                'repartition_type': 'tax',
+                'account_id': ref('l10n_es.account_common_477'),
+                'tag_ids': [ref('l10n_es.mod_303_15')],
+            }),
+        ]"/>
+    </record>
+    
+     <record id="fp_rebu" model="account.fiscal.position.template">
+            <field name="sequence">40</field>
+            <field name="name">REBU</field>
+            <field name="chart_template_id" ref="l10n_es.account_chart_template_common"/>
+            <field name="auto_apply" eval="True"/>
+    </record>
+
+    <record id="fptt_rebu_21b" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fp_rebu"/>
+            <field name="tax_src_id" ref="l10n_es.account_tax_template_s_iva21b"/>
+            <field name="tax_dest_id" ref="account_tax_template_s_iva21b_rebu"/>
+    </record>
+    <record id="fptt_rebu_10b" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fp_rebu"/>
+            <field name="tax_src_id" ref="l10n_es.account_tax_template_s_iva10b"/>
+            <field name="tax_dest_id" ref="account_tax_template_s_iva10b_rebu"/>
+    </record>
+   
+
+</odoo>
