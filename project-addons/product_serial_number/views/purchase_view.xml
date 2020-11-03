@@ -39,7 +39,7 @@
                         <field name="brand"/>
                         <field name="model"/>
                         <field name="id_product"/>
-                        <field name="sale_price"/>
+                        <field name="sale_price" required="1"/>
                         <field name="purchase_price_15"/>
                         <field name="purchase_price_30"/>
                         <field name="purchase_price_60"/>
