@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="ProductListWidget">
+        <t t-jquery=".product-list" t-operation="before">
+            <div class="product-list-empty-home">
+                Escane un código de barras para añadir un producto
+            </div>
+        </t>
+    </t>
+
+</templates>
