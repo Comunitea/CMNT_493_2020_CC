@@ -5,7 +5,6 @@ odoo.define('pos_custom_cc.BarcodeReader', function (require) {
 
     // BarcodeReader.include({
     //     scan: function (code) {
-    //         debugger;
     //         return this._super(code);
     //     },
     // });

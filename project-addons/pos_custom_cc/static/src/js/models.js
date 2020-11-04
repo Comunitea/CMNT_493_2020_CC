@@ -11,6 +11,7 @@ odoo.define('pos_custom_cc.models', function (require) {
 
     var pos_super = models.PosModel.prototype;
     var order_super = models.Order.prototype;
+   
 
     var OrderLine = models.Orderline;
 
@@ -74,28 +75,115 @@ odoo.define('pos_custom_cc.models', function (require) {
             var attr = JSON.parse(JSON.stringify(product));
             attr.pos = this.pos;
             attr.order = this;
-            // debugger;
-            var line = new OrderLine({}, {pos: this.pos, order: this, product: product});
+            debugger;
+            var line = new OrderLine({}, {pos: this.pos, order: this, product: product, cost: lot.standard_price, lot_id: lot.id});
             this.fix_tax_included_price(line);
-    
+            
             line.set_quantity(1);
-            line.set_unit_price(lot.list_price);
-            this.fix_tax_included_price(line);
-    
+           
+            
             // if(options.lst_price !== undefined){
-            //     line.set_lst_price(options.lst_price);
-            // }
-              
+                //     line.set_lst_price(options.lst_price);
+                // }
+            
+                
             this.orderlines.add(line);
             this.select_orderline(this.get_last_orderline());
-    
-            // if(line.has_product_lot){
-            //     this.display_lot_popup();
-            // }
+                
+                // if(line.has_product_lot){
+                    //     this.display_lot_popup();
+                    // }
+
+            debugger;
+            if (line.product.tracking == 'serial'){
+                var pack_lot_lines =  line.compute_lot_lines();
+                var lot_line = pack_lot_lines.models[0];
+                lot_line.set_lot_name(lot.name);
+                pack_lot_lines.remove_empty_model();
+                pack_lot_lines.set_quantity_by_lot();
+                line.set_unit_price(lot.list_price);
+                this.fix_tax_included_price(line);
+                this.save_to_db();
+                this.orderlines.trigger('change', line);
+            }
+
+
             if (this.pos.config.iface_customer_facing_display) {
                 this.pos.send_current_order_to_customer_facing_display();
             }
         }
 
     });
+
+
+    // ************************************************************************
+    // ************************************************************************
+    // ************************************************************************
+    // ************************************************************************
+    
+    // Asi no me funciona del todo, no siempre entra en la herencia, lo hace al
+    // principio, la manera de abajo es equivalente y funciona bien, aunque mas rara
+
+    // var order_line_super = models.Orderline.prototype;
+    // models.Orderline = models.Orderline.extend({
+    //     initialize: function(attr, options){
+    //         debugger;
+    //         this.cost = options.cost || 0.0
+    //         this.lot_id = options.lot_id || false
+    //         order_line_super.initialize.apply(this, arguments);
+    //     },
+    //     export_as_JSON: function () {
+    //         debugger;
+    //         var res = order_line_super.export_as_JSON.apply(this, arguments);
+    //         // if (this.lot_id) {
+    //         res.lot_id = this.lot_id;
+    //         res.cost = this.cost;
+    //         // }
+    //         return res;
+    //     },
+    //     compute_all: function(taxes, price_unit, quantity, currency_rounding, handle_price_include=true) {
+    //         debugger;
+    //         if (this.cost && this.lot_id) {
+    //             price_unit = price_unit - this.cost
+    //         }
+    //         var res = order_line_super.compute_all.apply(this, arguments);
+    //         return res
+    //     },
+
+    // });
+
+    var _initialize_ = models.Orderline.prototype.initialize;
+    models.Orderline.prototype.initialize = function(attr, options){
+        debugger;
+        var self = this;
+        this.cost = options.cost || 0.0
+        this.lot_id = options.lot_id || false
+        // this.set({
+        //     cost:  options.cost || 0.0,
+        //     lot_id:  options.lot_id || false,
+        // });
+        
+        return _initialize_.call(this, attr, options);
+    }
+    
+    var _exportjson_ = models.Orderline.prototype.export_as_JSON;
+    models.Orderline.prototype.export_as_JSON = function(){
+        debugger;
+        var self = this;
+        var res = _exportjson_.call(this);
+        res.lot_id = this.lot_id;
+        res.cost = this.cost;
+        return res
+    }
+
+    // var _compute_ = models.Orderline.prototype.compute_all;
+    // models.Orderline.prototype.compute_all = function(taxes, price_unit, quantity, currency_rounding, handle_price_include=true) {
+    //     debugger;
+    //     var self = this;
+    //     if (this.cost && this.lot_id) {
+    //         price_unit = price_unit - this.cost
+    //     }
+    //     return _compute_.call(this, taxes, price_unit, quantity, currency_rounding, handle_price_include);
+    // }
+
 });
