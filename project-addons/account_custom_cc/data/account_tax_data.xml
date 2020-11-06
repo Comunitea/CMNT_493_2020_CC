@@ -82,7 +82,7 @@
         ]"/>
     </record>
     
-     <record id="fp_rebu" model="account.fiscal.position.template">
+    <record id="fp_rebu" model="account.fiscal.position.template">
             <field name="sequence">40</field>
             <field name="name">REBU</field>
             <field name="chart_template_id" ref="l10n_es.account_chart_template_common"/>
@@ -98,6 +98,25 @@
             <field name="position_id" ref="fp_rebu"/>
             <field name="tax_src_id" ref="l10n_es.account_tax_template_s_iva10b"/>
             <field name="tax_dest_id" ref="account_tax_template_s_iva10b_rebu"/>
+    </record>
+
+
+    <record id="fp_exent_purchase" model="account.fiscal.position.template">
+            <field name="sequence">40</field>
+            <field name="name">Exent purchase</field>
+            <field name="chart_template_id" ref="l10n_es.account_chart_template_common"/>
+            <field name="auto_apply" eval="True"/>
+    </record>
+
+    <record id="fptt_exent_21b" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fp_rebu"/>
+            <field name="tax_src_id" ref="l10n_es.account_tax_template_s_iva21b"/>
+            <field name="tax_dest_id" ref="l10n_es.account_tax_template_p_iva0_bc"/>
+    </record>
+    <record id="fptt_exent_10b" model="account.fiscal.position.tax.template">
+            <field name="position_id" ref="fp_rebu"/>
+            <field name="tax_src_id" ref="l10n_es.account_tax_template_s_iva10b"/>
+            <field name="tax_dest_id" ref="l10n_es.account_tax_template_p_iva0_bc"/>
     </record>
    
 

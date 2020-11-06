@@ -17,7 +17,8 @@ class PurchaseOrder(models.Model):
                                 compute='_count_lots')
     
     cc_type = fields.Selection(
-        [('normal', 'Normal'),
+        [('normal', 'Normal'),    # REBU
+         ('general', 'General'),  # Normal IVA
          ('deposit', 'Deposit'),
          ('recoverable_sale', 'Recoverable Sale')], 'Purchase usage',
          default='normal')
