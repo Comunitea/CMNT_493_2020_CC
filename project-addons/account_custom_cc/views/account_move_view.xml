@@ -1,20 +1,26 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="view_move_form" model="ir.ui.view">
         <field name="name">account.move.form</field>
         <field name="model">account.move</field>
         <field name="inherit_id" ref="account.view_move_form" />
         <field name="arch" type="xml">
-          
-            <xpath expr="//field[@name='invoice_line_ids']/tree//field[@name='account_id']" position="after">
-                <field name="lot_id"/>
+
+            <xpath
+                expr="//field[@name='invoice_line_ids']/tree//field[@name='account_id']"
+                position="after"
+            >
+                <field name="lot_id" />
             </xpath>
-            <xpath expr="//field[@name='invoice_line_ids']/form//field[@name='account_id']" position="after">
-                <field name="lot_id"/>
+            <xpath
+                expr="//field[@name='invoice_line_ids']/form//field[@name='account_id']"
+                position="after"
+            >
+                <field name="lot_id" />
             </xpath>
 
             <field name="amount_untaxed" position="after">
-                <field name="exent_untaxed"/>
+                <field name="exent_untaxed" />
             </field>
 
         </field>
@@ -26,44 +32,46 @@
         <field name="model">account.move.line</field>
         <field name="arch" type="xml">
            <tree create="0" edit="0" delete="0">
-                    <field name="product_id"/>
-                    <field name="move_id"/>
-                    <field name="invoice_type" invisible="1"/>
-                    <field name="name"/>
-                    <field name="account_id"/>
-                    <field name="analytic_account_id"/>
-                    <field name="analytic_tag_ids" widget="many2many_tags"/>
-                    <field name="quantity"/>
-                    <field name="product_uom_id"/>
-                    <field name="price_unit"/>
-                    <field name="discount" string="Disc.%"/>
-                    <field name="tax_ids" widget="many2many_tags"/>
-                    <field name="price_subtotal"/>
-                    <field name="price_total"
-                            string="Total"
-                            groups="account.group_show_line_subtotals_tax_included"/>
+                    <field name="product_id" />
+                    <field name="move_id" />
+                    <field name="invoice_type" invisible="1" />
+                    <field name="name" />
+                    <field name="account_id" />
+                    <field name="analytic_account_id" />
+                    <field name="analytic_tag_ids" widget="many2many_tags" />
+                    <field name="quantity" />
+                    <field name="product_uom_id" />
+                    <field name="price_unit" />
+                    <field name="discount" string="Disc.%" />
+                    <field name="tax_ids" widget="many2many_tags" />
+                    <field name="price_subtotal" />
+                    <field
+                    name="price_total"
+                    string="Total"
+                    groups="account.group_show_line_subtotals_tax_included"
+                />
 
-                    <field name="partner_id" invisible="1"/>
-                    <field name="amount_currency" invisible="1"/>
-                    <field name="currency_id" invisible="1"/>
-                    <field name="debit" invisible="1"/>
-                    <field name="credit" invisible="1"/>
-                    <field name="date" invisible="1"/>
-                    <field name="date_maturity" invisible="1"/>
+                    <field name="partner_id" invisible="1" />
+                    <field name="amount_currency" invisible="1" />
+                    <field name="currency_id" invisible="1" />
+                    <field name="debit" invisible="1" />
+                    <field name="credit" invisible="1" />
+                    <field name="date" invisible="1" />
+                    <field name="date_maturity" invisible="1" />
 
-                    <field name="tax_line_id" invisible="1"/>
-                    <field name="tax_repartition_line_id" invisible="1"/>
-                    <field name="tag_ids" invisible="1"/>
-                    <field name="tax_base_amount" invisible="1"/>
-                    <field name="tax_exigible" invisible="1"/>
-                    <field name="company_id" invisible="1"/>
-                    <field name="company_currency_id" invisible="1"/>
-                    <field name="recompute_tax_line" invisible="1" force_save="1"/>
-                    <field name="display_type" force_save="1" invisible="1"/>
-                    <field name="is_rounding_line" invisible="1"/>
-                    <field name="exclude_from_invoice_tab" invisible="1"/>
-                    <field name="account_internal_type" invisible="1"/>
-                    <field name="always_set_currency_id" invisible="1"/>
+                    <field name="tax_line_id" invisible="1" />
+                    <field name="tax_repartition_line_id" invisible="1" />
+                    <field name="tag_ids" invisible="1" />
+                    <field name="tax_base_amount" invisible="1" />
+                    <field name="tax_exigible" invisible="1" />
+                    <field name="company_id" invisible="1" />
+                    <field name="company_currency_id" invisible="1" />
+                    <field name="recompute_tax_line" invisible="1" force_save="1" />
+                    <field name="display_type" force_save="1" invisible="1" />
+                    <field name="is_rounding_line" invisible="1" />
+                    <field name="exclude_from_invoice_tab" invisible="1" />
+                    <field name="account_internal_type" invisible="1" />
+                    <field name="always_set_currency_id" invisible="1" />
                 </tree>
         </field>
     </record>
@@ -73,15 +81,30 @@
             <field name="model">account.move.line</field>
             <field name="arch" type="xml">
                 <search string="Search Journal Items">
-                    <field name="product_id"/>
-                    <field name="move_id"/>
-                    <field name="partner_id"/>
-                    <separator/>
+                    <field name="product_id" />
+                    <field name="move_id" />
+                    <field name="partner_id" />
+                    <separator />
                     <group expand="0" string="Group By">
-                        <filter string="Product" name="group_by_product" domain="[]" context="{'group_by': 'product_id'}"/>
-                        <filter string="Invoice" name="group_by_invoice" domain="[]" context="{'group_by': 'move_id'}"/>
-                        <filter string="Partner" name="group_by_partner" domain="[]" context="{'group_by': 'partner_id'}"/>
-                      
+                        <filter
+                        string="Product"
+                        name="group_by_product"
+                        domain="[]"
+                        context="{'group_by': 'product_id'}"
+                    />
+                        <filter
+                        string="Invoice"
+                        name="group_by_invoice"
+                        domain="[]"
+                        context="{'group_by': 'move_id'}"
+                    />
+                        <filter
+                        string="Partner"
+                        name="group_by_partner"
+                        domain="[]"
+                        context="{'group_by': 'partner_id'}"
+                    />
+
                     </group>
                 </search>
             </field>
@@ -90,31 +113,43 @@
     <record id="action_invoice_lines_out" model="ir.actions.act_window">
         <field name="name">Invoice Lines</field>
         <field name="res_model">account.move.line</field>
-        <field name="domain">[('product_id', '!=', False), ('invoice_type', 'in', ['out_invoice', 'out_refund'])]</field>
-        <field name="context">{'search_default_group_by_product': 1,  'expand': 0}</field>
-        <field name="view_id" ref="view_invocie_line_tree"/>
-        <field name="search_view_id" ref="view_invoice_line_filter"/>
+        <field
+            name="domain"
+        >[('product_id', '!=', False), ('invoice_type', 'in', ['out_invoice', 'out_refund'])]</field>
+        <field
+            name="context"
+        >{'search_default_group_by_product': 1,  'expand': 0}</field>
+        <field name="view_id" ref="view_invocie_line_tree" />
+        <field name="search_view_id" ref="view_invoice_line_filter" />
         <field name="view_mode">tree</field>
     </record>
 
     <record id="action_invoice_lines_in" model="ir.actions.act_window">
         <field name="name">Invoice Lines</field>
         <field name="res_model">account.move.line</field>
-        <field name="domain">[('product_id', '!=', False), ('invoice_type', 'in', ['in_invoice', 'in_refund'])]</field>
-        <field name="context">{'search_default_group_by_product': 1, 'expand': 0}</field>
-        <field name="view_id" ref="view_invocie_line_tree"/>
-        <field name="search_view_id" ref="view_invoice_line_filter"/>
+        <field
+            name="domain"
+        >[('product_id', '!=', False), ('invoice_type', 'in', ['in_invoice', 'in_refund'])]</field>
+        <field
+            name="context"
+        >{'search_default_group_by_product': 1, 'expand': 0}</field>
+        <field name="view_id" ref="view_invocie_line_tree" />
+        <field name="search_view_id" ref="view_invoice_line_filter" />
         <field name="view_mode">tree</field>
     </record>
 
-    <menuitem  id="menu_invoice_lines_in"
-               action="action_invoice_lines_in"
-               parent="account.menu_finance_payables"
-               sequence="2"/>
+    <menuitem
+        id="menu_invoice_lines_in"
+        action="action_invoice_lines_in"
+        parent="account.menu_finance_payables"
+        sequence="2"
+    />
 
-    <menuitem  id="menu_invoice_lines_out"
-               action="action_invoice_lines_out"
-               parent="account.menu_finance_receivables"
-               sequence="2"/>
+    <menuitem
+        id="menu_invoice_lines_out"
+        action="action_invoice_lines_out"
+        parent="account.menu_finance_receivables"
+        sequence="2"
+    />
 
 </odoo>

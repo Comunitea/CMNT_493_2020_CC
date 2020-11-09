@@ -1,4 +1,4 @@
 ==============================
-Point of Sale - Customizations
+ACCOUNT CUSTOM CC
 ==============================
 - Search by lots

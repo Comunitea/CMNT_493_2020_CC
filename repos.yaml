@@ -1,0 +1,10 @@
+server-tools:
+  defaults:
+    depth: $DEPTH_MERGE
+  remotes:
+    cmnt: https://github.com/Comunitea/server-tools.git
+    origin: https://github.com/OCA/server-tools.git
+  target: origin $ODOO_VERSION
+  merges:
+  - origin $ODOO_VERSION
+  - cmnt 13.0-mig-base_multi_image

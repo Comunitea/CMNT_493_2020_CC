@@ -1,4 +1,4 @@
 ==============================
-Point of Sale - Customizations
+Product Serial Number
 ==============================
 - Search by lots

@@ -1,16 +1,24 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="cc_view_production_lot_form" model="ir.ui.view">
         <field name="name">cc.stock.production.lot.form</field>
         <field name="model">stock.production.lot</field>
-        <field name="inherit_id" ref="stock.view_production_lot_form"/>
+        <field name="inherit_id" ref="stock.view_production_lot_form" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">
-                <field name="salable"/>
-                <field name="police_date" style="color:Red;" attrs="{'invisible': [('salable', '=', True)]}"/>
-                <field name="police_date" style="color:Green;" attrs="{'invisible': [('salable', '=', False)]}"/>
-                <field name="limit_date"/>
-                <field name="lot_location_id"/>
+                <field name="salable" />
+                <field
+                    name="police_date"
+                    style="color:Red;"
+                    attrs="{'invisible': [('salable', '=', True)]}"
+                />
+                <field
+                    name="police_date"
+                    style="color:Green;"
+                    attrs="{'invisible': [('salable', '=', False)]}"
+                />
+                <field name="limit_date" />
+                <field name="lot_location_id" />
                 <!-- <field name="police_date" style="color:Green;" attrs="{'invisible': ['|', ('police_date','&gt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]}"/> -->
                 <!-- <field name="police_date" style="color:Red;" attrs="{'invisible': [('police_date','=', False)]}"/> -->
             </field>
@@ -18,35 +26,54 @@
             <notebook position="inside">
                 <page string="Product Info.">
                     <group>
-                        <field name="purchase_line_id"/>
-                        <field name="cc_type"/>
-                        <field name="standard_price"/>
-                        <field name="list_price"/> 
-                        <field name="location_info_id"/>
-                        <field name="location_info_ids" widget="many2many_tags"/>
+                        <field name="purchase_line_id" />
+                        <field name="cc_type" />
+                        <field name="standard_price" />
+                        <field name="list_price" />
+                        <field name="location_info_id" />
+                        <field name="location_info_ids" widget="many2many_tags" />
                     </group>
                     <group>
-                        <field name="ean13"/>
-                        <field name="brand"/>
-                        <field name="model"/>
-                        <field name="id_product"/>
-                        <field name="purchase_line_id"/>
+                        <field name="ean13" />
+                        <field name="brand" />
+                        <field name="model" />
+                        <field name="id_product" />
+                        <field name="purchase_line_id" />
                     </group>
                 </page>
                 <page string="Attributes">
                     <group string="Attributes">
-                        <field name="attribute_line_ids" widget="one2many" context="{'show_attribute': False}" nolabel="1">
+                        <field
+                            name="attribute_line_ids"
+                            widget="one2many"
+                            context="{'show_attribute': False}"
+                            nolabel="1"
+                        >
                             <tree string="Attributes" editable="bottom">
                                 <!-- <field name="attribute_id" attrs="{'readonly': [('id', '!=', False)]}" context="{'limit_attributes_product': parent.product_id}"/> -->
-                                <field name="attribute_id"   context="{'limit_attributes_product': parent.product_id}"/>
-                                <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" context="{'default_attribute_id': attribute_id, 'show_attribute': False}"/>
+                                <field
+                                    name="attribute_id"
+                                    context="{'limit_attributes_product': parent.product_id}"
+                                />
+                                <field
+                                    name="value_ids"
+                                    widget="many2many_tags"
+                                    options="{'no_create_edit': True}"
+                                    context="{'default_attribute_id': attribute_id, 'show_attribute': False}"
+                                />
                             </tree>
                         </field>
                     </group>
                 </page>
                 <page string="Add Images">
-                    <group >
-                        <field name="multi_image_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2" />
+                    <group>
+                        <field
+                            name="multi_image_ids"
+                            widget="many2many_binary"
+                            string="Attach a file"
+                            nolabel="1"
+                            colspan="2"
+                        />
                     </group>
                 </page>
                 <page string="Images">
@@ -59,9 +86,10 @@
                                 'default_owner_id': id,
                             }"
                             readonly="1"
-                            mode="kanban"/>
+                            mode="kanban"
+                        />
                     </group>
-                </page>     
+                </page>
             </notebook>
         </field>
     </record>
@@ -69,19 +97,19 @@
     <record id="cc_view_production_lot_tree" model="ir.ui.view">
         <field name="name">cc.stock.production.lot.tree</field>
         <field name="model">stock.production.lot</field>
-        <field name="inherit_id" ref="stock.view_production_lot_tree"/>
+        <field name="inherit_id" ref="stock.view_production_lot_tree" />
         <field name="arch" type="xml">
             <field name="company_id" position="after">
-                <field name="ean13"/>
-                <field name="brand"/>
-                <field name="model"/>
-                <field name="id_product"/>
-                <field name="purchase_line_id"/>
-                <field name="police_date"/>
-                <field name="limit_date"/>
-                <field name="salable"/>
-                <field name="cc_type"/>
-                <field name="lot_location_id"/>
+                <field name="ean13" />
+                <field name="brand" />
+                <field name="model" />
+                <field name="id_product" />
+                <field name="purchase_line_id" />
+                <field name="police_date" />
+                <field name="limit_date" />
+                <field name="salable" />
+                <field name="cc_type" />
+                <field name="lot_location_id" />
             </field>
         </field>
     </record>
@@ -89,25 +117,65 @@
     <record id="cc_search_product_lot_filter" model="ir.ui.view">
         <field name="name">"cc_search_product_lot_filter</field>
         <field name="model">stock.production.lot</field>
-        <field name="inherit_id" ref="stock.search_product_lot_filter"/>
+        <field name="inherit_id" ref="stock.search_product_lot_filter" />
         <field name="arch" type="xml">
             <field name="product_id" position="after">
-                <field name="lot_location_id"/>       
-                <separator/>
-                <filter name="salable" string="Salable" domain="['|', ('police_date','&lt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]" help="Lot available in sales"/>
+                <field name="lot_location_id" />
+                <separator />
+                <filter
+                    name="salable"
+                    string="Salable"
+                    domain="['|', ('police_date','&lt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]"
+                    help="Lot available in sales"
+                />
                 <!-- pUEDE NO FUNCIONAR PORQUE NO SE RECALCULA CON STORE -->
                 <!-- <filter name="salable" string="Salable" domain="[('salable', '=', True)]" help="Lot available in sales"/> -->
-                <filter name="police" string="Police" domain="[('police_date','&gt;', time.strftime('%%Y-%%m-%%d'))]" help="Lots in Police state"/>
-                <filter name="limit_date" string="Limit date" domain="[('limit_date','&gt;', time.strftime('%%Y-%%m-%%d'))]" help="Lots with limit date"/>
+                <filter
+                    name="police"
+                    string="Police"
+                    domain="[('police_date','&gt;', time.strftime('%%Y-%%m-%%d'))]"
+                    help="Lots in Police state"
+                />
+                <filter
+                    name="limit_date"
+                    string="Limit date"
+                    domain="[('limit_date','&gt;', time.strftime('%%Y-%%m-%%d'))]"
+                    help="Lots with limit date"
+                />
             </field>
-         
+
             <filter name="group_by_product" position="after">
-                <filter name="group_by_line" string="Purchase Line" domain="[]" context="{'group_by': 'purchase_line_id'}"/>            
-                <filter name="police_date" string="Police date" domain="[]" context="{'group_by': 'police_date'}"/>            
-                <filter name="limit_date" string="Limit date" domain="[]" context="{'group_by': 'limit_date'}"/>            
-                <filter name="lot_location_id" string="Location" domain="[]" context="{'group_by': 'lot_location_id'}"/>            
-                <filter name="cc_type" string="Contract type" domain="[]" context="{'group_by': 'cc_type'}"/>            
-            </filter>            
+                <filter
+                    name="group_by_line"
+                    string="Purchase Line"
+                    domain="[]"
+                    context="{'group_by': 'purchase_line_id'}"
+                />
+                <filter
+                    name="police_date"
+                    string="Police date"
+                    domain="[]"
+                    context="{'group_by': 'police_date'}"
+                />
+                <filter
+                    name="limit_date"
+                    string="Limit date"
+                    domain="[]"
+                    context="{'group_by': 'limit_date'}"
+                />
+                <filter
+                    name="lot_location_id"
+                    string="Location"
+                    domain="[]"
+                    context="{'group_by': 'lot_location_id'}"
+                />
+                <filter
+                    name="cc_type"
+                    string="Contract type"
+                    domain="[]"
+                    context="{'group_by': 'cc_type'}"
+                />
+            </filter>
         </field>
     </record>
 </odoo>

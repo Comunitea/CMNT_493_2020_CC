@@ -1,55 +1,84 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="cc_purchase_order_form" model="ir.ui.view">
         <field name="name">cc.purchase.order.form</field>
         <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="priority">1000</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
             <div name="button_box" position="inside">
-                <button name="view_lots_button" type="object" class="oe_stat_button" icon="fa-list">
-                    <field name="count_lots"  widget="statinfo"/>
+                <button
+                    name="view_lots_button"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-list"
+                >
+                    <field name="count_lots" widget="statinfo" />
                 </button>
             </div>
 
             <field name="company_id" position="after">
-                <field name="cc_type"/>
+                <field name="cc_type" />
             </field>
-
 
             <!-- Avoid editable in tree view -->
             <xpath expr="//field[@name='order_line']//tree" position="attributes">
-                <attribute name="editable"/>
+                <attribute name="editable" />
             </xpath>
 
-            <xpath expr="//field[@name='order_line']//form//field[@name='date_planned']" position="after">
-                <field name="cc_type"/>
-                <field name="police"/>
+            <xpath
+                expr="//field[@name='order_line']//form//field[@name='date_planned']"
+                position="after"
+            >
+                <field name="cc_type" />
+                <field name="police" />
 
-                <field name="limit_date" attrs="{
+                <field
+                    name="limit_date"
+                    attrs="{
                     'required':  [('cc_type', 'in', ('recoverable_sale'))],
-                    'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"/>
-                <field name="police_date" attrs="{
+                    'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
+                />
+                <field
+                    name="police_date"
+                    attrs="{
                     'required':  [('police', '=', True)],
-                    'invisible': [('police', '=', False)]}"/>
+                    'invisible': [('police', '=', False)]}"
+                />
             </xpath>
 
-            <xpath expr="//field[@name='order_line']//form/group/group[2]" position="after">
+            <xpath
+                expr="//field[@name='order_line']//form/group/group[2]"
+                position="after"
+            >
                     <group string="Product Info">
-                        <field name="ean13"/>
-                        <field name="brand"/>
-                        <field name="model"/>
-                        <field name="id_product"/>
-                        <field name="sale_price" required="1"/>
-                        <field name="purchase_price_15"/>
-                        <field name="purchase_price_30"/>
-                        <field name="purchase_price_60"/>
+                        <field name="ean13" />
+                        <field name="brand" />
+                        <field name="model" />
+                        <field name="id_product" />
+                        <field name="sale_price" required="1" />
+                        <field name="purchase_price_15" />
+                        <field name="purchase_price_30" />
+                        <field name="purchase_price_60" />
                     </group>
                     <group string="Attributes">
-                        <field name="attribute_line_ids" widget="one2many" context="{'show_attribute': False}" nolabel="1">
+                        <field
+                        name="attribute_line_ids"
+                        widget="one2many"
+                        context="{'show_attribute': False}"
+                        nolabel="1"
+                    >
                             <tree string="Attributes" editable="bottom">
-                                <!-- <field name="attribute_id" attrs="{'readonly': [('id', '!=', False)]}" context="{'limit_attributes_product': parent.product_id}"/> -->
-                                <field name="attribute_id"  context="{'limit_attributes_product': parent.product_id}"/>
-                                <field name="value_ids" widget="many2many_tags" options="{'no_create_edit': True}" context="{'default_attribute_id': attribute_id, 'show_attribute': False}"/>
+                                <field
+                                name="attribute_id"
+                                context="{'limit_attributes_product': parent.product_id}"
+                            />
+                                <field
+                                name="value_ids"
+                                widget="many2many_tags"
+                                options="{'no_create_edit': True}"
+                                context="{'default_attribute_id': attribute_id, 'show_attribute': False}"
+                            />
                             </tree>
                         </field>
                     </group>
@@ -59,41 +88,65 @@
             <xpath expr="//field[@name='order_line']//form//notebook" position="inside">
                 <page string="Add Images">
                     <group>
-                        <button name="copy_image_to_lots" string="Copy image to related lots" type="object" class="oe_link"/>
-                        <field name="multi_image_ids" widget="many2many_binary" string="Attach a file" nolabel="1" colspan="2" />
+                        <button
+                            name="copy_image_to_lots"
+                            string="Copy image to related lots"
+                            type="object"
+                            class="oe_link"
+                        />
+                        <field
+                            name="multi_image_ids"
+                            widget="many2many_binary"
+                            string="Attach a file"
+                            nolabel="1"
+                            colspan="2"
+                        />
                     </group>
                 </page>
                 <page string="Images">
                         <group>
                             <field
-                                name="image_ids"
-                                nolabel="1"
-                                context="{
+                            name="image_ids"
+                            nolabel="1"
+                            context="{
                                     'default_owner_model': 'stock.production.lot',
                                     'default_owner_id': id,
                                 }"
-                                readonly="1"
-                                mode="kanban"/>
+                            readonly="1"
+                            mode="kanban"
+                        />
                         </group>
-                </page>     
+                </page>
             </xpath>
 
             <!-- Cantidad de odo standard invisible y usamos lost_Qty -->
-            <xpath expr="//field[@name='order_line']//tree//field[@name='product_qty']" position="replace">
-                <field name="product_qty" invisible="1"/>
-                <field name="lot_qty" string="Quantity"/>
+            <xpath
+                expr="//field[@name='order_line']//tree//field[@name='product_qty']"
+                position="replace"
+            >
+                <field name="product_qty" invisible="1" />
+                <field name="lot_qty" string="Quantity" />
             </xpath>
 
-            <xpath expr="//field[@name='order_line']//form//field[@name='product_qty']" position="replace">
-                <field name="product_qty" invisible="1"/>
-                <field name="lot_qty" string="Quantity"/>
+            <xpath
+                expr="//field[@name='order_line']//form//field[@name='product_qty']"
+                position="replace"
+            >
+                <field name="product_qty" invisible="1" />
+                <field name="lot_qty" string="Quantity" />
             </xpath>
 
             <!-- Campo precio etiqueta génerica -->
-            <xpath expr="//field[@name='order_line']//tree//field[@name='price_unit']" position="attributes">
+            <xpath
+                expr="//field[@name='order_line']//tree//field[@name='price_unit']"
+                position="attributes"
+            >
                 <attribute name="string">Price</attribute>
             </xpath>
-            <xpath expr="//field[@name='order_line']//form//field[@name='price_unit']" position="attributes">
+            <xpath
+                expr="//field[@name='order_line']//form//field[@name='price_unit']"
+                position="attributes"
+            >
                 <attribute name="string">Price</attribute>
             </xpath>
 
@@ -105,39 +158,48 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">purchase.order.line</field>
         <field name="view_mode">tree,form</field>
-        <field name="view_id" ref="purchase.purchase_order_line_tree"/>
+        <field name="view_id" ref="purchase.purchase_order_line_tree" />
     </record>
-     <menuitem action="action_purchase_line" id="menu_purchase_line"
-            parent="purchase.menu_procurement_management"
-            sequence="90"/>
-    <record id="cc_sale_lot_tree_custom" model="ir.ui.view">
-        <field name="name">cc_sale_lot_tree_custom</field>
-        <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale_order_lot_selection.view_order_tree_lot"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="replace">
-                <field name="lot_id" domain="[('product_id','=', product_id), ('salable', '=', True)]" context="{'default_product_id': product_id}" groups="stock.group_production_lot"/>
-            </xpath>
-            
-        </field>
-    </record>
+     <menuitem
+        action="action_purchase_line"
+        id="menu_purchase_line"
+        parent="purchase.menu_procurement_management"
+        sequence="90"
+    />
+
 
     <!-- purchase.order inherit search view -->
     <record id="view_id" model="ir.ui.view">
         <field name="name">purchase.order.inherit.view.search</field>
         <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_view_search"/>
+        <field name="inherit_id" ref="purchase.purchase_order_view_search" />
         <field name="arch" type="xml">
             <!-- Add your xpath here -->
             <filter name="my_Orders" position="after">
-                 <separator/>
-                <filter name="general" string="General purchases" domain="[('cc_type', '=', 'general')]"/>
-                <separator/>
-                <filter name="special" string="Special purchases" domain="[('cc_type', '=', 'normal')]"/>
-                <separator/>
-                <filter name="recoverable" string="Recoverable purchases" domain="[('cc_type', '=', 'recoverable')]"/>
-                <separator/>
-                <filter name="deposit" string="Deposit purchases" domain="[('cc_type', '=', 'deposit')]"/>
+                 <separator />
+                <filter
+                    name="general"
+                    string="General purchases"
+                    domain="[('cc_type', '=', 'general')]"
+                />
+                <separator />
+                <filter
+                    name="special"
+                    string="Special purchases"
+                    domain="[('cc_type', '=', 'normal')]"
+                />
+                <separator />
+                <filter
+                    name="recoverable"
+                    string="Recoverable purchases"
+                    domain="[('cc_type', '=', 'recoverable')]"
+                />
+                <separator />
+                <filter
+                    name="deposit"
+                    string="Deposit purchases"
+                    domain="[('cc_type', '=', 'deposit')]"
+                />
             </filter>
         </field>
     </record>
@@ -148,46 +210,74 @@
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">purchase.order</field>
         <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
-        <field name="view_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="view_id" ref="purchase.purchase_order_view_tree" />
         <!-- <field name="domain">[('state','in',('purchase', 'done'))]</field> -->
-        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
-        <field name="context">{'default_cc_type': 'general', 'search_default_general': 'normal'}</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search" />
+        <field
+            name="context"
+        >{'default_cc_type': 'general', 'search_default_general': 'normal'}</field>
     </record>
     <record id="cc_special_purchase_form_action" model="ir.actions.act_window">
         <field name="name">SPECIAL PURCHASE</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">purchase.order</field>
         <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
-        <field name="view_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="view_id" ref="purchase.purchase_order_view_tree" />
         <!-- <field name="domain">[('state','in',('purchase', 'done'))]</field> -->
-        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
-        <field name="context">{'default_cc_type': 'normal', 'search_default_special': 'normal'}</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search" />
+        <field
+            name="context"
+        >{'default_cc_type': 'normal', 'search_default_special': 'normal'}</field>
     </record>
     <record id="cc_recoverable_purchase_form_action" model="ir.actions.act_window">
         <field name="name">RECOVERABLE PURCHASE</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">purchase.order</field>
         <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
-        <field name="view_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="view_id" ref="purchase.purchase_order_view_tree" />
         <!-- <field name="domain">[('state','in',('purchase', 'done'))]</field> -->
-        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
-        <field name="context">{'default_cc_type': 'recoverable', 'search_default_recoverable': 'normal'}</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search" />
+        <field
+            name="context"
+        >{'default_cc_type': 'recoverable', 'search_default_recoverable': 'normal'}</field>
     </record>
     <record id="cc_deposit_purchase_form_action" model="ir.actions.act_window">
         <field name="name">DEPOSIT PURCHASE</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">purchase.order</field>
         <field name="view_mode">tree,kanban,form,pivot,graph,calendar,activity</field>
-        <field name="view_id" ref="purchase.purchase_order_view_tree"/>
+        <field name="view_id" ref="purchase.purchase_order_view_tree" />
         <!-- <field name="domain">[('state','in',('purchase', 'done'))]</field> -->
-        <field name="search_view_id" ref="purchase.purchase_order_view_search"/>
-        <field name="context">{'default_cc_type': 'deposit', 'search_default_deposit': 'normal'}</field>
+        <field name="search_view_id" ref="purchase.purchase_order_view_search" />
+        <field
+            name="context"
+        >{'default_cc_type': 'deposit', 'search_default_deposit': 'normal'}</field>
     </record>
 
-    <menuitem action="cc_normal_purchase_form_action" id="menu_normal_purchase_form_action" parent="purchase.menu_procurement_management" sequence="7"/>
-    <menuitem action="cc_special_purchase_form_action" id="menu_special_purchase_form_action" parent="purchase.menu_procurement_management" sequence="8"/>
-    <menuitem action="cc_recoverable_purchase_form_action" id="menu_recoverable_purchase_form_action" parent="purchase.menu_procurement_management" sequence="9"/>
-    <menuitem action="cc_deposit_purchase_form_action" id="menu_deposit_purchase_form_action" parent="purchase.menu_procurement_management" sequence="10"/>
+    <menuitem
+        action="cc_normal_purchase_form_action"
+        id="menu_normal_purchase_form_action"
+        parent="purchase.menu_procurement_management"
+        sequence="7"
+    />
+    <menuitem
+        action="cc_special_purchase_form_action"
+        id="menu_special_purchase_form_action"
+        parent="purchase.menu_procurement_management"
+        sequence="8"
+    />
+    <menuitem
+        action="cc_recoverable_purchase_form_action"
+        id="menu_recoverable_purchase_form_action"
+        parent="purchase.menu_procurement_management"
+        sequence="9"
+    />
+    <menuitem
+        action="cc_deposit_purchase_form_action"
+        id="menu_deposit_purchase_form_action"
+        parent="purchase.menu_procurement_management"
+        sequence="10"
+    />
 
 
 

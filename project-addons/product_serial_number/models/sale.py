@@ -1,14 +1,12 @@
 # © 2020 Comunitea - Javier Colmenero <javier@comunitea.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
-from odoo import models, fields, api, _
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
-
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+from odoo import api, fields, models
 
 
 class SaleOrder(models.Model):
 
-    _inherit = 'sale.order.line'
+    _inherit = "sale.order.line"
 
     lot_id = fields.Many2one(required=True)
 
@@ -44,7 +42,7 @@ class SaleOrder(models.Model):
         if self.lot_id:
             res = self.lot_id.list_price
         return res
-    
+
     @api.onchange("lot_id")
     def _onchange_lot_id(self):
         if self.lot_id:

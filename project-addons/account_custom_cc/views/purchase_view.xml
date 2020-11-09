@@ -1,19 +1,25 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
     <record id="cc_account_purchase_order_form" model="ir.ui.view">
         <field name="name">cc.account.purchase.order.form</field>
         <field name="model">purchase.order</field>
-        <field name="inherit_id" ref="purchase.purchase_order_form"/>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
             <button name='action_view_invoice' position="after">
                 <!-- <button name="action_instant_payment" string="Instant Payment" type="object" context="{'create_bill':True}" attrs="{'invisible': ['|', '|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'not in', ('no', 'invoiced')), ('order_line', '=', [])]}"/> -->
-                <button name="action_instant_payment" string="Instant Payment" type="object" context="{'create_bill':True}" attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}"/>
+                <button
+                    name="action_instant_payment"
+                    string="Instant Payment"
+                    type="object"
+                    context="{'create_bill':True}"
+                    attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}"
+                />
             </button>
 
             <notebook position="inside">
                 <page string="Payment">
                     <group>
-                        <field name="payment_id"/>
+                        <field name="payment_id" />
                     </group>
                 </page>
             </notebook>

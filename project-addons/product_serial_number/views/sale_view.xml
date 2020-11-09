@@ -1,13 +1,16 @@
-<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8" ?>
 <odoo>
 
-    
+
        <record id="cc_sale_lot_tree_custom" model="ir.ui.view">
         <field name="name">cc_sale_lot_tree_custom</field>
         <field name="model">sale.order</field>
-        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="inherit_id" ref="sale.view_order_form" />
         <field name="arch" type="xml">
-            <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
+            <xpath
+                expr="//field[@name='order_line']/tree/field[@name='lot_id']"
+                position="attributes"
+            >
                 <attribute name="context">{'serial_lot_id': lot_id}</attribute>
             </xpath>
             <!-- <xpath expr="//field[@name='order_line']/tree/field[@name='lot_id']" position="attributes">
@@ -15,11 +18,15 @@
             </xpath> -->
 
             <header position="inside">
-                <button name="%(product_serial_number.action_recoverable_sale_wzd)d" string="Recoverable Sale"
-                        type="action" class="btn-warning"
-                        attrs="{'invisible': [('state', 'not in', ('draft', 'sent'))]}"/>
+                <button
+                    name="%(product_serial_number.action_recoverable_sale_wzd)d"
+                    string="Recoverable Sale"
+                    type="action"
+                    class="btn-warning"
+                    attrs="{'invisible': [('state', 'not in', ('draft', 'sent'))]}"
+                />
             </header>
-            
+
         </field>
     </record>
 
