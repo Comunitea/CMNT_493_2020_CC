@@ -12,11 +12,12 @@
     "author": "Comunitea",
     "website": "https://comunitea.com",
     "license": "AGPL-3",
-    "depends": [
-        "point_of_sale",
-    ],
+    "depends": ["point_of_sale", "account_custom_cc", "purchase"],
     "data": [
         "views/assets.xml",
+        "views/pos_order_view.xml",
+        "views/purchase_view.xml",
+        "wizard/recoverable_sale_wzd.xml",
     ],
     "qweb": [
         "static/src/xml/pos_custom_cc.xml",

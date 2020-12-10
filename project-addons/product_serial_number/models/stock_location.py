@@ -15,8 +15,8 @@ class StockLocation(models.Model):
         [
             ("normal", "Normal"),
             ("deposit", "Deposit"),
-            ("recoverable_sale", "Recoverable Sale"),
-            ("requisation", "requisatin"),
+            ("recoverable_sale", "Recoverable"),
+            ("requisation", "Requisation"),
             ("safe", "Safe"),
         ],
         "Location type",

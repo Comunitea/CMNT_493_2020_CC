@@ -1,15 +1,13 @@
-/*
-    Copyright (C) 2017-Today: La Louve (<http://www.lalouve.net/>)
-    Copyright (C) 2019-Today: Druidoo (<https://www.druidoo.io>)
-    @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
-    License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-*/
-
 odoo.define("pos_custom_cc.screens", function (require) {
     "use strict";
 
     var screens = require("point_of_sale.screens");
 
+    var core = require("web.core");
+    var _t = core._t;
+
+    // Copiado de pos_empty_home.
+    // Del módulo hide de la 12, ocultar productos para la selección
     screens.ProductListWidget.include({
         set_product_list: function (product_list) {
             this._super(product_list);
@@ -18,6 +16,28 @@ odoo.define("pos_custom_cc.screens", function (require) {
             } else {
                 $(this.el.querySelector(".product-list-empty-home")).show();
             }
+        },
+    });
+
+    // Limitar cambios de cantidad en productos con Nº de serie
+    screens.OrderWidget.include({
+        set_value: function (val) {
+            var mode = this.numpad_state.get("mode");
+            if (mode === "quantity" && parseFloat(val) > 1) {
+                var order = this.pos.get_order();
+                var selected_orderline = order.get_selected_orderline();
+                if (selected_orderline.product.tracking === "serial") {
+                    var msg = {
+                        title: _t("Cant set quantity greater than 1"),
+                        body: _t(
+                            "This product has serial number management. Quantity must be 1"
+                        ),
+                    };
+                    this.gui.show_popup("error", msg);
+                }
+                return;
+            }
+            this._super(val);
         },
     });
 

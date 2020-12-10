@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+
+    <record id="cc_purchase_order_form_recoverable" model="ir.ui.view">
+        <field name="name">cc.purchase.order.form.recoverable</field>
+        <field name="model">purchase.order</field>
+        <field name="priority">1000</field>
+        <field name="inherit_id" ref="purchase.purchase_order_form" />
+        <field name="arch" type="xml">
+            <header position="inside">
+                <button
+                    name="%(pos_custom_cc.action_recoverable_sale_wzd)d"
+                    string="Recoverable Purchase"
+                    type="action"
+                    class="btn-warning"
+                    attrs="{'invisible': ['|', '|', '|', ('cc_type', 'not in', ('recoverable_sale')), ('state', 'not in', ('purchase', 'done')), ('invoice_status', '!=', 'invoiced'), ('all_recovered', '=', True)]}"
+                />
+            </header>
+
+             <div name="button_box" position="inside">
+                <button
+                    name="view_pos_orders_button"
+                    type="object"
+                    class="oe_stat_button"
+                    icon="fa-list-ol"
+                >
+                <field name="count_pos_orders" widget="statinfo" />
+                </button>
+            </div>
+        </field>
+    </record>
+
+</odoo>

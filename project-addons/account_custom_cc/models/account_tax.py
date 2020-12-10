@@ -7,6 +7,7 @@ class AccountTax(models.Model):
     _inherit = "account.tax"
 
     rebu = fields.Boolean("REBU")
+    itp = fields.Boolean("ITP")
 
     # def _compute_amount(self, base_amount, price_unit,
     #                     quantity=1.0, product=None, partner=None):
@@ -42,6 +43,7 @@ class AccountTaxTemplate(models.Model):
     _inherit = "account.tax.template"
 
     rebu = fields.Boolean("REBU")
+    itp = fields.Boolean("ITP")
 
     def _get_tax_vals(self, company, tax_template_to_tax):
         self.ensure_one()

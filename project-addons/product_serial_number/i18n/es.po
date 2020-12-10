@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-20 16:25+0000\n"
-"PO-Revision-Date: 2020-10-20 16:25+0000\n"
+"POT-Creation-Date: 2020-12-09 17:34+0000\n"
+"PO-Revision-Date: 2020-12-09 17:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -39,6 +39,11 @@ msgstr "Activo"
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
 msgid "Add Images"
 msgstr "Añadir imágenes"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__all_recovered
+msgid "All products recovered"
+msgstr "Todos los productos recuperados"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__location_info_ids
@@ -86,9 +91,21 @@ msgid "Cancel"
 msgstr "Cancelar"
 
 #. module: product_serial_number
+#: model:ir.actions.server,name:product_serial_number.ir_cron_compute_salable_lot_ir_actions_server
+#: model:ir.cron,cron_name:product_serial_number.ir_cron_compute_salable_lot
+#: model:ir.cron,name:product_serial_number.ir_cron_compute_salable_lot
+msgid "Compute salable lots"
+msgstr "Recalcular estado vendible en lotes"
+
+#. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_transfer_lot
 msgid "Confirm"
 msgstr "Confirmar"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Contract type"
+msgstr "Tipo contrato"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -117,10 +134,21 @@ msgid "Created on"
 msgstr "Creado en"
 
 #. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.cc_deposit_purchase_form_action
+#: model:ir.ui.menu,name:product_serial_number.menu_deposit_purchase_form_action
+msgid "DEPOSIT PURCHASE"
+msgstr "COMPRA DEPÓSITO"
+
+#. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__deposit
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__deposit
 msgid "Deposit"
 msgstr "Deposito"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
+msgid "Deposit purchases"
+msgstr "Compras depósito"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__location_dest_id
@@ -140,6 +168,27 @@ msgstr "Nombre mostrado"
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__ean13
 msgid "EAN3"
 msgstr ""
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
+msgid "Finished recoverd purchase"
+msgstr "Compra recuperable finalizada"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.cc_normal_purchase_form_action
+#: model:ir.ui.menu,name:product_serial_number.menu_normal_purchase_form_action
+msgid "GENERAL PURCHASE"
+msgstr "COMPRA GENERAL"
+
+#. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__general
+msgid "General"
+msgstr "General"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
+msgid "General purchases"
+msgstr "Compras generales"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__id
@@ -200,6 +249,8 @@ msgstr ""
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__limit_date
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__limit_date
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Limit date"
 msgstr "Fecha límite"
 
@@ -260,6 +311,11 @@ msgid "Lots in Police state"
 msgstr "Lotes en estado policía"
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Lots with limit date"
+msgstr "Lotes con fecha límite"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__location_info_id
 msgid "Main Loacation"
 msgstr "Ubicación principal"
@@ -278,10 +334,14 @@ msgid "Model"
 msgstr "Modelo"
 
 #. module: product_serial_number
-#: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__normal
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__normal
 msgid "Normal"
 msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__num_renew
+msgid "Nº renews"
+msgstr "Nº renovaciones"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_operating_unit
@@ -302,6 +362,7 @@ msgstr "Por favor selecciona lotes de la misma ubicación"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__police
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__police
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__police
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Police"
 msgstr "Policía"
@@ -311,7 +372,7 @@ msgstr "Policía"
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__police_date
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Police date"
-msgstr ""
+msgstr "Fecha límite policía"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -354,6 +415,29 @@ msgstr "Información producto"
 #: model:ir.model,name:product_serial_number.model_product_template
 msgid "Product Template"
 msgstr "Plantilla de producto"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__recovered
+msgid "Product recovered"
+msgstr "Producto recuperado"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Product {} requires limit date"
+msgstr "El producto {} requiere fecha límite"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Product {} requires police date"
+msgstr "El producto {} requiere fecha policía"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Product {} requires renew commission"
+msgstr "El producto {} requiere comisión de renovacion"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__purchase_line_id
@@ -412,6 +496,7 @@ msgstr "Precio de compra a 60 días"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__cc_type
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__cc_type
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__cc_type
 msgid "Purchase usage"
 msgstr "Tipo de compra"
 
@@ -421,16 +506,54 @@ msgid "Quantity"
 msgstr "Cantidad"
 
 #. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.cc_recoverable_purchase_form_action
+#: model:ir.ui.menu,name:product_serial_number.menu_recoverable_purchase_form_action
+msgid "RECOVERABLE PURCHASE"
+msgstr "COMPRA RECUPERABLE"
+
+#. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__recoverable_sale
+msgid "Recoverable"
+msgstr "Recuperable"
+
+#. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__recoverable_sale
-msgid "Recoverable Sale"
-msgstr "Venta recuperable"
+msgid "Recoverable"
+msgstr "Recuperable"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
+msgid "Recoverable purchases"
+msgstr "Compras recuperables"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__renew_commission
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__renew_commission
+msgid "Renew commission"
+msgstr "Comisión de renovación"
+
+#. module: product_serial_number
+#: model:product.product,name:product_serial_number.product_renovate_commission
+#: model:product.template,name:product_serial_number.product_renovate_commission_product_template
+msgid "Renovation Commission"
+msgstr "Comisión de renovación"
+
+#. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__requisation
+msgid "Requisation"
+msgstr "Requisado"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__police_days
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__police_days
 msgid "Retain days"
 msgstr "Días retención"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.cc_special_purchase_form_action
+#: model:ir.ui.menu,name:product_serial_number.menu_special_purchase_form_action
+msgid "SPECIAL PURCHASE"
+msgstr "COMPRA ESPECIAL"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__safe
@@ -449,6 +572,12 @@ msgid "Sale Price"
 msgstr "Precio de venta"
 
 #. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Sale price must be greater than cost price"
+msgstr "EL precio de compra debe ser mayor que el precio de coste"
+
+#. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_sale_order_line
 msgid "Sales Order Line"
 msgstr "Línea de pedido de venta"
@@ -464,6 +593,16 @@ msgid "Serial quantity"
 msgstr "Cantidad nº serie"
 
 #. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__normal
+msgid "Special"
+msgstr "Especial"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
+msgid "Special purchases"
+msgstr "Compras especiales"
+
+#. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_stock_picking
 msgid "Transfer"
 msgstr "Albarán"
@@ -472,6 +611,12 @@ msgstr "Albarán"
 #: model:ir.actions.act_window,name:product_serial_number.action_view_transfer_lot
 msgid "Transfer Lot"
 msgstr "Transferir lotes"
+
+#. module: product_serial_number
+#: model:product.product,uom_name:product_serial_number.product_renovate_commission
+#: model:product.template,uom_name:product_serial_number.product_renovate_commission_product_template
+msgid "Units"
+msgstr "Unidades"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__value_ids
@@ -492,12 +637,7 @@ msgstr ""
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__name
 msgid "name"
-msgstr ""
-
-#. module: product_serial_number
-#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__requisation
-msgid "requisatin"
-msgstr ""
+msgstr "nombre"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_transfer_lot_wzd

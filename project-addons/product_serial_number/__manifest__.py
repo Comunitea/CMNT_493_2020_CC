@@ -20,8 +20,9 @@
     ],
     "data": [
         "security/ir.model.access.csv",
+        "data/product_data.xml",
+        "data/cron.xml",
         "wizard/transfer_lot_wzd_view.xml",
-        "wizard/recoverable_sale_wzd.xml",
         "views/product_view.xml",
         "views/stock_production_lot_view.xml",
         "views/purchase_view.xml",

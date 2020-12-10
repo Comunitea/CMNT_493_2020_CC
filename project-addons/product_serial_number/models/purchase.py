@@ -3,7 +3,7 @@
 from datetime import datetime, timedelta
 
 from odoo import _, api, fields, models
-from odoo.exceptions import UserError
+from odoo.exceptions import UserError, ValidationError
 
 
 class PurchaseOrder(models.Model):
@@ -18,16 +18,17 @@ class PurchaseOrder(models.Model):
 
     cc_type = fields.Selection(
         [
-            ("normal", "Normal"),  # REBU
+            ("normal", "Special"),  # REBU
             ("general", "General"),  # Normal IVA
             ("deposit", "Deposit"),
-            ("recoverable_sale", "Recoverable Sale"),
+            ("recoverable_sale", "Recoverable"),
         ],
         "Purchase usage",
         default="normal",
     )
-    # recoverable_sale = fields.Boolean('Recoverable sale')
-    # deposit_sale = fields.Boolean('Deposit Sale')
+    all_recovered = fields.Boolean(
+        "All products recovered", readonly=True, copy=False, default=False
+    )
 
     def _create_picking(self):
         """
@@ -82,16 +83,17 @@ class PurchaseOrder(models.Model):
         for line in self.mapped("order_line"):
             if line.police and not line.police_date:
                 raise UserError(
-                    _(
-                        "El producto {} requiere fecha "
-                        "policía".format(line.product_id.name)
-                    )
+                    _("Product {} requires " "police date".format(line.product_id.name))
                 )
             if line.cc_type in ("recoverable_sale", "deposit") and not line.limit_date:
                 raise UserError(
+                    _("Product {} requires " "limit date".format(line.product_id.name))
+                )
+            if line.cc_type in ("recoverable_sale") and not line.renew_commission:
+                raise UserError(
                     _(
-                        "El producto {} requiere fecha "
-                        "límite".format(line.product_id.name)
+                        "Product {} requires "
+                        "renew commission".format(line.product_id.name)
                     )
                 )
         res = super().button_confirm()
@@ -128,10 +130,6 @@ class PurchaseOrderLine(models.Model):
     # To do with product multi image
     multi_image_ids = fields.Many2many("ir.attachment", string="Images")
 
-    # recoverable_sale = fields.Boolean(
-    #     'Recoverable sale', related="order_id.recoverable_sale")
-    # deposit_sale = fields.Boolean(
-    #     'Deposit Sale', related="order_id.deposit_sale")
     cc_type = fields.Selection(related="order_id.cc_type", store=True)
     police = fields.Boolean(related="product_id.police", store=True)
     limit_date = fields.Date("Limit date")
@@ -145,6 +143,15 @@ class PurchaseOrderLine(models.Model):
     purchase_price_60 = fields.Float(
         "Purchase price at 60 days", related="product_id.purchase_price_60"
     )
+
+    renew_commission = fields.Float("Renew commission")
+
+    @api.constrains("sale_price", "price_unit")
+    def _check_prices(self):
+        """ Program code must be unique """
+        for line in self:
+            if line.sale_price < line.price_unit:
+                raise ValidationError(_("Sale price must be greater than cost price"))
 
     @api.onchange("product_id")
     def onchange_product_id(self):
@@ -170,16 +177,6 @@ class PurchaseOrderLine(models.Model):
             if self.product_id.police:
                 today = datetime.today()
                 self.police_date = today + timedelta(days=self.product_id.police_days)
-
-    # @api.onchange('product_id')
-    # def _onchange_quantity(self):
-    #     """
-    #     Get average purchase price
-    #     """
-    #     super()._onchange_quantity()
-    #     if self.product_id:
-    #         avg_cost = self.product_id.get_purchase_price_days_ago(15)
-    #         self.price_unit = avg_cost
 
     def _prepare_stock_moves(self, picking):
         """
@@ -251,6 +248,7 @@ class PurchaseOrderLine(models.Model):
             "note": self.name,
             "police_date": self.police_date,
             "limit_date": self.limit_date,
+            "renew_commission": self.renew_commission,
         }
         return res
 

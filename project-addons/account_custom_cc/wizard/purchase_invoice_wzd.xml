@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="view_purchase_invoice_wzd" model="ir.ui.view">
+            <field name="name">Invoice Payment</field>
+            <field name="model">purchase.invoice.wzd</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field
+                        name="journal_id"
+                        domain="[('type', 'in', ('bank', 'cash'))]"
+                    />
+                        <field name="amount" />
+                    </group>
+                    <footer>
+                        <button
+                        name="confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                        <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_purchase_invoice_wzd" model="ir.actions.act_window">
+            <field name="name">Invoce Payment</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">purchase.invoice.wzd</field>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <field name="view_id" ref="view_purchase_invoice_wzd" />
+            <field name="binding_model_id" ref="purchase.model_purchase_order" />
+        </record>
+
+</odoo>

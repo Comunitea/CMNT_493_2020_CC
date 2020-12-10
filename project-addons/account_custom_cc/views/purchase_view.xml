@@ -14,6 +14,13 @@
                     context="{'create_bill':True}"
                     attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}"
                 />
+                <button
+                    name="%(account_custom_cc.action_purchase_invoice_wzd)d"
+                    string="Instant Payment Invoice"
+                    type="action"
+                    class="btn-success"
+                    attrs="{'invisible': ['|', ('state', 'not in', ('purchase', 'done')), ('invoice_status', 'in', ('no', 'invoiced'))]}"
+                />
             </button>
 
             <notebook position="inside">

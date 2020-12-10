@@ -1,0 +1,312 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* pos_custom_cc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2020-12-09 17:33+0000\n"
+"PO-Revision-Date: 2020-12-09 17:33+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: pos_custom_cc
+#: model_terms:ir.ui.view,arch_db:pos_custom_cc.view_recoverable_lot
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/screens.js:0
+#, python-format
+msgid "Cant set quantity greater than 1"
+msgstr "No se puede establecer una cantidad superior a 1"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__commission
+msgid "Commission"
+msgstr "Comisión"
+
+#. module: pos_custom_cc
+#: model_terms:ir.ui.view,arch_db:pos_custom_cc.view_recoverable_lot
+msgid "Create Sale"
+msgstr "Crear venta"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__create_uid
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__create_date
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_pos_order_line__description
+msgid "Description"
+msgstr "Descripción"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__display_name
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/models.js:0
+#: code:addons/pos_custom_cc/static/src/js/models.js:0
+#, python-format
+msgid "Error searching Lot"
+msgstr "Error buscando lote"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__id
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__id
+msgid "ID"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd____last_update
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__write_uid
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__write_date
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__limit_date
+msgid "Limit date"
+msgstr "Fecha límite"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_pos_order__lot_id
+#: model:ir.model.fields,field_description:pos_custom_cc.field_pos_order_line__lot_id
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__lot_id
+msgid "Lot"
+msgstr "Lote"
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/models.js:0
+#, python-format
+msgid "Lot not exists"
+msgstr "El lote no existe"
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/models.js:0
+#, python-format
+msgid "Lot not exists or TpV is offline"
+msgstr "El lote no existe o el TpV está offline"
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/models.js:0
+#, python-format
+msgid "Lot not salable"
+msgstr "El lote no es vendible"
+
+#. module: pos_custom_cc
+#: model:ir.actions.act_window,name:pos_custom_cc.action_recoverable_sale_wzd
+msgid "Manage Recoverable purchase"
+msgstr "Gestionar compra recuperable"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__mode
+msgid "Mode"
+msgstr "Modo"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__new_limit_date
+msgid "New limit date"
+msgstr "Nueva fecha límite"
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/models/pos_session.py:0
+#, python-format
+msgid "No itp tax founded"
+msgstr "No se encontró impuesto ITP"
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/wizard/recoverable_sale_wzd.py:0
+#, python-format
+msgid "No pos session founded"
+msgstr "No se encontró una sesión de POS abierta"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__price
+msgid "PVP"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__payment_method_id
+msgid "Payment Method"
+msgstr "Método de pago"
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/models/pos_session.py:0
+#, python-format
+msgid ""
+"Please define income account for this                        product: \"%s\""
+" (id:%d)."
+msgstr "Por favor defina cuenta de ingresos para este producto:\"%s\""
+" (id:%d)."
+
+#. module: pos_custom_cc
+#: model:ir.model,name:pos_custom_cc.model_pos_order_line
+msgid "Point of Sale Order Lines"
+msgstr "Líneas de Orden de Punto de Venta"
+
+#. module: pos_custom_cc
+#: model:ir.model,name:pos_custom_cc.model_pos_order
+msgid "Point of Sale Orders"
+msgstr "Pedidos del TPV"
+
+#. module: pos_custom_cc
+#: model:ir.model,name:pos_custom_cc.model_pos_session
+msgid "Point of Sale Session"
+msgstr "Sesión TPV"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__product_id
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__product_id
+msgid "Product"
+msgstr "Producto"
+
+#. module: pos_custom_cc
+#: model:ir.model,name:pos_custom_cc.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__purchase_line_id
+msgid "Purchase line"
+msgstr "Línea de compra"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_pos_order__rebu
+#: model:ir.model.fields,field_description:pos_custom_cc.field_pos_order_line__rebu
+msgid "REBU"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model_terms:ir.ui.view,arch_db:pos_custom_cc.cc_purchase_order_form_recoverable
+msgid "Recoverable Purchase"
+msgstr "Compra recuperable"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__line_ids
+msgid "Manage products"
+msgstr "Gestionr productos"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_pos_order__purchase_id
+msgid "Recoverable purchase"
+msgstr "Compra recuperable"
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/wizard/recoverable_sale_wzd.py:0
+#, python-format
+msgid "Recoverable sale "
+msgstr "Venta recuperable"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields.selection,name:pos_custom_cc.selection__recoverable_sale_wzd__mode__renew
+#: model_terms:ir.ui.view,arch_db:pos_custom_cc.view_recoverable_lot
+msgid "Renew"
+msgstr "Renovar"
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/wizard/recoverable_sale_wzd.py:0
+#, python-format
+msgid "Renew "
+msgstr "Renovar"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__renew_price
+msgid "Renew amount"
+msgstr "Importe renovación"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields.selection,name:pos_custom_cc.selection__recoverable_sale_wzd__mode__sale
+msgid "Sale"
+msgstr "Vender"
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/models.js:0
+#, python-format
+msgid ""
+"This lot is marked as no salable. Maybe is in police state or is a "
+"recoverable purchase"
+msgstr "Este lote esta marcado como no vendible. Quizás está en policía o pertenece a una compra recuperable"
+
+#. module: pos_custom_cc
+#. openerp-web
+#: code:addons/pos_custom_cc/static/src/js/screens.js:0
+#, python-format
+msgid "This product has serial number management. Quantity must be 1"
+msgstr "Este producto tiene gestión por número de serie. La cantidad debe ser 1"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_purchase_order__count_pos_orders
+#: model:ir.model.fields,field_description:pos_custom_cc.field_purchase_order__pos_order_ids
+msgid "TpV Orders"
+msgstr "Pedidos TpV"
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/models/pos_session.py:0
+#, python-format
+msgid ""
+"Unable to close and validate the session.\n"
+"Please set corresponding tax account in each repartition line of the following taxes: \n"
+"%s"
+msgstr ""
+"No se puede cerrar y validar la sesión.\n"
+"Configure la cuenta de impuestos correspondiente en cada línea de reparto de los siguientes impuestos:\n"
+"%s"
+
+#. module: pos_custom_cc
+#: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_line_wzd__wzd_id
+msgid "Wzd"
+msgstr ""
+
+#. module: pos_custom_cc
+#: code:addons/pos_custom_cc/wizard/recoverable_sale_wzd.py:0
+#, python-format
+msgid "You need to open a pos session"
+msgstr "Se necesita una sesión de TpV abierta"
+
+#. module: pos_custom_cc
+#: model:ir.model,name:pos_custom_cc.model_recoverable_sale_line_wzd
+msgid "recoverable.sale.line.wzd"
+msgstr ""
+
+#. module: pos_custom_cc
+#: model:ir.model,name:pos_custom_cc.model_recoverable_sale_wzd
+msgid "recoverable.sale.wzd"
+msgstr ""

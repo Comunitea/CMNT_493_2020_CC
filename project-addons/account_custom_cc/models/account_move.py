@@ -6,6 +6,17 @@ from odoo import api, fields, models
 class AccountMove(models.Model):
     _inherit = "account.move"
 
+    cc_type = fields.Selection(
+        [
+            ("normal", "Special"),  # REBU
+            ("general", "General"),  # Normal IVA
+            ("deposit", "Deposit"),
+            ("recoverable_sale", "Recoverable"),
+        ],
+        "Purchase usage",
+        default="normal",
+    )
+
     @api.onchange(
         "line_ids",
         "invoice_payment_term_id",
@@ -42,8 +53,13 @@ class AccountMove(models.Model):
         "line_ids.payment_id.state",
     )
     def _compute_amount(self):
+        """
+        Add extenet amount in REBU
+        Discount ITP amount in itp
+        """
         super()._compute_amount()
         exent_untaxed = 0.0
+        itp_amount = 0.0
         for move in self:
             if move.type == "entry" or move.is_outbound():
                 sign = 1
@@ -51,9 +67,11 @@ class AccountMove(models.Model):
                 sign = -1
             for line in move.line_ids.filtered(lambda l: l.is_base_extra()):
                 exent_untaxed += line.balance * sign
+            for line in move.line_ids.filtered(lambda l: l.is_itp_extra()):
+                itp_amount += line.balance * sign
 
         move.exent_untaxed = exent_untaxed
-        move.amount_total = move.amount_total + exent_untaxed
+        move.amount_total = move.amount_total + exent_untaxed + itp_amount
         # move.amount_total_signed = move.amount_total + exent_untaxed
 
     def _recompute_tax_lines(self, recompute_tax_base_amount=False):
@@ -251,17 +269,51 @@ class AccountMove(models.Model):
                 base_line.credit = balance_taxes_res["taxes"][0]["base"] * sign
                 # base_line.balance = balance_taxes_res['taxes'][0]['base'] * sign
 
-            return balance_taxes_res
+            # ITP EXTRA BASE
+            if base_line.tax_ids.filtered("itp"):
+                credit = 0
+                for tax in balance_taxes_res["taxes"]:
+                    if "ITP" in tax["name"]:
+                        credit = tax["amount"]
 
-        # REBU
-        # lines2unlink = self.line_ids.filtered('base_extra')
-        # lines2unlink =self.line_ids.filtered(lambda x: 'EXENTO' in x.name)
-        # if lines2unlink and lines2unlink._origin:
-        #     lines2unlink = lines2unlink._origin
+                # ITP 2/3
+                if self.cc_type == "recoverable_sale":
+                    credit = credit * 2 / 3
+
+                create_method = (
+                    in_draft_mode
+                    and self.env["account.move.line"].new
+                    or self.env["account.move.line"].create
+                )
+                create_method(
+                    {
+                        "name": base_line.name + " ITP EXTRA",
+                        "move_id": self.id,
+                        "partner_id": base_line.partner_id.id,
+                        "company_id": base_line.company_id.id,
+                        "company_currency_id": base_line.company_currency_id.id,
+                        "quantity": base_line.quantity,
+                        "date_maturity": False,
+                        # 'amount_currency': taxes_map_entry['amount_currency'],
+                        "debit": 0.0,
+                        "credit": credit,
+                        "tax_base_amount": base_line.quantity,
+                        "exclude_from_invoice_tab": True,
+                        "tax_exigible": base_line.tax_exigible,
+                        "itp_extra": True,
+                        "account_id": base_line.account_id.id,
+                    }
+                )
+                # base_line.credit = balance_taxes_res["taxes"][0]["base"] * sign
+
+            return balance_taxes_res
 
         # REBU quitar lineas exentas
         self.line_ids -= self.line_ids.filtered(lambda l: l.is_base_extra())
         # lines2unlink.with_context(check_move_validity=False).unlink()
+
+        # ITP quitar línea extra
+        self.line_ids -= self.line_ids.filtered(lambda l: l.is_itp_extra())
 
         taxes_map = {}
 
@@ -385,6 +437,10 @@ class AccountMove(models.Model):
                     tax_repartition_line.invoice_tax_id
                     or tax_repartition_line.refund_tax_id
                 )
+
+                # ITP 2/3
+                if self.cc_type == "recoverable_sale":
+                    taxes_map_entry["balance"] = taxes_map_entry["balance"] * 2 / 3
                 tax_line = create_method(
                     {
                         "name": tax.name,
@@ -423,10 +479,24 @@ class AccountInvoiceLine(models.Model):
     )
 
     base_extra = fields.Boolean("Base extra")
+    itp_extra = fields.Boolean("ITP extra")
 
     def is_base_extra(self):
+        """
+        Con el boolean no encuenta en líneas .new. Tenemos que buscar por nombre
+        """
         self.ensure_one()
         if self.name and "EXENTO" in self.name:
+            return True
+        else:
+            return False
+
+    def is_itp_extra(self):
+        """
+        Con el boolean no encuenta en líneas .new. Tenemos que buscar por nombre
+        """
+        self.ensure_one()
+        if self.name and "ITP EXTRA" in self.name:
             return True
         else:
             return False
@@ -449,7 +519,7 @@ class AccountInvoiceLine(models.Model):
     ):
         """
         Se llama en el create del apunte, y no queremos que modifique el precio
-        unitartio, scandolo del balance
+        unitartio, sacandolo del balance
         """
         res = super()._get_fields_onchange_balance_model(
             quantity,
@@ -462,7 +532,28 @@ class AccountInvoiceLine(models.Model):
             force_computation,
         )
         if taxes and taxes[0].rebu and res.get("price_unit", False):
-            # import ipdb; ipdb.set_trace()
             res.pop("price_unit")
 
+        return res
+
+    @api.model
+    def _get_price_total_and_subtotal_model(
+        self,
+        price_unit,
+        quantity,
+        discount,
+        currency,
+        product,
+        partner,
+        taxes,
+        move_type,
+    ):
+        """
+        Descontar itp del total de la línea
+        """
+        res = super()._get_price_total_and_subtotal_model(
+            price_unit, quantity, discount, currency, product, partner, taxes, move_type
+        )
+        if taxes and taxes[0].itp:
+            res["price_total"] = res["price_subtotal"]
         return res

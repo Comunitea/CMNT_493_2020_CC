@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2020-10-20 16:03+0000\n"
-"PO-Revision-Date: 2020-10-20 16:03+0000\n"
+"POT-Creation-Date: 2020-12-09 17:32+0000\n"
+"PO-Revision-Date: 2020-12-09 17:32+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,74 @@ msgstr ""
 "Plural-Forms: \n"
 
 #. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_chart_template
+msgid "Account Chart Template"
+msgstr "Plantilla de Plan de Cuentas"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__amount
+msgid "Amount"
+msgstr "Importe"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_move_line__base_extra
+msgid "Base extra"
+msgstr "Base extra"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_purchase_invoice_wzd
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.view_purchase_invoice_wzd
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields.selection,name:account_custom_cc.selection__account_move__cc_type__deposit
+msgid "Deposit"
+msgstr "Depósito"
+
+#. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invocie_line_tree
 msgid "Disc.%"
+msgstr "Desc. %"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__display_name
+msgid "Display Name"
 msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_move__exent_untaxed
+msgid "Exent Amount"
+msgstr "Importe exento"
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_fiscal_position
+msgid "Fiscal Position"
+msgstr "Posición fiscal"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.cc_search_product_lot_filter_rebu
+msgid "GENERAL"
+msgstr "GENERAL"
+
+#. module: account_custom_cc
+#: model:ir.model.fields.selection,name:account_custom_cc.selection__account_move__cc_type__general
+msgid "General"
+msgstr "general"
 
 #. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
@@ -26,9 +91,42 @@ msgid "Group By"
 msgstr "Agrupado por"
 
 #. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__id
+msgid "ID"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_tax__itp
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_tax_template__itp
+#: model:ir.model.fields,field_description:account_custom_cc.field_product_product__itp
+#: model:ir.model.fields,field_description:account_custom_cc.field_product_template__itp
+msgid "ITP"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_operating_unit__itp_tax_id
+msgid "ITP Tax"
+msgstr "Impuesto ITP"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_move_line__itp_extra
+msgid "ITP extra"
+msgstr "ITP importe"
+
+#. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.cc_account_purchase_order_form
 msgid "Instant Payment"
 msgstr "Pago inmediato"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.cc_account_purchase_order_form
+msgid "Instant Payment Invoice"
+msgstr "Pago ventanilla"
+
+#. module: account_custom_cc
+#: model:ir.actions.act_window,name:account_custom_cc.action_purchase_invoice_wzd
+msgid "Invoce Payment"
+msgstr "Pago ventanilla"
 
 #. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
@@ -49,6 +147,11 @@ msgid "Invoice Type"
 msgstr "Tipo factura"
 
 #. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__journal_id
+msgid "Journal"
+msgstr "Método de pago"
+
+#. module: account_custom_cc
 #: model:ir.model,name:account_custom_cc.model_account_move
 msgid "Journal Entries"
 msgstr "Asientos contables"
@@ -59,9 +162,40 @@ msgid "Journal Item"
 msgstr "Apunte contable"
 
 #. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_purchase_invoice_wzd__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: account_custom_cc
 #: model:ir.model.fields,field_description:account_custom_cc.field_account_move_line__lot_id
 msgid "Lot"
 msgstr "Lote"
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_stock_production_lot
+msgid "Lot/Serial"
+msgstr "Lote/Número de serie"
+
+#. module: account_custom_cc
+#: code:addons/account_custom_cc/models/purchase.py:0
+#, python-format
+msgid "Not bank statement open found"
+msgstr "No se encontró un registro de caja abierto"
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_operating_unit
+msgid "Operating Unit"
+msgstr "Unidad operacional"
 
 #. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invoice_line_filter
@@ -85,14 +219,44 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_product_template
+msgid "Product Template"
+msgstr "Plantilla de producto"
+
+#. module: account_custom_cc
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.cc_product_template_search_view_itp
+msgid "Product with ITP"
+msgstr "Producto con itp"
+
+#. module: account_custom_cc
 #: model:ir.model,name:account_custom_cc.model_purchase_order
 msgid "Purchase Order"
 msgstr "Pedido de compra"
 
 #. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_purchase_order_line
+msgid "Purchase Order Line"
+msgstr "Línea de pedido de compra"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_move__cc_type
+msgid "Purchase usage"
+msgstr "Tipo compra"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_fiscal_position__rebu
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_fiscal_position_template__rebu
 #: model:ir.model.fields,field_description:account_custom_cc.field_account_tax__rebu
+#: model:ir.model.fields,field_description:account_custom_cc.field_account_tax_template__rebu
+#: model:ir.model.fields,field_description:account_custom_cc.field_stock_production_lot__rebu
+#: model_terms:ir.ui.view,arch_db:account_custom_cc.cc_search_product_lot_filter_rebu
 msgid "REBU"
 msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model.fields.selection,name:account_custom_cc.selection__account_move__cc_type__recoverable_sale
+msgid "Recoverable"
+msgstr "Recuperable"
 
 #. module: account_custom_cc
 #: model:ir.model,name:account_custom_cc.model_sale_order_line
@@ -105,11 +269,42 @@ msgid "Search Journal Items"
 msgstr ""
 
 #. module: account_custom_cc
+#: model:ir.model.fields.selection,name:account_custom_cc.selection__account_move__cc_type__normal
+msgid "Special"
+msgstr "Especial"
+
+#. module: account_custom_cc
 #: model:ir.model,name:account_custom_cc.model_account_tax
 msgid "Tax"
 msgstr "Impuesto"
 
 #. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_fiscal_position_template
+msgid "Template for Fiscal Position"
+msgstr "Plantilla de posición fiscal"
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_account_tax_template
+msgid "Templates for Taxes"
+msgstr "Plantilla de impuestos"
+
+#. module: account_custom_cc
 #: model_terms:ir.ui.view,arch_db:account_custom_cc.view_invocie_line_tree
 msgid "Total"
+msgstr ""
+
+#. module: account_custom_cc
+#: code:addons/account_custom_cc/models/purchase.py:0
+#, python-format
+msgid "You need to set the itp tax in the operating unit"
+msgstr "Necesitas establecer el impuesto itp en la unidad operacional"
+
+#. module: account_custom_cc
+#: model:ir.model.fields,field_description:account_custom_cc.field_stock_production_lot__itp_1_3
+msgid "itp 1/3"
+msgstr ""
+
+#. module: account_custom_cc
+#: model:ir.model,name:account_custom_cc.model_purchase_invoice_wzd
+msgid "purchase.invoice.wzd"
 msgstr ""

@@ -18,9 +18,14 @@
     "data": [
         "security/ir.model.access.csv",
         "data/account_tax_data.xml",
+        "wizard/purchase_invoice_wzd.xml",
         "views/purchase_view.xml",
+        "views/product_view.xml",
+        "views/operating_unit_view.xml",
         "views/account_tax_view.xml",
+        "views/fiscal_position_view.xml",
         "views/account_move_view.xml",
+        "views/stock_production_lot_view.xml",
     ],
     "installable": True,
 }

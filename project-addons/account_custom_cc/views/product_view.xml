@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="cc_view_product_template_itp" model="ir.ui.view">
+            <field name="name">cc.view.product.template.itp</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_form_view" />
+            <field name="arch" type="xml">
+                <div name="options" position="inside">
+                    <div>
+                        <field name="itp" />
+                        <label for="itp" />
+                    </div>
+                </div>
+            </field>
+        </record>
+
+        <record id="cc_product_template_search_view_itp" model="ir.ui.view">
+            <field name="name">cc.product.template.search.view.itp</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_search_view" />
+            <field name="arch" type="xml">
+               <filter name="services" position="before">
+                    <filter
+                    string="Product with ITP"
+                    name="itp"
+                    domain="[('itp','=',True)]"
+                />
+               </filter>
+            </field>
+        </record>
+</odoo>

@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="view_recoverable_lot" model="ir.ui.view">
+            <field name="name">Manage Recoverable Sale </field>
+            <field name="model">recoverable.sale.wzd</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group>
+                        <field name="mode" />
+                        <field name="product_id" />
+                        <field name="payment_method_id" />
+                        <field name="amount" />
+                    </group>
+                    <group>
+                        <field name="line_ids" nolabel="1">
+                            <tree editable="bottom" create="0">
+                                <field name="lot_id" force_save="1" />
+                                <field name="product_id" force_save="1" />
+                                <field name="purchase_line_id" force_save="1" />
+                                <!-- <field
+                                name="commission"
+                                attrs="{'column_invisible': [('parent.mode', '!=', 'renew')]}"
+                            /> -->
+                                <field name="commission" />
+                                <!-- <field
+                                name="renew_price"
+                                force_save="1"
+                                attrs="{'column_invisible': [('parent.mode', '!=', 'renew')]}"
+                            /> -->
+                                <field name="renew_price" force_save="1" />
+                                <field
+                                name="limit_date"
+                                force_save="1"
+                                attrs="{'column_invisible': [('parent.mode', '!=', 'renew')]}"
+                            />
+                                <field
+                                name="new_limit_date"
+                                force_save="1"
+                                attrs="{'column_invisible': [('parent.mode', '!=', 'renew')]}"
+                            />
+                                <field
+                                name="price"
+                                force_save="1"
+                                attrs="{'column_invisible': [('parent.mode', '=', 'renew')]}"
+                            />
+                            </tree>
+                        </field>
+                    </group>
+                    <footer>
+                        <button
+                        name="button_sale"
+                        string="Create Sale"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('mode', '!=', 'sale')]}"
+                    />
+                        <button
+                        name="button_renovate"
+                        string="Renew"
+                        type="object"
+                        class="btn-primary"
+                        attrs="{'invisible': [('mode', '!=', 'renew')]}"
+                    />
+                        <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                    </footer>
+                </form>
+            </field>
+        </record>
+
+        <record id="action_recoverable_sale_wzd" model="ir.actions.act_window">
+            <field name="name">Manage Recoverable purchase</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">recoverable.sale.wzd</field>
+            <!-- <field name="view_type">form</field> -->
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+            <!-- TODO: check if we need this -->
+            <field name="binding_model_id" ref="purchase.model_purchase_order" />
+        </record>
+
+</odoo>

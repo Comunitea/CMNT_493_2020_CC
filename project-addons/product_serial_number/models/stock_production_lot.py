@@ -46,20 +46,34 @@ class ProductionLot(models.Model):
     lot_location_id = fields.Many2one(
         "stock.location", compute="_compute_location", store=True
     )
+    renew_commission = fields.Float("Renew commission")
+    recovered = fields.Boolean("Product recovered")
+    num_renew = fields.Integer("Nº renews")
 
     @api.depends("quant_ids.location_id")
     def _compute_location(self):
         for lot in self:
-            lot.lot_location_id = lot.quant_ids.filtered(
-                lambda x: x.quantity > 0
-            ).location_id.id
+            lot.lot_location_id = lot.quant_ids.filtered(lambda x: x.quantity > 0)[
+                0
+            ].location_id.id
 
-    @api.depends("police_date", "limit_date")
+    @api.depends("police_date", "limit_date", "lot_location_id")
     def _compute_salable(self):
         for lot in self:
             res = True
             if lot.police_date and lot.police_date > fields.Date.today():
                 res = False
+            elif lot.limit_date and lot.limit_date > fields.Date.today():
+                res = False
+            elif lot.lot_location_id:
+                location = lot.lot_location_id.get_warehouse().lot_stock_id
+                domain = [
+                    ("id", "=", lot.lot_location_id.id),
+                    ("id", "child_of", location.id),
+                ]
+                is_stock_location = self.env["stock.location"].search(domain)
+                if not is_stock_location:
+                    res = False
             lot.salable = res
 
     @api.model
@@ -95,6 +109,13 @@ class ProductionLot(models.Model):
                     "owner_model": "stock.production.lot",
                 }
                 self.env["base_multi_image.image"].create(vals)
+
+    def _cron_compute_salable_lots(self):
+        # import pudb.remote
+        # pudb.remote.set_trace(term_size=(271, 64))
+        domain = []
+        lots = self.env["stock.production.lot"].search(domain)
+        lots._compute_salable()
 
 
 class LotAttributeLine(models.Model):

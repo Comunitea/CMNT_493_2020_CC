@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <odoo>
+
+    <record id="cc_purchase_order_tree" model="ir.ui.view">
+        <field name="name">cc.purchase.order.tree</field>
+        <field name="model">purchase.order</field>
+        <field name="inherit_id" ref="purchase.purchase_order_tree" />
+        <field name="arch" type="xml">
+            <field name="state" position="before">
+                <field name="cc_type" />
+            </field>
+        </field>
+    </record>
+
     <record id="cc_purchase_order_form" model="ir.ui.view">
         <field name="name">cc.purchase.order.form</field>
         <field name="model">purchase.order</field>
@@ -19,6 +31,11 @@
 
             <field name="company_id" position="after">
                 <field name="cc_type" />
+                <field
+                    name="all_recovered"
+                    attrs="{
+                        'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
+                />
             </field>
 
             <!-- Avoid editable in tree view -->
@@ -36,8 +53,8 @@
                 <field
                     name="limit_date"
                     attrs="{
-                    'required':  [('cc_type', 'in', ('recoverable_sale'))],
-                    'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
+                    'required':  [('parent.cc_type', 'in', ('recoverable_sale'))],
+                    'invisible': [('parent.cc_type', 'not in', ('recoverable_sale'))]}"
                 />
                 <field
                     name="police_date"
@@ -57,6 +74,12 @@
                         <field name="model" />
                         <field name="id_product" />
                         <field name="sale_price" required="1" />
+                        <field
+                        name="renew_commission"
+                        attrs="{
+                        'required':  [('parent.cc_type', 'in', ('recoverable_sale'))],
+                        'invisible': [('parent.cc_type', 'not in', ('recoverable_sale'))]}"
+                    />
                         <field name="purchase_price_15" />
                         <field name="purchase_price_30" />
                         <field name="purchase_price_60" />
@@ -192,7 +215,12 @@
                 <filter
                     name="recoverable"
                     string="Recoverable purchases"
-                    domain="[('cc_type', '=', 'recoverable')]"
+                    domain="[('cc_type', '=', 'recoverable_sale')]"
+                />
+                <filter
+                    name="all_recovered"
+                    string="Finished recoverd purchase"
+                    domain="[('all_recovered', '=', True)]"
                 />
                 <separator />
                 <filter
@@ -204,7 +232,7 @@
         </field>
     </record>
 
-
+    <!-- Compra con regimen general -->
     <record id="cc_normal_purchase_form_action" model="ir.actions.act_window">
         <field name="name">GENERAL PURCHASE</field>
         <field name="type">ir.actions.act_window</field>
@@ -217,6 +245,8 @@
             name="context"
         >{'default_cc_type': 'general', 'search_default_general': 'normal'}</field>
     </record>
+
+    <!-- Estas son con REBU -->
     <record id="cc_special_purchase_form_action" model="ir.actions.act_window">
         <field name="name">SPECIAL PURCHASE</field>
         <field name="type">ir.actions.act_window</field>
@@ -239,7 +269,7 @@
         <field name="search_view_id" ref="purchase.purchase_order_view_search" />
         <field
             name="context"
-        >{'default_cc_type': 'recoverable', 'search_default_recoverable': 'normal'}</field>
+        >{'default_cc_type': 'recoverable_sale', 'search_default_recoverable': 'normal'}</field>
     </record>
     <record id="cc_deposit_purchase_form_action" model="ir.actions.act_window">
         <field name="name">DEPOSIT PURCHASE</field>
