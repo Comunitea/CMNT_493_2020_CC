@@ -47,14 +47,24 @@ class RecoverableSaleWzd(models.TransientModel):
         return res
 
     mode = fields.Selection(
-        [("sale", "Sale"), ("renew", "Renew")], "Mode", required=True, default="sale"
+        [("sale", "Recover"), ("renew", "Renew")], "Mode", required=True, default="sale"
     )
+    create_invoice = fields.Boolean("Create Invoice")
     product_id = fields.Many2one("product.product", "Product", required=True)
     payment_method_id = fields.Many2one(
         "pos.payment.method", "Payment Method", required=True
     )
     amount = fields.Float("Amount", required=True)
     line_ids = fields.One2many("recoverable.sale.line.wzd", "wzd_id", "Manage products")
+    pos_config_id = fields.Many2one("pos.config", string="TpV", required=True)
+
+    @api.onchange('pos_config_id')
+    def _onchange_pos_config_id(self):
+        res = {}
+        if self.pos_config_id and self.pos_config_id.payment_method_ids:
+            domain = [('id', 'in',  self.pos_config_id.payment_method_ids.ids)]
+            res = {'domain': {'payment_method_id': domain}}
+        return res
 
     @api.onchange("line_ids", "mode")
     def onchange_mode_or_lines(self):
@@ -64,6 +74,7 @@ class RecoverableSaleWzd(models.TransientModel):
             self.amount = amount
         else:
             self.amount = sum([x.renew_price for x in self.line_ids])
+            self.create_invoice = True
 
     def get_statement_lines(self):
         vals = {
@@ -110,12 +121,14 @@ class RecoverableSaleWzd(models.TransientModel):
             # GET STATEMENT LINES
             statement_lst = self.get_statement_lines()
 
-            domain = [("state", "=", "opened")]
+            domain = [
+                ("state", "=", "opened"),
+                ("config_id", "=", self.pos_config_id.id),
+            ]
             pos_session = self.env["pos.session"].search(domain, limit=1)
             if not pos_session:
                 raise UserError(
-                    _("No pos session founded"),
-                    _("You need to open a pos session"),
+                    _("No pos session founded.You need to open a pos session")
                 )
 
             creation_date = fields.Datetime.to_string(fields.datetime.now())
@@ -141,13 +154,13 @@ class RecoverableSaleWzd(models.TransientModel):
                 "creation_date": creation_date,
                 "fiscal_position_id": False,
                 "server_id": False,
-                "to_invoice": False if not renovate else True,
+                "to_invoice": self.create_invoice,
             }
             data_dic_lst = [
                 {
                     "id": name,
                     "data": order_vals,
-                    "to_invoice": False if not renovate else True,
+                    "to_invoice": self.create_invoice,
                 }
             ]
 
@@ -171,7 +184,12 @@ class RecoverableSaleWzd(models.TransientModel):
                     {"num_renew": lot.num_renew + 1, "limit_date": line.new_limit_date}
                 )
         else:
-            self.line_ids.mapped("lot_id").write({"recovered": True, "itp_1_3": 0})
+            self.line_ids.mapped("lot_id").write(
+                {
+                    "recovered": True,
+                    "itp_1_3": 0,  # EN ESTE CASO NO SE HACE EL CÁLCULO DEL ITP
+                }
+            )
 
             # Check if finished recoverable sale
             if all([x.recovered for x in purchase.mapped("order_line.lot_ids")]):

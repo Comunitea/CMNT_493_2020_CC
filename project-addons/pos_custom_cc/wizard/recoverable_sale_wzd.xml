@@ -7,7 +7,9 @@
                 <form>
                     <group>
                         <field name="mode" />
+                        <field name="create_invoice" />
                         <field name="product_id" />
+                        <field name="pos_config_id" />
                         <field name="payment_method_id" />
                         <field name="amount" />
                     </group>

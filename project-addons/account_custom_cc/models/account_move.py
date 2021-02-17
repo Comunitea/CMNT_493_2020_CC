@@ -1,6 +1,6 @@
 # Part of Odoo. See LICENSE file for full copyright and licensing details.
 
-from odoo import api, fields, models
+from odoo import _, api, fields, models
 
 
 class AccountMove(models.Model):
@@ -8,7 +8,7 @@ class AccountMove(models.Model):
 
     cc_type = fields.Selection(
         [
-            ("normal", "Special"),  # REBU
+            ("normal", "Special"),  # CMNT ADD: REBU
             ("general", "General"),  # Normal IVA
             ("deposit", "Deposit"),
             ("recoverable_sale", "Recoverable"),
@@ -29,7 +29,7 @@ class AccountMove(models.Model):
         Al cambiar cantidad o precio, borrar aquí las líneas de base extras
         para recalcularlas
         """
-        # REBU
+        # CMNT ADD: REBU
         lines2unlink = self.line_ids.filtered(lambda l: l.is_base_extra())
         self.line_ids -= lines2unlink
         # lines2unlink.with_context(check_move_validity=False).unlink()
@@ -108,8 +108,10 @@ class AccountMove(models.Model):
             :param base_line:   The account.move.line owning the taxes.
             :return:            The result of the compute_all method.
             """
-            move = base_line.move_id
 
+            move = base_line.move_id
+            # import pudb.remote
+            # pudb.remote.set_trace(term_size=(271, 64))
             if move.is_invoice(include_receipts=True):
                 handle_price_include = True
                 sign = -1 if move.is_inbound() else 1
@@ -143,7 +145,7 @@ class AccountMove(models.Model):
                     tax_type == "purchase" and base_line.credit
                 )
 
-            # REBU calculo el impuesto sobre el beneficio
+            # CMNT ADD: REBU calculo el impuesto sobre el beneficio
             if base_line.tax_ids.filtered("rebu") and base_line.lot_id:
                 price_unit_comp_curr -= base_line.lot_id.standard_price * sign
 
@@ -181,7 +183,7 @@ class AccountMove(models.Model):
                         ).ids
 
             if base_line.currency_id:
-                # REBU
+                # CMNT ADD: REBU
                 if base_line.tax_ids.filtered("rebu") and base_line.lot_id:
                     price_unit_foreign_curr -= base_line.lot_id.standard_price * sign
 
@@ -239,7 +241,7 @@ class AccountMove(models.Model):
                             move.date,
                         )
 
-            # REBU EXTRA BASE
+            # CMNT ADD: REBU EXTRA BASE
             if base_line.tax_ids.filtered("rebu") and base_line.lot_id:
                 credit = base_line.quantity * base_line.lot_id.standard_price
                 create_method = (
@@ -269,7 +271,7 @@ class AccountMove(models.Model):
                 base_line.credit = balance_taxes_res["taxes"][0]["base"] * sign
                 # base_line.balance = balance_taxes_res['taxes'][0]['base'] * sign
 
-            # ITP EXTRA BASE
+            # CMNT ADD: ITP EXTRA BASE (SOLO DESDE COMPRAS)
             if base_line.tax_ids.filtered("itp"):
                 credit = 0
                 for tax in balance_taxes_res["taxes"]:
@@ -287,7 +289,7 @@ class AccountMove(models.Model):
                 )
                 create_method(
                     {
-                        "name": base_line.name + " ITP EXTRA",
+                        "name": base_line.name + _(" ITP EXTRA"),
                         "move_id": self.id,
                         "partner_id": base_line.partner_id.id,
                         "company_id": base_line.company_id.id,
@@ -304,15 +306,85 @@ class AccountMove(models.Model):
                         "account_id": base_line.account_id.id,
                     }
                 )
-                # base_line.credit = balance_taxes_res["taxes"][0]["base"] * sign
+            # base_line.credit = balance_taxes_res["taxes"][0]["base"] * sign
+
+            # CMNT ADD: ITP 1/3 (SOLO DESDE VENTA POS)
+            # La factura de venta de una compra recuperable que se recupera
+            # no lleva itp_1_3 y no se calcula
+            # CMNT ADD: ITP EXTRA BASE (SOLO DESDE VENTAS)
+            if (
+                base_line.lot_id
+                and base_line.lot_id.itp_1_3
+                and base_line.move_id.type in ("out_invoice")
+            ):
+                create_method = (
+                    in_draft_mode
+                    and self.env["account.move.line"].new
+                    or self.env["account.move.line"].create
+                )
+
+                itp_tax = False
+                if self.operating_unit_id and self.operating_unit_id.itp_tax_id:
+                    itp_tax = self.operating_unit_id.itp_tax_id
+
+                itp_tax_name = itp_tax.name if itp_tax else ""
+
+                # CREATE ITP 1/3
+                create_method(
+                    {
+                        "name": _("ITP 1/3: ") + itp_tax_name,
+                        "move_id": self.id,
+                        "partner_id": base_line.partner_id.id,
+                        "company_id": base_line.company_id.id,
+                        "company_currency_id": base_line.company_currency_id.id,
+                        "quantity": 0,
+                        "date_maturity": False,
+                        # 'amount_currency': taxes_map_entry['amount_currency'],
+                        "debit": 0.0,
+                        "credit": base_line.lot_id.itp_1_3,
+                        # "tax_base_amount": base_line.quantity,
+                        "exclude_from_invoice_tab": True,
+                        # "tax_exigible": base_line.tax_exigible,
+                        "itp_extra": True,
+                        "account_id":
+                        base_line.lot_id.product_id.categ_id.
+                        property_account_expense_categ_id.id,
+                    }
+                )
+
+                # CREATE ITP 1/3 TAX
+                rep_line = itp_tax.invoice_repartition_line_ids.filtered(
+                    lambda x: x.repartition_type == "tax"
+                )
+                create_method(
+                    {
+                        "name": _("TAX ITP 1/3: ") + itp_tax_name,
+                        "move_id": self.id,
+                        "partner_id": base_line.partner_id.id,
+                        "company_id": base_line.company_id.id,
+                        "company_currency_id": base_line.company_currency_id.id,
+                        "quantity": 0,
+                        "date_maturity": False,
+                        # 'amount_currency': taxes_map_entry['amount_currency'],
+                        "debit": base_line.lot_id.itp_1_3,
+                        "credit": 0,
+                        # "tax_base_amount": base_line.quantity,
+                        "exclude_from_invoice_tab": True,
+                        # "tax_exigible": base_line.tax_exigible,
+                        "itp_extra": True,
+                        "account_id": base_line.account_id.id,
+                        "tax_line_id": itp_tax.id,  # Añado como cuota
+                        "tax_repartition_line_id": rep_line.id,
+                    }
+                )
 
             return balance_taxes_res
 
-        # REBU quitar lineas exentas
+        # CMNT ADD: REBU quitar lineas exentas
         self.line_ids -= self.line_ids.filtered(lambda l: l.is_base_extra())
         # lines2unlink.with_context(check_move_validity=False).unlink()
 
-        # ITP quitar línea extra
+        #  CMNT ADD: ITP quitar línea extra
         self.line_ids -= self.line_ids.filtered(lambda l: l.is_itp_extra())
 
         taxes_map = {}
@@ -438,9 +510,10 @@ class AccountMove(models.Model):
                     or tax_repartition_line.refund_tax_id
                 )
 
-                # ITP 2/3
+                # CMNT ADD: ITP 2/3
                 if self.cc_type == "recoverable_sale":
                     taxes_map_entry["balance"] = taxes_map_entry["balance"] * 2 / 3
+
                 tax_line = create_method(
                     {
                         "name": tax.name,

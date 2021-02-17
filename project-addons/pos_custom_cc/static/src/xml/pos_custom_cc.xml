@@ -17,4 +17,64 @@
     </t>
 
 
+    <t t-extend="ProductScreenWidget">
+        <t t-jquery='div.placeholder-ActionpadWidget' t-operation='before'>
+            <div class="placeholder-ButtonOpenLotPopupWidget">
+             SELECT LOT placeholder
+            </div>
+        </t>
+    </t>
+
+    <t t-name="ButtonOpenLotPopupWidget">
+        <div
+            class='control-button'
+            style="width: 85%;margin-top: 5px;margin-bottom: -5px;"
+        >
+            <div class="select-lot">
+                <i class='fa fa-star' /> ADD SERIAL Nº
+            </div>
+        </div>
+    </t>
+
+    <t t-name="SelectLotPopupWidget">
+        <div class="modal-dialog">
+            <div class="popup popup-textinput" style="height: 270px !important;">
+                <p
+                    class="title"
+                    style="background-color: rgb(110,200,155); color: #fff;"
+                >ADD SERIAL Nº</p>
+                <p
+                    class="body"
+                    style="color: #0075AC;height"
+                >Enter Serial Number here</p>
+                 <input
+                    id="existing_serial_number"
+                    type="text"
+                    style="margin:0px auto;"
+                    class="input-field"
+                    name="serial-number"
+                />
+                <div
+                    class="footer"
+                    style="background-color: rgb(110,200,155); color: #fff;"
+                >
+                    <div
+                        class="button cancel"
+                        style="background-color: #0075AC; color: #fff;"
+                    >
+                        Cancel
+                    </div>
+                    <div
+                        class="button confirm"
+                        id="add_serial_number"
+                        style="background-color: #0075AC; color: #fff;"
+                    >
+                        Apply
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+
 </templates>

@@ -22,6 +22,18 @@ class PosOrder(models.Model):
         res["fiscal_position_id"] = False
         return res
 
+    def _prepare_invoice_line(self, order_line):
+        """
+        Cuando se factura desde POS propago el lote a la factura,
+        Para que el cálculo del REBU se pueda hacer correctamnte.
+        """
+        # import pudb.remote
+        # pudb.remote.set_trace(term_size=(271, 64))
+        res = super()._prepare_invoice_line(order_line)
+        if order_line.lot_id:
+            res["lot_id"] = order_line.lot_id
+        return res
+
 
 class PosOrderLine(models.Model):
     _inherit = "pos.order.line"

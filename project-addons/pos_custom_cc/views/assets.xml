@@ -5,6 +5,10 @@
             <script type="text/javascript" src="/pos_custom_cc/static/src/js/db.js" />
             <script
                 type="text/javascript"
+                src="/pos_custom_cc/static/src/js/popups.js"
+            />
+            <script
+                type="text/javascript"
                 src="/pos_custom_cc/static/src/js/screens.js"
             />
             <script

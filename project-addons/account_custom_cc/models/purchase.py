@@ -43,7 +43,7 @@ class PurchaseOrder(models.Model):
         }
         return res
 
-    def create_invoice_payment(self, journal, amount):
+    def create_invoice_payment(self, journal, amount, pos_config):
         self.ensure_one()
         invoice_vals = self._get_invoice_vals(journal)
         for po_line in self.order_line:
@@ -52,11 +52,13 @@ class PurchaseOrder(models.Model):
         invoice = self.env["account.move"].create([invoice_vals])
 
         invoice.action_post()
-
+        # import pudb.remote
+        # pudb.remote.set_trace(term_size=(271, 64))
         # Create bank statement line
         domain = [
             ("state", "=", "open"),
             ("journal_id", "=", journal.id),
+            ("pos_session_id.config_id", "=", pos_config.id),
             ("company_id", "=", self.company_id.id),
         ]
         statement = self.env["account.bank.statement"].search(domain)
@@ -137,6 +139,11 @@ class PurchaseOrderLine(models.Model):
     _inherit = "purchase.order.line"
 
     def prepare_lot_vals(self):
+        """
+        Propago al lote el coste con ITP, PERO NO EN EL CASO DE RECUPERAR LA
+        compra, en ese caso el coste y el precio del producto coincidirán. Lo
+        que se cobra a mayores es la comision de renovación.
+        """
         res = super().prepare_lot_vals()
 
         # Add rebu mark
@@ -154,13 +161,13 @@ class PurchaseOrderLine(models.Model):
                 partner=self.partner_id,
                 is_refund=False,
             )
-            res["standard_price"] = tax_res["total_included"]
 
-            if (
-                self.cc_type == "recoverable_sale"
-                and tax_res["taxes"]
-                and "ITP" in tax_res["taxes"][0]["name"]
-            ):
+            # SI ES COMPRA RECUPERABLE EL COSTE SERÁ EL PRECIO DE COMPRA
+            # SIN AÑADIR ITP
+            if self.cc_type != "recoverable_sale":
+                res["standard_price"] = tax_res["total_included"]
+
+            if tax_res["taxes"] and "ITP" in tax_res["taxes"][0]["name"]:
                 res["itp_1_3"] = tax_res["taxes"][0]["amount"] - (
                     tax_res["taxes"][0]["amount"] * 2 / 3
                 )

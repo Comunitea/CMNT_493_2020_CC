@@ -98,11 +98,14 @@ odoo.define("pos_custom_cc.models", function (require) {
                     cost: lot.standard_price,
                     lot_id: lot.id,
                     rebu: lot.rebu,
+                    lot_price: lot.list_price,
                 }
             );
             this.fix_tax_included_price(line);
-
+            
             line.set_quantity(1);
+            // Que al setar cliente y hacer set_pricelist no se calcule el precio de nuevo
+            line.price_manually_set = true
 
             // If(options.lst_price !== undefined){
             //     line.set_lst_price(options.lst_price);
@@ -175,6 +178,7 @@ odoo.define("pos_custom_cc.models", function (require) {
         // Debugger;
         // var self = this;
         this.cost = options.cost || 0.0;
+        this.lot_price = options.lot_price || 0.0;
         this.lot_id = options.lot_id || false;
         this.rebu = options.rebu || false;
         // This.set({
@@ -217,8 +221,6 @@ odoo.define("pos_custom_cc.models", function (require) {
     ) {
         var original_price_unit = price_unit;
         var new_price_unit = price_unit;
-        // If (price_unit === 150)
-        //     debugger;
         if (this.rebu && this.cost && this.lot_id) {
             new_price_unit -= this.cost;
         }

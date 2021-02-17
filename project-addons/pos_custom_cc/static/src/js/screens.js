@@ -41,5 +41,31 @@ odoo.define("pos_custom_cc.screens", function (require) {
         },
     });
 
+    // BUTTON TO OPEN POPUP LOT
+    var ButtonOpenLotPopupWidget = screens.ActionButtonWidget.extend({
+        template: "ButtonOpenLotPopupWidget",
+        init: function (parent) {
+            return this._super(parent);
+        },
+        renderElement: function () {
+            var self = this;
+            this._super();
+            this.$(".select-lot").click(function () {
+                self.gui.show_popup("select-lot", {
+                    title: _t("Enter Serial Nº"),
+                });
+            });
+        },
+    });
+
+    // // POP UP LOT
+    screens.ProductScreenWidget.include({
+        start: function () {
+            this._super();
+            this.popup_lot = new ButtonOpenLotPopupWidget(this, {});
+            this.popup_lot.replace(this.$(".placeholder-ButtonOpenLotPopupWidget"));
+        },
+    });
+
     return screens;
 });

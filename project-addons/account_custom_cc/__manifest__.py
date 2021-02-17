@@ -14,6 +14,8 @@
         "purchase",
         "account_tax_python",
         "product_serial_number",
+        "product_serial_number",
+        "pos_operating_unit_cc",
     ],
     "data": [
         "security/ir.model.access.csv",

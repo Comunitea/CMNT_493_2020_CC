@@ -12,9 +12,14 @@ class PosSession(models.Model):
     def _prepare_line(self, order_line):
         """
         OVERWRITED TO GET THE CORRECT REBU AMOUNT TAX
+        Derive from order_line the order date, income account,
+        amount and taxes information.
+        These information will be used in accumulating the amounts
+        for sales and tax lines.
+
+        Devuelve el desglose de impuestos y el subtotal asociados a la línea
         """
         # import pudb.remote
-
         # pudb.remote.set_trace(term_size=(271, 64))
         def get_income_account(order_line):
             product = order_line.product_id
@@ -57,11 +62,14 @@ class PosSession(models.Model):
         else:
             is_refund = check_refund(order_line)
 
-        # REBU
-        if order_line.rebu and order_line.lot_id:
+        # CMNT ADD: REBU
+        if order_line.rebu and order_line.lot_id and not order_line.order_id.to_invoice:
+            # import pudb.remote
+            # pudb.remote.set_trace(term_size=(271, 64))
+            # if order_line.rebu and order_line.lot_id:
             # En venta recuparada, el precio de venta será el coste mas la comisión
-            if order_line.lot_id.renew_commission and not order_line.lot_id.salable:
-                price = price * (1 + (order_line.lot_id.renew_commission / 100))
+            # if order_line.lot_id.renew_commission and not order_line.lot_id.salable:
+            #     price = price * (1 + (order_line.lot_id.renew_commission / 100))
             price -= sign * order_line.lot_id.standard_price
 
         tax_data = tax_ids.compute_all(
@@ -81,14 +89,30 @@ class PosSession(models.Model):
         date_order = order_line.order_id.date_order
         taxes = [{"date_order": date_order, **tax} for tax in taxes]
 
-        # REBU
+        # CMNT ADD: REBU
+        # fix_amount = order_line.price_subtotal_incl
         fix_amount = order_line.price_subtotal
-        if order_line.rebu:
+        # COJO EL PRECIO CON IMPRUESTO INCLUIDO, YA QUE AQUI HABRIA QUE
+        # TENER EL IMPUESTO CALCULADO COMO REBU A 0,
+        # PARA PODER COJER EL SUBTOTAL
+        if (
+            order_line.lot_id
+            and order_line.lot_id.cc_type == "recoverable_sale"
+            and order_line.rebu
+        ):
+            fix_amount = order_line.price_subtotal_incl
+        # En venta recuparada, el precio de venta será el coste mas la comisión
+        # SINO NOS QUEDA AQUÍ UN BENEFICIO NEGATIVO
+        # if order_line.lot_id.renew_commission and not order_line.lot_id.salable:
+        #     fix_amount = order_line.price_subtotal_incl
+        #     fix_amount = fix_amount * (1 + (order_line.lot_id.renew_commission / 100))
+        if order_line.rebu and not order_line.order_id.to_invoice:
+            # if order_line.rebu:
             fix_amount -= order_line.lot_id.standard_price
         return {
             "date_order": order_line.order_id.date_order,
             "income_account_id": get_income_account(order_line).id,
-            "amount": fix_amount,  # rebu fix
+            "amount": fix_amount,  # CMNT ADD: rebu fix
             "taxes": taxes,
             "base_tags": tuple(tax_data["base_tags"]),
         }
@@ -96,6 +120,7 @@ class PosSession(models.Model):
     def _create_non_reconciliable_move_lines(self, data):
         """
         OVEREWRITED TO CREATE BASE EXTRA
+
         """
         # Create account.move.line records for
         #   - sales
@@ -105,7 +130,6 @@ class PosSession(models.Model):
         #   - non-cash combine receivables (not for automatic reconciliation)
 
         # import pudb.remote
-
         # pudb.remote.set_trace(term_size=(271, 64))
         taxes = data.get("taxes")
         sales = data.get("sales")
@@ -137,13 +161,18 @@ class PosSession(models.Model):
             ) % ", ".join(tax_names_no_account)
             raise UserError(error_message)
 
-        # REBU BASE EXTRA
+        # CMNT ADD: REBU BASE EXTRA
         amounts = lambda: {"amount": 0.0, "amount_converted": 0.0}
         sales_exent = defaultdict(amounts)
         extra = 0.0
         total_itp_1_3 = 0.0
         example_lot = False
         for pos_line in self.order_ids.mapped("lines"):
+
+            # CMNT ADD: ME SALTO EL CASO DE QUE TENGA FACTURA
+            if pos_line.order_id.to_invoice:
+                continue
+
             if pos_line.rebu and pos_line.lot_id:
                 extra = pos_line.lot_id.standard_price
 
@@ -163,12 +192,14 @@ class PosSession(models.Model):
                     {"amount": line["amount"]},
                     line["date_order"],
                 )
-            # ITP 1/3
+            # CMNT ADD: ITP 1/3
+            # El itp no se calcula cuanndo una compra se ha recuperado
+            # En este caso el itp_1_3 estará a 0
             if pos_line.lot_id and pos_line.lot_id.itp_1_3:
                 example_lot = pos_line.lot_id
                 total_itp_1_3 += pos_line.lot_id.itp_1_3
 
-        # REBU BASE EXTRA VALS
+        # CMNT ADD: REBU BASE EXTRA VALS
         new_extra_base_vals = []
         if extra:
             new_extra_base_vals = [
@@ -176,6 +207,7 @@ class PosSession(models.Model):
                 for key, amounts in sales_exent.items()
             ]
 
+        # CMNT ADD: ITP BASE EXTRA VALS
         itp_1_3_vals = []
         if total_itp_1_3:
             itp_1_3_vals = self.get_itp_1_3_vals(total_itp_1_3, example_lot)
@@ -186,8 +218,8 @@ class PosSession(models.Model):
                 self._get_sale_vals(key, amounts["amount"], amounts["amount_converted"])
                 for key, amounts in sales.items()
             ]
-            + new_extra_base_vals  # REBU added
-            + itp_1_3_vals  # ITP 1_3 added
+            + new_extra_base_vals  # CMNT ADD: REBU added
+            + itp_1_3_vals  # CMNT ADD: ITP 1_3 added
             + [
                 self._get_stock_expense_vals(
                     key, amounts["amount"], amounts["amount_converted"]
@@ -210,6 +242,10 @@ class PosSession(models.Model):
         return data
 
     def get_itp_1_3_vals(self, amount, example_lot):
+        """
+        DEVUELVO EL APUNTE DEL ITP A LA CUENTA 47. EN EL DEBE Y LA BASE ITP
+        AL HABER
+        """
         # related_invoice_line = self.env['account.move.line'].search(
         # [('purchase_line_id', '=', example_lot.purchase_line_id.id)])
         itp_tax = example_lot.purchase_line_id.taxes_id.filtered(lambda x: x.itp)
@@ -226,19 +262,21 @@ class PosSession(models.Model):
             example_lot.product_id.categ_id.property_account_expense_categ_id.id
         )
         tax_vals = {
-            "debit": amount,
-            "credit": 0,
-            "name": "BASE ITP 1/3",
+            "debit": 0,
+            "credit": amount,
+            "name": _("ITP 1/3 ") + itp_tax.name,
             "account_id": account_id,
             "move_id": self.move_id.id,
             "tax_ids": [(6, 0, set())],
             "tag_ids": [(6, 0, ())],
             "tax_repartition_line_id": tax_rep.id,
         }
+        # El ITP Para hacienda va en el debe ya que repercuto en el proveedor
+        # No en el cliente
         purchase_vals = {
-            "debit": 0.0,
-            "credit": amount,
-            "name": "ITP 1/3 " + itp_tax.name,
+            "debit": amount,
+            "credit": 0,
+            "name": _("TAX ITP 1/3 ") + itp_tax.name,
             "account_id": tax_rep.account_id.id,
             "move_id": self.move_id.id,
             "tax_ids": [(6, 0, set())],
