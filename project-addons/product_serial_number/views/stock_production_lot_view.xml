@@ -145,6 +145,8 @@
                     help="Lot available in sales"
                 /> -->
                 <!-- pUEDE NO FUNCIONAR PORQUE NO SE RECALCULA CON STORE, aunque tengo el cron -->
+                <!-- esto es que si pasa un día y el cron falla o no se lanza no se actulizará, para eso mejor el filtro como arriba -->
+                <!-- Pero no tendria en cuenta el stock -->
                 <filter
                     name="salable"
                     string="Salable"
