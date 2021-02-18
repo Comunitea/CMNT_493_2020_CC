@@ -73,7 +73,9 @@ class PurchaseOrder(models.Model):
         self.ensure_one()
         res = super()._get_destination_location()
         if self.cc_type in ("recoverable_sale", "deposit"):
-            loc = self.env["stock.location"].search([("cc_type", "=", self.cc_type)])
+            loc = self.env["stock.location"].search(
+                [("cc_type", "=", self.cc_type)], limit=1
+            )
             if loc:
                 return loc.id
 

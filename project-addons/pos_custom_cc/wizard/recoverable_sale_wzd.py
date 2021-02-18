@@ -58,12 +58,12 @@ class RecoverableSaleWzd(models.TransientModel):
     line_ids = fields.One2many("recoverable.sale.line.wzd", "wzd_id", "Manage products")
     pos_config_id = fields.Many2one("pos.config", string="TpV", required=True)
 
-    @api.onchange('pos_config_id')
+    @api.onchange("pos_config_id")
     def _onchange_pos_config_id(self):
         res = {}
         if self.pos_config_id and self.pos_config_id.payment_method_ids:
-            domain = [('id', 'in',  self.pos_config_id.payment_method_ids.ids)]
-            res = {'domain': {'payment_method_id': domain}}
+            domain = [("id", "in", self.pos_config_id.payment_method_ids.ids)]
+            res = {"domain": {"payment_method_id": domain}}
         return res
 
     @api.onchange("line_ids", "mode")
@@ -251,6 +251,8 @@ class RecoverableSaleLineWzd(models.TransientModel):
         return res
 
     def get_line_vals(self, purchase, renovate):
+        # import pudb.remote
+        # pudb.remote.set_trace(term_size=(271, 64))
         self.ensure_one()
         taxes_vals = self.get_tax_ids(purchase, renovate)
 
@@ -264,9 +266,10 @@ class RecoverableSaleLineWzd(models.TransientModel):
         price_compute = price
         # REBU
         if self.lot_id.rebu and not renovate:
-            price_compute = (
-                price * (1 + (self.commission / 100))
-            ) - self.lot_id.standard_price
+            # price_compute = (
+            #     price * (1 + (self.commission / 100))
+            # ) - self.lot_id.standard_price
+            price_compute = price - self.lot_id.standard_price
         tax_res = taxes.compute_all(
             price_compute,
             currency=purchase.company_id.currency_id,

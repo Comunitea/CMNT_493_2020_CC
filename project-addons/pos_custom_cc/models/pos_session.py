@@ -1,9 +1,12 @@
 # © 2020 Comunitea - Javier Colmenero <javier@comunitea.com>
 # License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
+import logging
 from collections import defaultdict
 
 from odoo import _, models
 from odoo.exceptions import UserError
+
+_logger = logging.getLogger("POS CLOSE SESSION")
 
 
 class PosSession(models.Model):
@@ -92,23 +95,34 @@ class PosSession(models.Model):
         # CMNT ADD: REBU
         # fix_amount = order_line.price_subtotal_incl
         fix_amount = order_line.price_subtotal
+
+        # TODO
+        # esta parte ya no es necesaria, al recuperaer el cliente
+        # ya se debería calular el rebu a 0 ya que el coste coincide
+        # con el precio de venta y debería ser igua el
+        # price_subtotal_incl al price_subtotal
+
         # COJO EL PRECIO CON IMPRUESTO INCLUIDO, YA QUE AQUI HABRIA QUE
         # TENER EL IMPUESTO CALCULADO COMO REBU A 0,
         # PARA PODER COJER EL SUBTOTAL
-        if (
-            order_line.lot_id
-            and order_line.lot_id.cc_type == "recoverable_sale"
-            and order_line.rebu
-        ):
-            fix_amount = order_line.price_subtotal_incl
+        # if (
+        #     order_line.lot_id
+        #     and order_line.lot_id.cc_type == "recoverable_sale"
+        #     and order_line.rebu and order_line.lot_id.recovered
+        # ):
+        #     fix_amount = order_line.price_subtotal_incl
         # En venta recuparada, el precio de venta será el coste mas la comisión
         # SINO NOS QUEDA AQUÍ UN BENEFICIO NEGATIVO
         # if order_line.lot_id.renew_commission and not order_line.lot_id.salable:
         #     fix_amount = order_line.price_subtotal_incl
         #     fix_amount = fix_amount * (1 + (order_line.lot_id.renew_commission / 100))
         if order_line.rebu and not order_line.order_id.to_invoice:
-            # if order_line.rebu:
             fix_amount -= order_line.lot_id.standard_price
+
+        _logger.info("*************_prepare_line amount:***************")
+        _logger.info(fix_amount)
+        _logger.info("*************_prepare_line taxes:***************")
+        _logger.info(taxes)
         return {
             "date_order": order_line.order_id.date_order,
             "income_account_id": get_income_account(order_line).id,
@@ -196,11 +210,13 @@ class PosSession(models.Model):
             # El itp no se calcula cuanndo una compra se ha recuperado
             # En este caso el itp_1_3 estará a 0
             if pos_line.lot_id and pos_line.lot_id.itp_1_3:
+                _logger.info("Get ITP 1/3")
                 example_lot = pos_line.lot_id
                 total_itp_1_3 += pos_line.lot_id.itp_1_3
 
         # CMNT ADD: REBU BASE EXTRA VALS
         new_extra_base_vals = []
+        _logger.info("Extra rebu base vals")
         if extra:
             new_extra_base_vals = [
                 self._get_sale_vals(key, amounts["amount"], amounts["amount_converted"])
@@ -211,6 +227,7 @@ class PosSession(models.Model):
         itp_1_3_vals = []
         if total_itp_1_3:
             itp_1_3_vals = self.get_itp_1_3_vals(total_itp_1_3, example_lot)
+        _logger.info("ITP TOTAL VALS")
 
         MoveLine.create(
             tax_vals

@@ -167,7 +167,11 @@ class PurchaseOrderLine(models.Model):
             if self.cc_type != "recoverable_sale":
                 res["standard_price"] = tax_res["total_included"]
 
-            if tax_res["taxes"] and "ITP" in tax_res["taxes"][0]["name"]:
+            if (
+                self.cc_type == "recoverable_sale"
+                and tax_res["taxes"]
+                and "ITP" in tax_res["taxes"][0]["name"]
+            ):
                 res["itp_1_3"] = tax_res["taxes"][0]["amount"] - (
                     tax_res["taxes"][0]["amount"] * 2 / 3
                 )
