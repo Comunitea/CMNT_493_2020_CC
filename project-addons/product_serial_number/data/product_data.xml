@@ -7,7 +7,7 @@
             <field name="default_code">RC</field>
             <field name="type">service</field>
             <field name="available_in_pos" eval="False" />
-            <field name="serial_management" eval="False" />
+            <field name="serial_mgmt" eval="False" />
             <field name="taxes_id" eval="[(5,)]" />
         </record>
     </data>
