@@ -1,8 +1,5 @@
-# Copyright (C) 2017-Today: La Louve (<http://www.lalouve.net/>)
-# Copyright (C) 2020-Today: Druidoo (<https://www.druidoo.io>)
-# @author: Sylvain LE GAL (https://twitter.com/legalsylvain)
-# License AGPL-3.0 or later (http://www.gnu.org/licenses/agpl.html).
-
+# © 2020 Comunitea - Javier Colmenero <javier@comunitea.com>
+# License AGPL-3 - See http://www.gnu.org/licenses/agpl-3.0.html
 {
     "name": "Pos Custom CC",
     "version": "13.0.0.0.0",
@@ -15,9 +12,9 @@
     "depends": ["point_of_sale", "account_custom_cc", "purchase"],
     "data": [
         "views/assets.xml",
+        "wizard/recoverable_sale_wzd.xml",
         "views/pos_order_view.xml",
         "views/purchase_view.xml",
-        "wizard/recoverable_sale_wzd.xml",
     ],
     "qweb": [
         "static/src/xml/pos_custom_cc.xml",

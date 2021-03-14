@@ -21,7 +21,7 @@ msgstr ""
 #: code:addons/pos_custom_cc/static/src/xml/pos_custom_cc.xml:0
 #, python-format
 msgid "ADD SERIAL Nº"
-msgstr "AÑADIR Nº SERIE
+msgstr "AÑADIR Nº SERIE"
 
 #. module: pos_custom_cc
 #: model:ir.model.fields,field_description:pos_custom_cc.field_recoverable_sale_wzd__amount

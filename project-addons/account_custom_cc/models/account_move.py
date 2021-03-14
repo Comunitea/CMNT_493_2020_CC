@@ -380,6 +380,8 @@ class AccountMove(models.Model):
 
             return balance_taxes_res
 
+        # import pudb.remote
+        # pudb.remote.set_trace(term_size=(271, 64))
         # CMNT ADD: REBU quitar lineas exentas
         self.line_ids -= self.line_ids.filtered(lambda l: l.is_base_extra())
         # lines2unlink.with_context(check_move_validity=False).unlink()

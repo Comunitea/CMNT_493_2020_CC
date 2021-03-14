@@ -16,6 +16,8 @@ class ProductTemplate(models.Model):
     police_days = fields.Integer("Retain days")
     auto_create_lot = fields.Boolean(default=True)
     # tracking = fields.Selection(default='serial')
+    type = fields.Selection(default='product')
+    available_in_pos = fields.Boolean(default=True)
 
     @api.model
     def default_get(self, default_fields):

@@ -173,12 +173,15 @@ class PurchaseOrderLine(models.Model):
                     att_values.append((0, 0, vals))
                 self.attribute_line_ids = att_values
 
-            avg_cost = self.product_id.get_purchase_price_days_ago(15)
-            self.price_unit = avg_cost
-
+            # avg_cost = self.product_id.get_purchase_price_days_ago(15)
+            # self.price_unit = avg_cost
+            today = datetime.today()
             if self.product_id.police:
-                today = datetime.today()
                 self.police_date = today + timedelta(days=self.product_id.police_days)
+            
+
+            if self.order_id and self.order_id.cc_type == 'recoverable_sale':
+                self.limit_date = today + timedelta(days=30)
 
     def _prepare_stock_moves(self, picking):
         """

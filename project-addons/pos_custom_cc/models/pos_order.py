@@ -27,8 +27,6 @@ class PosOrder(models.Model):
         Cuando se factura desde POS propago el lote a la factura,
         Para que el cálculo del REBU se pueda hacer correctamnte.
         """
-        # import pudb.remote
-        # pudb.remote.set_trace(term_size=(271, 64))
         res = super()._prepare_invoice_line(order_line)
         if order_line.lot_id:
             res["lot_id"] = order_line.lot_id

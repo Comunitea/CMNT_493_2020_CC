@@ -22,8 +22,6 @@ class PosSession(models.Model):
 
         Devuelve el desglose de impuestos y el subtotal asociados a la línea
         """
-        # import pudb.remote
-        # pudb.remote.set_trace(term_size=(271, 64))
         def get_income_account(order_line):
             product = order_line.product_id
             income_account = (
@@ -66,7 +64,9 @@ class PosSession(models.Model):
             is_refund = check_refund(order_line)
 
         # CMNT ADD: REBU
-        if order_line.rebu and order_line.lot_id and not order_line.order_id.to_invoice:
+        if order_line.rebu and order_line.lot_id and not \
+                order_line.order_id.to_invoice and not \
+                    order_line.order_id.is_invoiced:
             # import pudb.remote
             # pudb.remote.set_trace(term_size=(271, 64))
             # if order_line.rebu and order_line.lot_id:
@@ -116,7 +116,8 @@ class PosSession(models.Model):
         # if order_line.lot_id.renew_commission and not order_line.lot_id.salable:
         #     fix_amount = order_line.price_subtotal_incl
         #     fix_amount = fix_amount * (1 + (order_line.lot_id.renew_commission / 100))
-        if order_line.rebu and not order_line.order_id.to_invoice:
+        if order_line.rebu and not order_line.order_id.to_invoice and not \
+                order_line.order_id.is_invoiced:
             fix_amount -= order_line.lot_id.standard_price
 
         _logger.info("*************_prepare_line amount:***************")
@@ -184,7 +185,7 @@ class PosSession(models.Model):
         for pos_line in self.order_ids.mapped("lines"):
 
             # CMNT ADD: ME SALTO EL CASO DE QUE TENGA FACTURA
-            if pos_line.order_id.to_invoice:
+            if pos_line.order_id.to_invoice or pos_line.order_id.is_invoiced:
                 continue
 
             if pos_line.rebu and pos_line.lot_id:

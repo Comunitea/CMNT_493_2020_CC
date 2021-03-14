@@ -13,6 +13,7 @@
         "stock",
         "sale_order_lot_selection",
         "purchase",
+        "point_of_sale",
         "stock_picking_auto_create_lot",
         "base_multi_image",
         "purchase_operating_unit",
