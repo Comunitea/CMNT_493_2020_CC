@@ -36,7 +36,7 @@ class TransferLotWzd(models.TransientModel):
             ("product_id", "in", lots.mapped("product_id").ids),
             ("location_id", "child_of", self.location_id.id),
             ("quantity", ">", 0),
-            ("lot_id", "!=", False),
+            ("lot_id", "in", lots.ids),
         ]
         quants = self.env["stock.quant"].search(domain)
         ctx = self._context.copy()
