@@ -157,7 +157,7 @@ class PurchaseOrderLine(models.Model):
 
     dysfuncionality_ids = fields.Many2many(
         'dysfuncionality', 'purchase_disfuncionality_rel',
-        'line_id', 'dys_id', 'Disfuncionalities',
+        'line_id', 'dys_id', 'Dysfuncionalities',
     )
 
     product_accessory_ids = fields.Many2many(

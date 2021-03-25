@@ -5,7 +5,7 @@
             <field name="name">disfuncionality.view.form</field>
             <field name="model">dysfuncionality</field>
             <field name="arch" type="xml">
-                <form string="Dysfuncionality">
+                <form string="Dysfuncionalities">
                     <sheet>
                         <group>
                             <field name="name"/>
@@ -22,7 +22,7 @@
             <field name="name">disfuncionality.view.tree</field>
             <field name="model">dysfuncionality</field>
             <field name="arch" type="xml">
-                <tree string="Dysfuncionalitys">
+                <tree string="Dysfuncionalities">
                     <field name="name"/>
                     <field name="block_purchase"/>
                     <field name="print_in_ticket"/>
@@ -33,7 +33,7 @@
 
 
     <record id="action_dysfuncionality" model="ir.actions.act_window">
-        <field name="name">Dysfuncionality</field>
+        <field name="name">Dysfuncionalities</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">dysfuncionality</field>
         <!-- <field name="view_ids"

@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 17:36+0000\n"
-"PO-Revision-Date: 2021-03-25 17:36+0000\n"
+"POT-Creation-Date: 2021-03-25 20:40+0000\n"
+"PO-Revision-Date: 2021-03-25 20:40+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -133,13 +133,17 @@ msgstr "Marca"
 #, python-format
 msgid ""
 "Can not confirm order because product %s has this dysfuncionalities: %s"
-msgstr "No se puede confirmar el pedido porque el producto %s tiene las siguientes disfuncionalidades: %s"
+msgstr ""
+"No se puede confirmar el pedido porque el producto %s tiene las siguientes "
+"disfuncionalidades: %s"
 
 #. module: product_serial_number
 #: code:addons/product_serial_number/models/purchase.py:0
 #, python-format
 msgid "Can not confirm order because product %s requires next accesories: %s"
-msgstr "No se puede confirmar el pedido porque el producto %s requiere los siguientes acesorios: %s"
+msgstr ""
+"No se puede confirmar el pedido porque el producto %s requiere los "
+"siguientes acesorios: %s"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_transfer_lot
@@ -232,15 +236,6 @@ msgstr "Ubicación destino"
 msgid "Discount"
 msgstr "Descuento"
 
-#. module: product_serial_number
-#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__dysfuncionality_ids
-msgid "Disfuncionalities"
-msgstr "Disfuncionalidades"
-
-#. module: product_serial_number
-#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__accessory_ids
-msgid "Disfuncionality"
-msgstr "Disfuncionalidad"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__display_name
@@ -253,21 +248,13 @@ msgid "Display Name"
 msgstr "Nombre mostrado"
 
 #. module: product_serial_number
-#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
-#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_product_template
-msgid "Dysfuncionalities"
-msgstr "Disfuncionalidades"
-
-#. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.action_dysfuncionality
 #: model:ir.ui.menu,name:product_serial_number.menu_dysfuncionality
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_product_template
 #: model_terms:ir.ui.view,arch_db:product_serial_number.dysfuncionality_view_form
-msgid "Dysfuncionality"
-msgstr "Disfuncionalidad"
-
-#. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.dysfuncionality_view_tree
-msgid "Dysfuncionalitys"
+msgid "Dysfuncionalities"
 msgstr "Disfuncionalidades"
 
 #. module: product_serial_number
@@ -456,7 +443,7 @@ msgstr "Gestionar por nº de serie"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__mandatory
 msgid "Mandatory in Purchase"
-msgstr "Obligatorio en compra"
+msgstr "Obligatorio para compras"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__model
@@ -520,7 +507,7 @@ msgstr "Fecha límite policía"
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__product_accessory_ids
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__product_dys_ids
 msgid "Possible Product dysfuncionslities"
-msgstr "Posibles disfuncionalidades producto"
+msgstr "Disfuncionalidades del producto posibles"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -573,7 +560,7 @@ msgstr "Información producto"
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__product_state
 msgid "Product State"
-msgstr "Estado producto"
+msgstr "Estado del producto"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_product_template
