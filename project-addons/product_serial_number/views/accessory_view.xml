@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <!-- accessory form view -->
+        <record id="accessory_view_form" model="ir.ui.view">
+            <field name="name">accessory.view.form</field>
+            <field name="model">accessory</field>
+            <field name="arch" type="xml">
+                <form string="Accessories">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="mandatory"/>
+                            <field name="print_in_ticket"/>
+                            <field name="discount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="accessory_view_tree" model="ir.ui.view">
+            <field name="name">accessory.view.tree</field>
+            <field name="model">accessory</field>
+            <field name="arch" type="xml">
+                <tree string="Accessory">
+                    <field name="name"/>
+                    <field name="mandatory"/>
+                    <field name="print_in_ticket"/>
+                    <field name="discount"/>
+                </tree>
+            </field>
+        </record>
+
+
+    <record id="action_accessory" model="ir.actions.act_window">
+        <field name="name">Accessories</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">accessory</field>
+        <!-- <field name="search_view_id" ref="search_product_lot_filter"/> -->
+        <!-- <field name="context">{'search_default_group_by_product': 1, 'display_complete': True, 'default_company_id': allowed_company_ids[0]}</field> -->
+        <!-- <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Add a lot/serial number
+          </p><p>
+            Lots/Serial numbers help you tracking the path followed by your products.
+            From their traceability report you will see the full history of their use, as well as their composition.
+          </p>
+        </field> -->
+    </record>
+    <menuitem action="action_accessory" id="menu_accessory"
+        parent="stock.menu_stock_inventory_control" sequence="105"/>
+</odoo>

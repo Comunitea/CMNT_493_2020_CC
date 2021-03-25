@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <!-- disfuncionality form view -->
+        <record id="dysfuncionality_view_form" model="ir.ui.view">
+            <field name="name">disfuncionality.view.form</field>
+            <field name="model">dysfuncionality</field>
+            <field name="arch" type="xml">
+                <form string="Dysfuncionality">
+                    <sheet>
+                        <group>
+                            <field name="name"/>
+                            <field name="block_purchase"/>
+                            <field name="print_in_ticket"/>
+                            <field name="discount"/>
+                        </group>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="dysfuncionality_view_tree" model="ir.ui.view">
+            <field name="name">disfuncionality.view.tree</field>
+            <field name="model">dysfuncionality</field>
+            <field name="arch" type="xml">
+                <tree string="Dysfuncionalitys">
+                    <field name="name"/>
+                    <field name="block_purchase"/>
+                    <field name="print_in_ticket"/>
+                    <field name="discount"/>
+                </tree>
+            </field>
+        </record>
+
+
+    <record id="action_dysfuncionality" model="ir.actions.act_window">
+        <field name="name">Dysfuncionality</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">dysfuncionality</field>
+        <!-- <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('view_production_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('view_production_lot_form')})]"/> -->
+        <!-- <field name="search_view_id" ref="search_product_lot_filter"/> -->
+        <!-- <field name="context">{'search_default_group_by_product': 1, 'display_complete': True, 'default_company_id': allowed_company_ids[0]}</field> -->
+        <!-- <field name="help" type="html">
+          <p class="o_view_nocontent_smiling_face">
+            Add a lot/serial number
+          </p><p>
+            Lots/Serial numbers help you tracking the path followed by your products.
+            From their traceability report you will see the full history of their use, as well as their composition.
+          </p>
+        </field> -->
+    </record>
+    <menuitem action="action_dysfuncionality" id="menu_dysfuncionality"
+        parent="stock.menu_stock_inventory_control" sequence="104"/>
+</odoo>

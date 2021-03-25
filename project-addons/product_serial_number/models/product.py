@@ -18,6 +18,14 @@ class ProductTemplate(models.Model):
     # tracking = fields.Selection(default='serial')
     type = fields.Selection(default='product')
     available_in_pos = fields.Boolean(default=True)
+    dysfuncionality_ids = fields.Many2many(
+        'dysfuncionality', 'product_disfuncionality_rel',
+        'product_id', 'dys_id', 'Dysfunctionalities',
+    )
+    accessory_ids = fields.Many2many(
+        'accessory', 'product_accessory_rel',
+        'product_id', 'acc_id_id', 'Accesories',
+    )
 
     @api.model
     def default_get(self, default_fields):

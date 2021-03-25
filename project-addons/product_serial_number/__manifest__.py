@@ -31,6 +31,8 @@
         "views/location_info_view.xml",
         "views/operating_unit_view.xml",
         "views/stock_location_view.xml",
+        "views/dysfuncionality_view.xml",
+        "views/accessory_view.xml",
     ],
     "installable": True,
 }

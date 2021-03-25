@@ -79,12 +79,25 @@
                         attrs="{
                         'required':  [('parent.cc_type', 'in', ('recoverable_sale'))],
                         'invisible': [('parent.cc_type', 'not in', ('recoverable_sale'))]}"
-                    />
+                        />
+                        <field name="product_state" widget="statusbar" options="{'clickable': '1'}"/>
+                    </group>
+                    <group string="Product Info 2">
                         <field name="purchase_price_15" />
                         <field name="purchase_price_30" />
                         <field name="purchase_price_60" />
                     </group>
-                    <group string="Attributes">
+                    <!-- <group string="Product State">
+                    </group> -->
+                     <group string="Dysfuncionalities" attrs="{'invisible': [('product_dys_ids', '=', [])]}">
+                        <field name="product_dys_ids" widget="many2many_tags" invisible="1"/>
+                        <field name="dysfuncionality_ids"  domain="[('id', 'in', product_dys_ids)]" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                     <group string="Accesories" attrs="{'invisible': [('product_accessory_ids', '=', [])]}">
+                        <field name="product_accessory_ids"  widget="many2many_tags" invisible="1"/>
+                        <field name="accessory_ids" domain="[('id', 'in', product_accessory_ids)]"  widget="many2many_tags" nolabel="1"  options="{'no_create': True}"/>
+                    </group>
+                    <group string="Attributes" colspan="4">
                         <field
                         name="attribute_line_ids"
                         widget="one2many"
@@ -109,6 +122,18 @@
 
             <!-- IMAGE TABS -->
             <xpath expr="//field[@name='order_line']//form//notebook" position="inside">
+                <!-- <page string="Dysfuncionalities">
+                    <group string="Dysfuncionalities">
+                        <field name="product_dys_ids" force_save="1" widget="many2many_tags" invisible="0"/>
+                        <field name="dysfuncionality_ids" force_save="1"  domain="[('id', 'in', product_dys_ids)]" widget="many2many_checkboxes" options="{'no_create': True}"/>
+                    </group>
+                </page>
+                <page string="Accesories">
+                    <group string="Accesories">
+                        <field name="product_accessory_ids" force_save="1" widget="many2many_tags" invisible="0"/>
+                        <field name="accessory_ids" domain="[('id', 'in', product_accessory_ids)]" widget="many2many_checkboxes" nolabel="1"/>
+                    </group>
+                </page> -->
                 <page string="Add Images">
                     <group>
                         <button
@@ -142,7 +167,7 @@
                 </page>
             </xpath>
 
-            <!-- Cantidad de odo standard invisible y usamos lost_Qty -->
+            <!-- Cantidad de odo standard invisible y usamos lot_Qty -->
             <xpath
                 expr="//field[@name='order_line']//tree//field[@name='product_qty']"
                 position="replace"

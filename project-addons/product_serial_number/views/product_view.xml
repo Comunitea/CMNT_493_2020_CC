@@ -32,6 +32,19 @@
                          'required':[('police', '=', True)]}"
                 />
                 </field>
+
+                <notebook position="inside">
+                    <page string="Dysfuncionalities">
+                        <group string="Dysfuncionalities">
+                            <field name="dysfuncionality_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                    <page string="Accesories">
+                        <group string="Accesories">
+                            <field name="accessory_ids" nolabel="1"/>
+                        </group>
+                    </page>
+                </notebook>
             </field>
         </record>
 

@@ -98,6 +98,7 @@ class PurchaseOrder(models.Model):
                         "renew commission".format(line.product_id.name)
                     )
                 )
+            line.check_constraints()
         res = super().button_confirm()
         return res
 
@@ -148,19 +149,59 @@ class PurchaseOrderLine(models.Model):
 
     renew_commission = fields.Float("Renew commission")
 
+    product_dys_ids = fields.Many2many(
+        string="Possible Product dysfuncionslities",
+        comodel_name="dysfuncionality",
+        compute="_compute_product_dysfuncionality",
+    )
+
+    dysfuncionality_ids = fields.Many2many(
+        'dysfuncionality', 'purchase_disfuncionality_rel',
+        'line_id', 'dys_id', 'Disfuncionalities',
+    )
+
+    product_accessory_ids = fields.Many2many(
+        string="Possible Product dysfuncionslities",
+        comodel_name="accessory",
+        compute="_compute_product_accessory",
+        store=False
+    )
+    accessory_ids = fields.Many2many(
+        'accessory', 'purchase_accessory_rel',
+        'line_id', 'acc_id_id', 'Disfuncionality',
+    )
+
+    product_state = fields.Selection([
+        ('a', 'Perfect State'),
+        ('b', 'Good State'),
+        ('c', 'Used')], 'Product State', required=True, default='b')
+
+    @api.depends("product_id")
+    def _compute_product_dysfuncionality(self):
+        for line in self:
+            line.product_dys_ids = line.product_id.dysfuncionality_ids
+
+    @api.depends("product_id")
+    def _compute_product_accessory(self):
+        for line in self:
+            line.product_accessory_ids = line.product_id.accessory_ids
+
+
     @api.constrains("sale_price", "price_unit")
     def _check_prices(self):
         """ Program code must be unique """
         for line in self:
             if line.sale_price < line.price_unit:
-                raise ValidationError(_("Sale price must be greater than cost price"))
+                raise ValidationError(
+                    _("Sale price must be greater than cost price"))
 
     @api.onchange("product_id")
     def onchange_product_id(self):
         """
         Preload attributes
         """
-        super().onchange_product_id()
+        res = super().onchange_product_id()
+        # dis_ids = []
         if self.product_id:
             attributes = self.product_id.product_tmpl_id.attribute_line_ids.mapped(
                 "attribute_id"
@@ -182,6 +223,7 @@ class PurchaseOrderLine(models.Model):
 
             if self.order_id and self.order_id.cc_type == 'recoverable_sale':
                 self.limit_date = today + timedelta(days=30)
+        return res
 
     def _prepare_stock_moves(self, picking):
         """
@@ -256,7 +298,28 @@ class PurchaseOrderLine(models.Model):
             "renew_commission": self.renew_commission,
         }
         return res
+    
+    def check_constraints(self):
+        self.ensure_one()
+        blocking_dys = self.dysfuncionality_ids.filtered('block_purchase')
+        if blocking_dys:
+            dys_names = ', '.join(blocking_dys.mapped('name'))
+            raise UserError(
+                _("Can not confirm order because product %s has "
+                  "this dysfuncionalities: %s") % 
+                (self.product_id.name, dys_names))
 
+        mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
+        # if mandatory_acess and self.accessory_ids not in mandatory_acess:
+        if mandatory_acess:
+            diff_access = mandatory_acess - \
+                self.accessory_ids.filtered('mandatory')
+            if diff_access:
+                acc_names = ','.join(diff_access.mapped('name'))
+                raise UserError(
+                    _("Can not confirm order because product %s requires "
+                    "next accesories: %s") % 
+                    (self.product_id.name, acc_names))
 
 class PurchaseAttributeLine(models.Model):
     _name = "purchase.attribute.line"

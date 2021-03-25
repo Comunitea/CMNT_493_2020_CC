@@ -2,3 +2,5 @@ id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_lot_attribute_line,lot.attribute line,model_lot_attribute_line,base.group_user,1,1,1,1
 access_purchase_attribute_line,purchase.attribute line,model_purchase_attribute_line,base.group_user,1,1,1,1
 access_location_info,location.info,model_location_info,base.group_user,1,1,1,1
+access_dysfuncionality,dysfuncionality,model_dysfuncionality,base.group_user,1,1,1,1
+access_accessory,accessory,model_accessory,base.group_user,1,1,1,1
