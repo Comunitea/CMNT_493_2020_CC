@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+   <!-- product.category inherit form view -->
+   <record id="product_category_form_view_cc" model="ir.ui.view">
+       <field name="name">product.category.inherit.view.form</field>
+       <field name="model">product.category</field>
+       <field name="inherit_id" ref="product.product_category_form_view"/>
+       <field name="arch" type="xml">
+           <field name="parent_id" position="after">
+                <field name="jewelry"/>
+                <field name="is_categ_jewelry"/>
+           </field>
+           
+       </field>
+   </record>
+
+   <record id="product_category_search_view_cc" model="ir.ui.view">
+       <field name="name">product.category.inherit.view.search.cc</field>
+       <field name="model">product.category</field>
+       <field name="inherit_id" ref="product.product_category_search_view"/>
+       <field name="arch" type="xml">
+           <field name="parent_id" position="after">
+                 <separator/>
+                <filter
+                    string="Jewelry Mark"
+                    name="jewelry"
+                    domain="[('jewelry','=',True)]"
+                />
+                <filter
+                    string="No Jewelry Makrk"
+                    name="no_jewelry"
+                    domain="[('jewelry','=',False)]"
+                />
+                <separator/>
+                <filter
+                    string="Is Jewelry"
+                    name="jewelry"
+                    domain="[('is_categ_jewelry','=',True)]"
+                />
+                <filter
+                    string="No Jewelry"
+                    name="no_jewelry"
+                    domain="[('is_categ_jewelry','=',False)]"
+                />
+           </field>
+       </field>
+   </record>
+</odoo>

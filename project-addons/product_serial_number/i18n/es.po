@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-25 20:40+0000\n"
-"PO-Revision-Date: 2021-03-25 20:40+0000\n"
+"POT-Creation-Date: 2021-03-31 11:34+0000\n"
+"PO-Revision-Date: 2021-03-31 11:34+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -45,11 +45,13 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__accessory_ids
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_product_template
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
 msgid "Accesories"
 msgstr "Accesorios"
 
 #. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.action_accessory
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__accessory_ids
 #: model:ir.ui.menu,name:product_serial_number.menu_accessory
 #: model_terms:ir.ui.view,arch_db:product_serial_number.accessory_view_form
 msgid "Accessories"
@@ -115,7 +117,13 @@ msgstr "Secuencia para lotes"
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__available_in_pos
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__available_in_pos
 msgid "Available in POS"
-msgstr "Disponible en PdV"
+msgstr "Disponible en TpV"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_view_batch_change_lot_state
+#: model:ir.ui.menu,name:product_serial_number.menu_action_view_batch_change_lot_state
+msgid "Batch Change Lot State"
+msgstr "Cambio estado lotes agrupado"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__block_purchase
@@ -123,10 +131,22 @@ msgid "Block Purchase"
 msgstr "Bloquear compra"
 
 #. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Blocked by dysfuncionalitys"
+msgstr "Bloqueado por disfuncionalidad"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__brand
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__brand
 msgid "Brand"
 msgstr "Marca"
+
+#. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order_line__product_state__n
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__product_state__n
+msgid "Brand New"
+msgstr "A estrenar"
 
 #. module: product_serial_number
 #: code:addons/product_serial_number/models/purchase.py:0
@@ -138,17 +158,21 @@ msgstr ""
 "disfuncionalidades: %s"
 
 #. module: product_serial_number
-#: code:addons/product_serial_number/models/purchase.py:0
-#, python-format
-msgid "Can not confirm order because product %s requires next accesories: %s"
-msgstr ""
-"No se puede confirmar el pedido porque el producto %s requiere los "
-"siguientes acesorios: %s"
-
-#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_batch_change_lot_state
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_change_lot_state
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_transfer_lot
 msgid "Cancel"
 msgstr "Cancelar"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_view_change_lot_state
+msgid "Change Lot State"
+msgstr "Cambiar estado lote"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__lot_state_dest
+msgid "Change to"
+msgstr "Cambiar a"
 
 #. module: product_serial_number
 #: model:ir.model.fields,help:product_serial_number.field_product_product__available_in_pos
@@ -164,6 +188,8 @@ msgid "Compute salable lots"
 msgstr "Recalcular estado vendible en lotes"
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_batch_change_lot_state
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_change_lot_state
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_transfer_lot
 msgid "Confirm"
 msgstr "Confirmar"
@@ -189,7 +215,19 @@ msgid "Cost"
 msgstr "Coste"
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Create from"
+msgstr "Creado desde"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Create to"
+msgstr "Creado hasta"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__create_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__create_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_uid
@@ -200,6 +238,8 @@ msgstr "Creado por"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__create_date
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__create_date
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_date
@@ -207,6 +247,16 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__create_date
 msgid "Created on"
 msgstr "Creado en"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Creation Date"
+msgstr "Fecha creación"
+
+#. module: product_serial_number
+#: model:ir.module.category,name:product_serial_number.module_category_cc
+msgid "Custom CC"
+msgstr ""
 
 #. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.cc_deposit_purchase_form_action
@@ -236,9 +286,20 @@ msgstr "Ubicación destino"
 msgid "Discount"
 msgstr "Descuento"
 
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__discounted_price
+msgid "Discounted Price"
+msgstr "Precio descuento propuesto"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__accessory_ids
+msgid "Disfuncionality"
+msgstr "Disfuncionalidad"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__display_name
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__display_name
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__display_name
@@ -249,13 +310,29 @@ msgstr "Nombre mostrado"
 
 #. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.action_dysfuncionality
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__dysfuncionality_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__dysfuncionality_ids
 #: model:ir.ui.menu,name:product_serial_number.menu_dysfuncionality
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_product_template
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
 #: model_terms:ir.ui.view,arch_db:product_serial_number.dysfuncionality_view_form
 #: model_terms:ir.ui.view,arch_db:product_serial_number.dysfuncionality_view_tree
 msgid "Dysfuncionalities"
 msgstr "Disfuncionalidades"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__dys_discount
+msgid "Dysfuncionality Discount (%)"
+msgstr "Descuento disfuncionalidad (%)"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__dys_note
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__dys_note
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "Dysfuncionality Note"
+msgstr "Notas disfuncionalidad"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__dysfuncionality_ids
@@ -270,9 +347,41 @@ msgid "EAN3"
 msgstr ""
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_batch_change_lot_state
+msgid "Filter dates"
+msgstr "Filtrado por fechas"
+
+#. module: product_serial_number
+#: model:ir.ui.menu,name:product_serial_number.menu_general_lot_filtered
+msgid "Filtered Lots"
+msgstr "Lotes filtrados"
+
+#. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
 msgid "Finished recoverd purchase"
 msgstr "Compra recuperable finalizada"
+
+#. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_dest__for_sale
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_orig__for_sale
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__lot_state__for_sale
+msgid "For Sale"
+msgstr "A la venta"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+msgid "Force Confirm"
+msgstr "Forzar confirmación"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__date_start
+msgid "From"
+msgstr "Desde"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__lot_state_orig
+msgid "From State"
+msgstr "Desde estado"
 
 #. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.cc_normal_purchase_form_action
@@ -292,11 +401,14 @@ msgstr "Compras generales"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order_line__product_state__b
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__product_state__b
 msgid "Good State"
 msgstr "Buen estado"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__id
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__id
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__id
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__id
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__id
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__id
@@ -331,7 +443,34 @@ msgid "Inventory Locations"
 msgstr "Ubicaciones de inventario"
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.product_category_search_view_cc
+msgid "Is Jewelry"
+msgstr "Es joyería"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_product_category__is_categ_jewelry
+msgid "Is Jewelry Categ"
+msgstr "La categoría es joyería"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_product_category__jewelry
+#: model:ir.model.fields,field_description:product_serial_number.field_product_product__jewelry
+#: model:ir.model.fields,field_description:product_serial_number.field_product_template__jewelry
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__jewelry
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_product_template_search_view
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Jewelry"
+msgstr "Joyería"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.product_category_search_view_cc
+msgid "Jewelry Mark"
+msgstr "Marcado como joyería"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory____last_update
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd____last_update
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line____last_update
@@ -342,6 +481,8 @@ msgstr ""
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__write_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__write_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_uid
@@ -352,6 +493,8 @@ msgstr ""
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__write_date
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__write_date
+#: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_date
@@ -399,9 +542,44 @@ msgid "Lot Location"
 msgstr "Ubicación lote"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__lot_state
+msgid "Lot State"
+msgstr "Estado lote"
+
+#. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Lot available in sales"
 msgstr "Lote disponible en ventas"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "Lot changed state: Jewerly (Recoverable) to Recoverable"
+msgstr "Cambio estado lote: Policía (Joyería Recuperable) --> Recuperable"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "Lot changed state: Jewerly to Sale"
+msgstr "Cambio estado lote: Joyería --> Venta"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "Lot changed state: Police (Recoverable) to Recoverable"
+msgstr "Cambio estado lote: Policía (Joyería Recuperable) --> Recuperable"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "Lot changed state: Police to sale"
+msgstr "Cambio estado lote: Policía --> A la venta"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+msgid "Lot state"
+msgstr "Estado lote"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_stock_production_lot
@@ -417,6 +595,24 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__count_lots
 msgid "Lots"
 msgstr "Lotes"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_all
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_all
+msgid "Lots All"
+msgstr "Todos los lotes"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_for_sale
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_for_sale
+msgid "Lots For sale"
+msgstr "Lotes a la venta"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_sold
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_sold
+msgid "Lots Sold"
+msgstr "Lotes vendidos"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
@@ -441,9 +637,20 @@ msgid "Manage by serial number"
 msgstr "Gestionar por nº de serie"
 
 #. module: product_serial_number
+#: model:res.groups,name:product_serial_number.group_filtered_lots
+msgid "Manage filtered lots"
+msgstr "Gestionar lotes filtrados"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__mandatory
 msgid "Mandatory in Purchase"
 msgstr "Obligatorio para compras"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/change_lot_state_wzd.py:0
+#, python-format
+msgid "Manually lot changed state from %s to %s"
+msgstr "Cambio de estado manual de: %s a %s"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__model
@@ -456,6 +663,54 @@ msgstr "Modelo"
 #: model:ir.model.fields,field_description:product_serial_number.field_dysfuncionality__name
 msgid "Name"
 msgstr "Nombre"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_product_template_search_view
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
+#: model_terms:ir.ui.view,arch_db:product_serial_number.product_category_search_view_cc
+msgid "No Jewelry"
+msgstr "No es joyería"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.product_category_search_view_cc
+msgid "No Jewelry Makrk"
+msgstr "No marcado joyería"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "No lots founded"
+msgstr "No se encontraron lotes"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "No lots founded for Jewerly (Recoverable) to Recoverable"
+msgstr "No se encontraron lotes para: Policía (Joyería Recuperable) a Recuperable"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "No lots founded for Jewerly to Sale"
+msgstr "No se encontraron lotes para: Joyería a Venta"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "No lots founded for Police (Recoverable) to Recoverable"
+msgstr "No se encontraron lotes para: Policía (Recuperable) a Recuperable"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "No lots founded for Police to sale"
+msgstr "No se encontraron lotes para: Policía a Venta"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
+#, python-format
+msgid "No lots founded for Recoverable to Sale"
+msgstr "No se encontraron lotes para: Recuperable a Venta"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__normal
@@ -473,12 +728,18 @@ msgid "Operating Unit"
 msgstr "Unidad operacional"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__operation
+msgid "Operation"
+msgstr "Operación"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__location_id
 msgid "Origin location"
 msgstr "Ubicación origen"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order_line__product_state__a
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__product_state__a
 msgid "Perfect State"
 msgstr "Perfecto estado"
 
@@ -492,9 +753,33 @@ msgstr "Por favor selecciona lotes de la misma ubicación"
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__police
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__police
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__police
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_dest__police
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_orig__police
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__lot_state__police
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
 msgid "Police"
 msgstr "Policía"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_jewelry_to_recoverable
+#: model:ir.model.fields.selection,name:product_serial_number.selection__batch_change_lot_state_wzd__operation__jewelry_to_recoverable
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_jewelry_to_recoverable
+msgid "Police (Jewerly Recoverable) to Recoverable"
+msgstr "Policía (Joyería Recuperable) a Recuperable"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_jewelry_to_sale
+#: model:ir.model.fields.selection,name:product_serial_number.selection__batch_change_lot_state_wzd__operation__jewelry_to_sale
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_jewelry_to_sale
+msgid "Police (Jewerly) to Sale"
+msgstr "Policía (Joyería) a Venta"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_police_to_recoverable
+#: model:ir.model.fields.selection,name:product_serial_number.selection__batch_change_lot_state_wzd__operation__police_to_recoverable
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_police_recoverable_to_recoverable
+msgid "Police (Recoverable) to Recoverable"
+msgstr "Policía (Recuperable) a Recuperable"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__police_date
@@ -504,8 +789,17 @@ msgid "Police date"
 msgstr "Fecha límite policía"
 
 #. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_police_to_sale
+#: model:ir.model.fields.selection,name:product_serial_number.selection__batch_change_lot_state_wzd__operation__police_to_sale
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_police_to_sale
+msgid "Police to Sale"
+msgstr "Policía a Venta"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__product_accessory_ids
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__product_dys_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__product_accessory_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__product_dys_ids
 msgid "Possible Product dysfuncionslities"
 msgstr "Disfuncionalidades del producto posibles"
 
@@ -532,6 +826,18 @@ msgid "Product"
 msgstr "Producto"
 
 #. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Product %s has this dysfuncionalities that will block the purchase: %s"
+msgstr "El product %s tiene las siguientes disfuncionalidades que bloquearán la compra: %s"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Product %s should have this accesories: %s"
+msgstr "El producto %s requeriría los siguientes accesorios: %s"
+
+#. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_product_attribute
 msgid "Product Attribute"
 msgstr "Atributo de producto"
@@ -541,6 +847,11 @@ msgstr "Atributo de producto"
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__attribute_line_ids
 msgid "Product Attributes"
 msgstr "Atributos"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_product_category
+msgid "Product Category"
+msgstr "Categoría de producto"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -559,6 +870,7 @@ msgstr "Información producto"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__product_state
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__product_state
 msgid "Product State"
 msgstr "Estado del producto"
 
@@ -595,6 +907,11 @@ msgstr "El producto {} requiere fecha policía"
 #, python-format
 msgid "Product {} requires renew commission"
 msgstr "El producto {} requiere comisión de renovacion"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+msgid "Proposed Price"
+msgstr "Precio propuesto"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__purchase_line_id
@@ -669,8 +986,11 @@ msgid "RECOVERABLE PURCHASE"
 msgstr "COMPRA RECUPERABLE"
 
 #. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_dest__recoverable
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_orig__recoverable
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__recoverable_sale
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__recoverable_sale
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__lot_state__recoverable
 msgid "Recoverable"
 msgstr "Recuperable"
 
@@ -678,6 +998,13 @@ msgstr "Recuperable"
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
 msgid "Recoverable purchases"
 msgstr "Compras recuperables"
+
+#. module: product_serial_number
+#: model:ir.actions.act_window,name:product_serial_number.action_lot_filtered_recoverable_to_sale
+#: model:ir.model.fields.selection,name:product_serial_number.selection__batch_change_lot_state_wzd__operation__recoverable_to_sale
+#: model:ir.ui.menu,name:product_serial_number.menu_lot_filtered_recoverable_to_sale
+msgid "Recoverable to Sale"
+msgstr "Recuperable a Venta"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__renew_commission
@@ -690,6 +1017,12 @@ msgstr "Comisión de renovación"
 #: model:product.template,name:product_serial_number.product_renovate_commission_product_template
 msgid "Renovation Commission"
 msgstr "Comisión de renovación"
+
+#. module: product_serial_number
+#: code:addons/product_serial_number/models/purchase.py:0
+#, python-format
+msgid "Requires Accesories"
+msgstr "Requiere accesorios"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__requisation
@@ -741,9 +1074,21 @@ msgid "Sales Price"
 msgstr "Precio de venta"
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.view_batch_change_lot_state
+msgid "Select action"
+msgstr "Selecciona una operación"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__lot_qty
 msgid "Serial quantity"
 msgstr "Cantidad nº serie"
+
+#. module: product_serial_number
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_dest__sold
+#: model:ir.model.fields.selection,name:product_serial_number.selection__change_lot_state_wzd__lot_state_orig__sold
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__lot_state__sold
+msgid "Sold"
+msgstr "Vendido"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order__cc_type__normal
@@ -754,6 +1099,11 @@ msgstr "Especial"
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
 msgid "Special purchases"
 msgstr "Compras especiales"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__date_end
+msgid "To"
+msgstr "Hasta"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_stock_picking
@@ -773,6 +1123,7 @@ msgstr "Unidades"
 
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__purchase_order_line__product_state__c
+#: model:ir.model.fields.selection,name:product_serial_number.selection__stock_production_lot__product_state__c
 msgid "Used"
 msgstr "Usado"
 
@@ -790,6 +1141,16 @@ msgstr "Modo de Creación de Variantes"
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_accessory
 msgid "accessory"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_batch_change_lot_state_wzd
+msgid "batch.change.lot.state.wzd"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_change_lot_state_wzd
+msgid "change.lot.state.wzd"
 msgstr ""
 
 #. module: product_serial_number

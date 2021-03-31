@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="view_batch_change_lot_state" model="ir.ui.view">
+            <field name="name">Batch Change Lot State</field>
+            <field name="model">batch.change.lot.state.wzd</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Filter dates">
+                        <field  col="2" name="date_start"/>
+                        <field  col="2" name="date_end"/>
+                    </group>
+                    <group string="Select action" colspan="4">
+                        <field name="operation"/>
+                    </group>
+                    <footer>
+                        <button
+                        name="confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                        <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                    </footer>
+                </form>
+            </field>
+        </record>
+<!--
+        <act_window id="action_view_change_lot_state"
+                multi="True"
+                key2="client_action_multi"
+                name="Change Lot State"
+                src_model="stock.production.lot"
+                res_model="change.lot.state.wzd"
+                view_mode="form"
+                view_type="form"
+                target="new" /> -->
+
+        <record id="action_view_batch_change_lot_state" model="ir.actions.act_window">
+            <field name="name">Batch Change Lot State</field>
+            <field name="res_model">batch.change.lot.state.wzd</field>
+            <!-- <field name="binding_model_id" ref="stock.model_stock_production_lot" /> -->
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_batch_change_lot_state" />
+            <field name="target">new</field>
+        </record>
+
+         <menuitem id="menu_action_view_batch_change_lot_state" action="action_view_batch_change_lot_state" 
+             parent="menu_general_lot_filtered"
+            sequence="9"/>
+
+
+</odoo>

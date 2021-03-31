@@ -18,6 +18,10 @@
         <field name="priority">1000</field>
         <field name="inherit_id" ref="purchase.purchase_order_form" />
         <field name="arch" type="xml">
+            <button name="button_confirm" position="after">
+                <button name="button_confirm" context="{'skyp_dys': True}" type="object" states="draft,sent" string="Force Confirm" class="btn-warning" id="force_confirm"/>
+            </button>
+
             <div name="button_box" position="inside">
                 <button
                     name="view_lots_button"
@@ -97,6 +101,14 @@
                         <field name="product_accessory_ids"  widget="many2many_tags" invisible="1"/>
                         <field name="accessory_ids" domain="[('id', 'in', product_accessory_ids)]"  widget="many2many_tags" nolabel="1"  options="{'no_create': True}"/>
                     </group>
+                     <group string="Dysfuncionality Note">
+                        <field name="dys_note" nolabel="1"/>
+                    </group>
+                     <group string="Proposed Price">
+                        <field name="dys_discount" force_save="1"/>
+                        <field name="discounted_price" force_save="1"/>
+                    </group>
+                    
                     <group string="Attributes" colspan="4">
                         <field
                         name="attribute_line_ids"
@@ -122,18 +134,6 @@
 
             <!-- IMAGE TABS -->
             <xpath expr="//field[@name='order_line']//form//notebook" position="inside">
-                <!-- <page string="Dysfuncionalities">
-                    <group string="Dysfuncionalities">
-                        <field name="product_dys_ids" force_save="1" widget="many2many_tags" invisible="0"/>
-                        <field name="dysfuncionality_ids" force_save="1"  domain="[('id', 'in', product_dys_ids)]" widget="many2many_checkboxes" options="{'no_create': True}"/>
-                    </group>
-                </page>
-                <page string="Accesories">
-                    <group string="Accesories">
-                        <field name="product_accessory_ids" force_save="1" widget="many2many_tags" invisible="0"/>
-                        <field name="accessory_ids" domain="[('id', 'in', product_accessory_ids)]" widget="many2many_checkboxes" nolabel="1"/>
-                    </group>
-                </page> -->
                 <page string="Add Images">
                     <group>
                         <button

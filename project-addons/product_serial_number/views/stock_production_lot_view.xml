@@ -5,8 +5,16 @@
         <field name="model">stock.production.lot</field>
         <field name="inherit_id" ref="stock.view_production_lot_form" />
         <field name="arch" type="xml">
-            <field name="product_id" position="after">
-                <field name="salable" />
+
+            <sheet position="before">
+                <header>
+                    <field name="lot_state" widget="statusbar"  statusbar_visible="police,recoverable,for_sale,sold"
+                        statusbar_colors='{"police":"red","recoverable":"blue","for_sale": "green", "sold": "red"}'/>
+                </header>
+            </sheet>
+
+            <field name="company_id" position="after">
+                <field name="create_date"/>
                 <field
                     name="police_date"
                     style="color:Red;"
@@ -19,42 +27,67 @@
                 />
                 <field name="limit_date" />
                 <field name="lot_location_id" />
-                <!-- <field name="police_date" style="color:Green;" attrs="{'invisible': ['|', ('police_date','&gt;', time.strftime('%%Y-%%m-%%d')), ('police_date','=', False)]}"/> -->
-                <!-- <field name="police_date" style="color:Red;" attrs="{'invisible': [('police_date','=', False)]}"/> -->
             </field>
-
+            <group name="main_group" position="inside">
+                <group>
+                    <field name="cc_type" />
+                    <field name="standard_price" />
+                    <field name="list_price" />
+                    <field name="salable" />
+                    <field name="jewelry" />
+                    <field name="product_state" widget="statusbar" options="{'clickable': '1'}"/>
+                </group>
+            </group>
+            <group name="main_group" position="after">
+                 <group name="dys_acc">
+                    <!-- <group string="Dysfuncionalities" attrs="{'invisible': [('product_dys_ids', '=', [])]}"> -->
+                    <group string="Dysfuncionalities">
+                        <field name="product_dys_ids" widget="many2many_tags" invisible="1"/>
+                        <field name="dysfuncionality_ids"  domain="[('id', 'in', product_dys_ids)]" widget="many2many_tags" options="{'no_create': True}"/>
+                    </group>
+                    <!-- <group string="Accesories" attrs="{'invisible': [('product_accessory_ids', '=', [])]}"> -->
+                    <group string="Accesories">
+                        <field name="product_accessory_ids"  widget="many2many_tags" invisible="1"/>
+                        <field name="accessory_ids" domain="[('id', 'in', product_accessory_ids)]"  widget="many2many_tags" nolabel="1"  options="{'no_create': True}"/>
+                    </group>
+                </group>
+                <group string="Dysfuncionality Note">
+                        <field name="dys_note" nolabel="1"/>
+                </group>
+            </group>
             <notebook position="inside">
                 <page string="Product Info.">
                     <group>
-                        <field name="purchase_line_id" />
-                        <field name="cc_type" />
-                        <field name="standard_price" />
-                        <field name="list_price" />
-                        <field
-                            name="renew_commission"
-                            attrs="{
-                        'required':  [('cc_type', 'in', ('recoverable_sale'))],
-                        'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
-                        />
-                        <field
-                            name="recovered"
-                            attrs="{
-                        'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
-                        />
-                        <field
-                            name="num_renew"
-                            attrs="{
-                        'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
-                        />
-                        <field name="location_info_id" />
-                        <field name="location_info_ids" widget="many2many_tags" />
-                    </group>
-                    <group>
-                        <field name="ean13" />
-                        <field name="brand" />
-                        <field name="model" />
-                        <field name="id_product" />
-                        <field name="purchase_line_id" />
+                        <group>
+                            <field name="purchase_line_id" />
+                            <field name="standard_price" />
+                            <field name="list_price" />
+                            <field
+                                name="renew_commission"
+                                attrs="{
+                            'required':  [('cc_type', 'in', ('recoverable_sale'))],
+                            'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
+                            />
+                            <field
+                                name="recovered"
+                                attrs="{
+                            'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
+                            />
+                            <field
+                                name="num_renew"
+                                attrs="{
+                            'invisible': [('cc_type', 'not in', ('recoverable_sale'))]}"
+                            />
+                            <field name="location_info_id" />
+                            <field name="location_info_ids" widget="many2many_tags" />
+                        </group>
+                        <group>
+                            <field name="ean13" />
+                            <field name="brand" />
+                            <field name="model" />
+                            <field name="id_product" />
+                            <field name="purchase_line_id" />
+                        </group>
                     </group>
                 </page>
                 <page string="Attributes">
@@ -123,9 +156,10 @@
                 <field name="purchase_line_id" />
                 <field name="police_date" />
                 <field name="limit_date" />
+                <field name="lot_location_id" />
                 <field name="salable" />
                 <field name="cc_type" />
-                <field name="lot_location_id" />
+                <field name="lot_state" />
             </field>
         </field>
     </record>
@@ -137,6 +171,8 @@
         <field name="arch" type="xml">
             <field name="product_id" position="after">
                 <field name="lot_location_id" />
+                <field name="create_date" string="Create from" filter_domain="[('create_date','&gt;=',self)]"/>
+                <field name="create_date"  string="Create to"  filter_domain="[('create_date','&lt;=',self)]"/>
                 <separator />
                 <!-- <filter
                     name="salable"
@@ -147,12 +183,26 @@
                 <!-- pUEDE NO FUNCIONAR PORQUE NO SE RECALCULA CON STORE, aunque tengo el cron -->
                 <!-- esto es que si pasa un día y el cron falla o no se lanza no se actulizará, para eso mejor el filtro como arriba -->
                 <!-- Pero no tendria en cuenta el stock -->
+                <filter  name="period_generator" string="Creation Date" date="create_date" default_period="last_week"/>
+
                 <filter
                     name="salable"
                     string="Salable"
                     domain="[('salable', '=', True)]"
                     help="Lot available in sales"
                 />
+                <separator/>
+                <filter
+                    name="no_jewelry"
+                    string="Jewelry"
+                    domain="[('jewelry', '=', True)]"
+                />
+                <filter
+                    name="jewelry"
+                    string="No Jewelry"
+                    domain="[('jewelry', '=', False)]"
+                />
+                <separator/>
                 <filter
                     name="police"
                     string="Police"
@@ -165,6 +215,7 @@
                     domain="[('limit_date','&gt;', time.strftime('%%Y-%%m-%%d'))]"
                     help="Lots with limit date"
                 />
+                <separator/>
             </field>
 
             <filter name="group_by_product" position="after">
@@ -198,7 +249,187 @@
                     domain="[]"
                     context="{'group_by': 'cc_type'}"
                 />
+                <filter
+                    name="lot_state"
+                    string="Lot state"
+                    domain="[]"
+                    context="{'group_by': 'lot_state'}"
+                />
             </filter>
         </field>
     </record>
+
+    <!-- ************************************************************************************************************************************************************ -->
+    <!-- CUSTOM FILTERED VIEWS AND MENUS -->
+    <!-- ************************************************************************************************************************************************************ -->
+    
+    <record id="view_cc_lot_tree" model="ir.ui.view">
+        <field name="name">stock.production.lot.view.tree</field>
+        <field name="model">stock.production.lot</field>
+        <field name="arch" type="xml">
+        <tree create="0">
+                <field name="company_id"  invisible="1"/>
+                <field name="jewelry" invisible="1"/>
+                <field name="create_date"/>
+                <field name="product_id"/>
+                <field name="cc_type"/>
+                <field name="standard_price"/>
+                <field name="list_price"/>
+                <field name="police_date"/>
+                <field name="limit_date"/>
+                <field name="lot_location_id" />
+                <field name="lot_state" />
+                <field name="salable" />
+            </tree>
+        </field>
+    </record>
+
+    <!-- <record id="view_cc_lot_form" model="ir.ui.view">
+        <field name="name">stock.production.lot.view.form.cc</field>
+        <field name="model">stock.production.lot</field>
+        <field name="arch" type="xml">
+            <form create="0">
+                <header>
+                    <field name="lot_state" widget="statusbar"  statusbar_visible="police,recoverable,for_sale,sold"
+                        statusbar_colors='{"police":"red","recoverable":"blue","for_sale": "green", "sold": "red"}'/>
+                </header>
+                <sheet>
+                    <field name="display_complete" invisible="1"/>
+                    <div class="oe_button_box" name="button_box"
+                        attrs="{'invisible': [('display_complete', '=', False)]}">
+                            <button name="action_lot_open_quants" icon="fa-arrows" class="oe_stat_button" string="Location" type="object"/>
+                            <button name="%(stock.action_stock_report)d" icon="fa-arrow-up" class="oe_stat_button" string="Traceability" type="action"/>
+                    </div>
+                    <div class="oe_title">
+                        <label for="name" class="oe_edit_only"/>
+                        <h1>
+                            <field name="name" placeholder="e.g. LOT/0001/20121"/>
+                        </h1>
+                    </div>
+                    
+                    
+            </form>
+        </field>
+    </record> -->
+
+    <menuitem id="menu_general_lot_filtered" name="Filtered Lots" parent="stock.menu_stock_root" sequence="5"  groups="group_filtered_lots"/>
+
+
+    <record id="action_lot_filtered_police_to_sale" model="ir.actions.act_window">
+        <field name="name">Police to Sale</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('cc_type', '!=', 'recoverable_sale'), ('lot_state', '=', 'police'), ('jewelry', '=', False)]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_police_to_sale" action="action_lot_filtered_police_to_sale" 
+        parent="menu_general_lot_filtered"
+        sequence="1"/>
+    
+
+    <record id="action_lot_filtered_jewelry_to_sale" model="ir.actions.act_window">
+        <field name="name">Police (Jewerly) to Sale</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('cc_type', '!=', 'recoverable_sale'), ('lot_state', '=', 'police'), ('jewelry', '=', True)]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_jewelry_to_sale" action="action_lot_filtered_jewelry_to_sale" 
+        parent="menu_general_lot_filtered"
+        sequence="2"/>
+
+
+
+    <record id="action_lot_police_to_recoverable" model="ir.actions.act_window">
+        <field name="name">Police (Recoverable) to Recoverable</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('cc_type', '=', 'recoverable_sale'), ('lot_state', '=', 'police'), ('jewelry', '=', False)]</field>
+    </record>
+
+    <menuitem id="menu_lot_police_recoverable_to_recoverable" action="action_lot_police_to_recoverable" 
+        parent="menu_general_lot_filtered"
+        sequence="3"/>
+    
+    <record id="action_lot_filtered_jewelry_to_recoverable" model="ir.actions.act_window">
+        <field name="name">Police (Jewerly Recoverable) to Recoverable</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('cc_type', '=', 'recoverable_sale'), ('lot_state', '=', 'police'), ('jewelry', '=', True)]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_jewelry_to_recoverable" action="action_lot_filtered_jewelry_to_recoverable" 
+        parent="menu_general_lot_filtered"
+        sequence="4"/>
+
+
+    <record id="action_lot_filtered_recoverable_to_sale" model="ir.actions.act_window">
+        <field name="name">Recoverable to Sale</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('lot_state', '=', 'recoverable')]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_recoverable_to_sale" action="action_lot_filtered_recoverable_to_sale" 
+        parent="menu_general_lot_filtered"
+        sequence="5"/>
+
+    <record id="action_lot_filtered_for_sale" model="ir.actions.act_window">
+        <field name="name">Lots For sale</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('lot_state', '=', 'for_sale')]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_for_sale" action="action_lot_filtered_for_sale" 
+        parent="menu_general_lot_filtered"
+        sequence="5"/>
+
+
+    <record id="action_lot_filtered_sold" model="ir.actions.act_window">
+        <field name="name">Lots Sold</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[('lot_state', '=', 'sold')]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_sold" action="action_lot_filtered_sold" 
+        parent="menu_general_lot_filtered"
+        sequence="6"/>
+
+    <record id="action_lot_filtered_all" model="ir.actions.act_window">
+        <field name="name">Lots All</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">stock.production.lot</field>
+        <field name="view_ids"
+                   eval="[(5, 0, 0),
+                          (0, 0, {'view_mode': 'tree', 'view_id': ref('product_serial_number.view_cc_lot_tree')}),
+                          (0, 0, {'view_mode': 'form', 'view_id': ref('stock.view_production_lot_form')})]"/>
+        <field name="domain">[]</field>
+    </record>
+    <menuitem id="menu_lot_filtered_all" action="action_lot_filtered_all" 
+        parent="menu_general_lot_filtered"
+        sequence="6"/>
 </odoo>

@@ -3,6 +3,7 @@
 from . import dysfuncionality
 from . import accessory
 from . import product
+from . import product_category
 from . import operating_unit
 from . import stock_picking
 from . import location_info

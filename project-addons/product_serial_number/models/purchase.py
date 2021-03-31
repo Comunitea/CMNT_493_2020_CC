@@ -69,38 +69,59 @@ class PurchaseOrder(models.Model):
             action = {"type": "ir.actions.act_window_close"}
         return action
 
-    def _get_destination_location(self):
-        self.ensure_one()
-        res = super()._get_destination_location()
-        if self.cc_type in ("recoverable_sale", "deposit"):
-            loc = self.env["stock.location"].search(
-                [("cc_type", "=", self.cc_type)], limit=1
-            )
-            if loc:
-                return loc.id
+    # def _get_destination_location(self):
+    #     self.ensure_one()
+    #     res = super()._get_destination_location()
+    #     if self.cc_type in ("recoverable_sale", "deposit"):
+    #         loc = self.env["stock.location"].search(
+    #             [("cc_type", "=", self.cc_type)], limit=1
+    #         )
+    #         if loc:
+    #             return loc.id
 
-        return res
+    #     return res
 
     def button_confirm(self):
-        for line in self.mapped("order_line"):
-            if line.police and not line.police_date:
-                raise UserError(
-                    _("Product {} requires " "police date".format(line.product_id.name))
-                )
-            if line.cc_type in ("recoverable_sale", "deposit") and not line.limit_date:
-                raise UserError(
-                    _("Product {} requires " "limit date".format(line.product_id.name))
-                )
-            if line.cc_type in ("recoverable_sale") and not line.renew_commission:
-                raise UserError(
-                    _(
-                        "Product {} requires "
-                        "renew commission".format(line.product_id.name)
+        if not self._context.get('skyp_dys'):
+            for line in self.mapped("order_line"):
+                if line.police and not line.police_date:
+                    raise UserError(
+                        _("Product {} requires " "police date".format(line.product_id.name))
                     )
-                )
-            line.check_constraints()
+                if line.cc_type in ("recoverable_sale", "deposit") and not line.limit_date:
+                    raise UserError(
+                        _("Product {} requires " "limit date".format(line.product_id.name))
+                    )
+                if line.cc_type in ("recoverable_sale") and not line.renew_commission:
+                    raise UserError(
+                        _(
+                            "Product {} requires "
+                            "renew commission".format(line.product_id.name)
+                        )
+                    )
+                line.check_constraints()
         res = super().button_confirm()
         return res
+    
+    @api.onchange('order_line')
+    def onchange_dysfuncionality_ids(self):
+        res = {}
+        for line in self.order_line:
+            mandatory_acess = line.product_id.accessory_ids.filtered('mandatory')
+            if mandatory_acess:
+                diff_access = mandatory_acess - \
+                    line.accessory_ids.filtered('mandatory')
+                if diff_access:
+                    acc_names = ','.join(diff_access.mapped('name'))
+                    msg = _("Product %s should have "
+                    "this accesories: %s") % (line.product_id.name, acc_names)
+                    warning = {
+                        'title': _("Requires Accesories"),
+                        'message': msg
+                    }
+                    res['warning'] = warning
+                    return res
+
 
 
 class PurchaseOrderLine(models.Model):
@@ -168,13 +189,17 @@ class PurchaseOrderLine(models.Model):
     )
     accessory_ids = fields.Many2many(
         'accessory', 'purchase_accessory_rel',
-        'line_id', 'acc_id_id', 'Disfuncionality',
+        'line_id', 'acc_id_id', 'Accessories',
     )
 
     product_state = fields.Selection([
+        ('n', 'Brand New'),
         ('a', 'Perfect State'),
         ('b', 'Good State'),
         ('c', 'Used')], 'Product State', required=True, default='b')
+    dys_discount = fields.Float('Dysfuncionality Discount (%)')
+    discounted_price = fields.Float('Discounted Price')
+    dys_note = fields.Text('Dysfuncionality Note')
 
     @api.depends("product_id")
     def _compute_product_dysfuncionality(self):
@@ -194,6 +219,64 @@ class PurchaseOrderLine(models.Model):
             if line.sale_price < line.price_unit:
                 raise ValidationError(
                     _("Sale price must be greater than cost price"))
+        
+    @api.onchange('dysfuncionality_ids')
+    def onchange_warning_dysfuncionality_ids(self):
+        blocking_dys = self.dysfuncionality_ids.filtered('block_purchase')
+        res = {}
+        if blocking_dys:
+            dys_names = ', '.join(blocking_dys.mapped('name'))
+            msg = _("Product %s has "
+                    "this dysfuncionalities that will block the purchase: %s") % (self.product_id.name, dys_names)
+            warning = {
+                'title': _("Blocked by dysfuncionalitys"),
+                'message': msg
+            }
+            res['warning'] = warning
+
+        # dys_discounts = self.dysfuncionality_ids.mapped('discount')
+        # dys_discount = sum(dys_discounts)
+
+        # acc_discount = 0
+        # mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
+        # if mandatory_acess:
+        #     diff_access = mandatory_acess - \
+        #         self.accessory_ids.filtered('mandatory')
+        #     if diff_access:
+        #         acc_discounts = diff_access.mapped('discount')
+        #         acc_discount = sum(acc_discounts)
+        # total_discount = dys_discount + acc_discount
+        # self.dys_discount = total_discount
+
+        # discounted_price = 0.0
+        # if total_discount < 100.0:
+        #     discounted_price = self.price_unit * (1 - (dys_discount / 100.0))
+        # self.discounted_price = discounted_price
+        return res
+
+    @api.onchange('accessory_ids', 'dysfuncionality_ids', 'price_unit')
+    def onchange_accessory_dys_discounts_ids(self):
+        dys_discounts = self.dysfuncionality_ids.mapped('discount')
+        dys_discount = sum(dys_discounts)
+
+        acc_discount = 0
+        mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
+        if mandatory_acess:
+            diff_access_ids = set(mandatory_acess.ids) - \
+                set(self.accessory_ids.filtered('mandatory').ids)
+
+            if diff_access_ids:
+                diff_access = self.env['accessory'].browse(diff_access_ids)
+                acc_discounts = diff_access.mapped('discount')
+                acc_discount = sum(acc_discounts)
+        total_discount = dys_discount + acc_discount
+        self.dys_discount = total_discount
+
+        discounted_price = 0.0
+        if total_discount < 100.0:
+            discounted_price = self.price_unit * (1 - (dys_discount / 100.0))
+        self.discounted_price = discounted_price
+
 
     @api.onchange("product_id")
     def onchange_product_id(self):
@@ -291,11 +374,16 @@ class PurchaseOrderLine(models.Model):
             "brand": self.brand,
             "id_product": self.id_product,
             "attribute_line_ids": attribute_line_ids,
+            "dysfuncionality_ids": self.dysfuncionality_ids,
+            "accessory_ids": self.accessory_ids,
             "purchase_line_id": self.id,
             "note": self.name,
             "police_date": self.police_date,
             "limit_date": self.limit_date,
             "renew_commission": self.renew_commission,
+            "lot_state": "police",
+            "product_state": self.product_state,
+            "dys_note": self.dys_note,
         }
         return res
     
@@ -309,17 +397,17 @@ class PurchaseOrderLine(models.Model):
                   "this dysfuncionalities: %s") % 
                 (self.product_id.name, dys_names))
 
-        mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
-        # if mandatory_acess and self.accessory_ids not in mandatory_acess:
-        if mandatory_acess:
-            diff_access = mandatory_acess - \
-                self.accessory_ids.filtered('mandatory')
-            if diff_access:
-                acc_names = ','.join(diff_access.mapped('name'))
-                raise UserError(
-                    _("Can not confirm order because product %s requires "
-                    "next accesories: %s") % 
-                    (self.product_id.name, acc_names))
+        # mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
+        # # if mandatory_acess and self.accessory_ids not in mandatory_acess:
+        # if mandatory_acess:
+        #     diff_access = mandatory_acess - \
+        #         self.accessory_ids.filtered('mandatory')
+        #     if diff_access:
+        #         acc_names = ','.join(diff_access.mapped('name'))
+        #         raise UserError(
+        #             _("Can not confirm order because product %s requires "
+        #             "next accesories: %s") % 
+        #             (self.product_id.name, acc_names))
 
 class PurchaseAttributeLine(models.Model):
     _name = "purchase.attribute.line"

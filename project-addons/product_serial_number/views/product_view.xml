@@ -18,6 +18,12 @@
                         <field name="police" />
                         <label for="police" />
                     </div>
+                    <div
+                    attrs="{'invisible':[('type', 'not in', ['product', 'consu', 'service'])]}"
+                >
+                        <field name="jewelry" />
+                        <label for="jewelry" />
+                    </div>
                     <!-- <div attrs="{'invisible':['|', ('police', '!=', True), ('type', 'not in', ['product', 'consu', 'service'])]}">
                         <label for="police_days"/>
                         <field name="police_days" col="2"/> days(s)
@@ -59,6 +65,17 @@
                     name="mgmt_serial"
                     domain="[('serial_mgmt','=',True)]"
                 />
+                <filter
+                    string="Jewelry"
+                    name="jewelry"
+                    domain="[('jewelry','=',True)]"
+                />
+                <filter
+                    string="No Jewelry"
+                    name="no_jewelry"
+                    domain="[('jewelry','=',False)]"
+                />
+                <separator/>
                </filter>
             </field>
         </record>

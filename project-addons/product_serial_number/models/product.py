@@ -12,7 +12,8 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     serial_mgmt = fields.Boolean("Manage by serial number", default=True)
-    police = fields.Boolean("Police")
+    police = fields.Boolean("Police", default=True)
+    jewelry = fields.Boolean("Jewelry", related="categ_id.is_categ_jewelry", store=True)
     police_days = fields.Integer("Retain days")
     auto_create_lot = fields.Boolean(default=True)
     # tracking = fields.Selection(default='serial')

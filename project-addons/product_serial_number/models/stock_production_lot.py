@@ -8,6 +8,8 @@ class ProductionLot(models.Model):
     _name = "stock.production.lot"
     _inherit = [_name, "base_multi_image.owner"]
 
+    _order="create_date desc"
+
     standard_price = fields.Float("Cost", digits="Product Price")
     list_price = fields.Float(
         "Sales Price",
@@ -50,31 +52,82 @@ class ProductionLot(models.Model):
     recovered = fields.Boolean("Product recovered")
     num_renew = fields.Integer("Nº renews")
 
+    lot_state = fields.Selection([
+        ('police', 'Police'),
+        ('recoverable', 'Recoverable'),
+        ('for_sale', 'For Sale'),
+        ('sold', 'Sold'),
+    ], string="Lot State", readonly=False)
+    jewelry = fields.Boolean("Jewelry", related='product_id.jewelry', store=True)
+
+    product_dys_ids = fields.Many2many(
+        string="Possible Product dysfuncionslities",
+        comodel_name="dysfuncionality",
+        compute="_compute_product_dysfuncionality",
+    )
+
+    dysfuncionality_ids = fields.Many2many(
+        'dysfuncionality', 'lot_disfuncionality_rel',
+        'line_id', 'dys_id', 'Dysfuncionalities',
+    )
+
+    product_accessory_ids = fields.Many2many(
+        string="Possible Product dysfuncionslities",
+        comodel_name="accessory",
+        compute="_compute_product_accessory",
+        store=False
+    )
+    accessory_ids = fields.Many2many(
+        'accessory', 'lot_accessory_rel',
+        'line_id', 'acc_id_id', 'Disfuncionality',
+    )
+
+    product_state = fields.Selection([
+        ('n', 'Brand New'),
+        ('a', 'Perfect State'),
+        ('b', 'Good State'),
+        ('c', 'Used')], 'Product State', required=True, default='b')
+    
+    dys_note = fields.Text('Dysfuncionality Note')
+
+    @api.depends("product_id")
+    def _compute_product_dysfuncionality(self):
+        for lot in self:
+            lot.product_dys_ids = lot.product_id.dysfuncionality_ids
+
+    @api.depends("product_id")
+    def _compute_product_accessory(self):
+        for lot in self:
+            lot.product_accessory_ids = lot.product_id.accessory_ids
+
     @api.depends("quant_ids.location_id")
     def _compute_location(self):
         for lot in self:
-            lot.lot_location_id = lot.quant_ids.filtered(lambda x: x.quantity > 0)[
-                0
-            ].location_id.id
+            if lot.quant_ids.filtered(lambda x: x.quantity > 0):
+                lot.lot_location_id = lot.quant_ids.filtered(lambda x: x.quantity > 0)[
+                    0
+                ].location_id.id
 
-    @api.depends("police_date", "limit_date", "lot_location_id")
+    # @api.depends("police_date", "limit_date", "lot_location_id")
+    @api.depends("lot_state")
     def _compute_salable(self):
         for lot in self:
-            res = True
-            if lot.police_date and lot.police_date > fields.Date.today():
-                res = False
-            elif lot.limit_date and lot.limit_date > fields.Date.today():
-                res = False
-            elif lot.lot_location_id:
-                location = lot.lot_location_id.get_warehouse().lot_stock_id
-                domain = [
-                    ("id", "=", lot.lot_location_id.id),
-                    ("id", "child_of", location.id),
-                ]
-                is_stock_location = self.env["stock.location"].search(domain)
-                if not is_stock_location:
-                    res = False
-            lot.salable = res
+            # res = True
+            # if lot.police_date and lot.police_date > fields.Date.today():
+            #     res = False
+            # elif lot.limit_date and lot.limit_date > fields.Date.today():
+            #     res = False
+            # elif lot.lot_location_id:
+            #     location = lot.lot_location_id.get_warehouse().lot_stock_id
+            #     domain = [
+            #         ("id", "=", lot.lot_location_id.id),
+            #         ("id", "child_of", location.id),
+            #     ]
+            #     is_stock_location = self.env["stock.location"].search(domain)
+            #     if not is_stock_location:
+            #         res = False
+            # lot.salable = res
+           lot.salable = True if lot.lot_state == 'for_sale' else False
 
     @api.model
     def create(self, vals):
@@ -111,8 +164,9 @@ class ProductionLot(models.Model):
                 self.env["base_multi_image.image"].create(vals)
 
     def _cron_compute_salable_lots(self):
-        # import pudb.remote
-        # pudb.remote.set_trace(term_size=(271, 64))
+        """
+        Desactivado, NO NECESARIO
+        """
         domain = []
         lots = self.env["stock.production.lot"].search(domain)
         lots._compute_salable()
