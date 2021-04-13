@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="sign_total_recoverable">
+        <div class="sign-total2">
+            <div class="row">
+                <div class="col-4">
+                    <span>EL COMPRADOR</span>
+                </div>
+                <div class="col-2">
+                    <span>EL VENDEDOR</span>
+                    <br/>
+                    <span>Firmado:</span>
+                    <br/>
+                    <span>NIF:</span>
+                </div>
+                <div class="col-6">
+                    <br/>
+                    <span t-field="o.partner_id.name" style="text-transform: uppercase;"/>
+                    <br/>
+                    <span t-esc="o.partner_id.vat"/>
+                    <div>
+                        <img t-if="o.signature" t-att-src="image_data_uri(o.signature)" style="vertical-align:bottom;width:30mm;height:30mm"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="report_purchase_contract_document_header">
+        <div class="contract-address">
+            <div class="row">
+                <div class="col-3">
+                    <span>CASH CONVERTERS</span>
+                    <br/>
+                    <span t-field="o.company_id.name"/>
+                    <br/> 
+                    <span t-field="o.company_id.street"/>
+                    <br/>
+                    <br/>
+                    <div t-if="o.company_id.partner_id.phone">
+                        <span>Tel: </span><span t-esc="o.company_id.partner_id.phone"/>
+                    </div>
+                    <div t-if="o.company_id.partner_id.vat">
+                        <span>NIF: </span><span t-esc="o.company_id.partner_id.vat"/>
+                    </div> 
+                    <div>
+                        <span>(en adelante COMPRADOR)</span>
+                    </div> 
+                </div>
+                <div class="col-11">
+                    <span t-field="o.partner_id.name" style="text-transform: uppercase;"/>
+                        <br/>
+                    <span t-field="o.partner_id.street"/>
+                    <div>
+                        <span t-esc="o.partner_id.zip"/> <span> </span>
+                        <span t-esc="o.partner_id.city"/> 
+                        <t t-if="o.partner_id.state_id">
+                        <br/>
+                        <span t-esc="o.partner_id.state_id.name"/>
+                        </t>
+                    </div>
+                    <div t-if="o.partner_id.phone">
+                        <span>Tel: </span><span t-esc="o.partner_id.phone"/><span t-if="o.partner_id.mobile">, Móvil: </span><span t-if="o.partner_id.mobile" t-esc="o.partner_id.mobile"/>
+                    </div>
+                    <div t-if="o.partner_id.vat">
+                        <span>NIF: </span><span t-esc="o.partner_id.vat"/>
+                        <t t-set="url" t-value="o.partner_id.vat"/>
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', url, 600, 100)" style="width:35%;height:20px" alt="Barcode"/>
+                    </div> 
+                    <div>
+                        <span>(en adelante VENDEDOR)</span>
+                    </div>
+                    <br/> 
+                    <div class="contract-address">
+                    <div class="row">
+                            <div class="col-4">
+                                <span>Fecha: </span> <span t-field="o.date_order"/>
+                            </div>
+                            <div class="col-8">
+                                <span>Grupo: </span> <span t-field="o.name"/>
+                                <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', o.name, 600, 100)" style="width:25%;height:20px" alt="Barcode"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> 
+        </div>
+    </template>
+
+
+    <template id="report_purchase_contract_document">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div class="contract-title">
+                    CONTRATO DE COMPRA <span t-esc="num_c"/> de <span t-esc="num_t"/>
+                </div>
+                <br/>
+                <t t-call="custom_documents_cc.report_purchase_contract_document_header" t-lang="lang"/>
+                <br/>
+                <div class="contract-table">
+                    <table class="c-table">
+                        <thead>
+                            <tr>
+                                <th style="width:20%" name="th_description">Código</th>
+                                <th style="width:60%" name="th_description">Description</th>
+                                <th style="width:15%" name="th_quantity" class="text-right">Cantidad</th>
+                                <!-- <th name="th_price_unit" class="text-right"><strong>Unit Price</strong></th> -->
+                                <th style="width:15%" name="th_amount" class="text-right">Importe</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-set="current_subtotal" t-value="0"/>
+                            <t t-set="total_qty" t-value="0"/>
+                            <t t-foreach="o.order_line" t-as="line">
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                <t t-set="total_qty" t-value="total_qty + line.product_qty"/>
+
+                                <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                    <t t-if="not line.display_type">
+                                        <td id="code">
+                                            <span t-if="line.lot_ids" t-field="line.lot_ids[0].name"/>
+                                        </td>
+                                        <td id="product">
+                                            <strong><span t-field="line.product_id.name"/></strong>
+                                            <div t-if="line.name">
+                                                <span>Descripción: </span><span t-field="line.name"/>
+                                            </div>
+                                            <div t-if="line.brand">
+                                                 <span>Marca: </span><span t-field="line.brand"/>
+                                            </div>
+                                            <div t-if="line.model">
+                                                 <span>Modelo: </span><span t-field="line.model"/>
+                                            </div>
+                                            <div t-if="line.id_product">
+                                                 <span>Número De Serie: </span><span t-field="line.id_product"/>
+                                            </div>
+                                        </td>
+                                       
+                                        <td class="text-right">
+                                            <span t-esc="line.product_qty"/>
+                                            <!-- <span t-field="line.product_uom.name" groups="uom.group_uom"/> -->
+                                        </td>
+                                        <!-- <td class="text-right">
+                                            <span t-field="line.price_unit"/>
+                                        </td> -->
+                                        <td class="text-right">
+                                            <span t-field="line.price_subtotal"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                        </td>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_section'">
+                                        <td colspan="99" id="section">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                        <t t-set="current_section" t-value="line"/>
+                                        <t t-set="current_subtotal" t-value="0"/>
+                                    </t>
+                                    <t t-if="line.display_type == 'line_note'">
+                                        <td colspan="99" id="note">
+                                            <span t-field="line.name"/>
+                                        </td>
+                                    </t>
+                                </tr>
+                                <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                    <tr class="is-subtotal text-right">
+                                        <td colspan="99" id="subtotal">
+                                            <strong class="mr16">Subtotal</strong>
+                                            <span
+                                                t-esc="current_subtotal"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                            />
+                                        </td>
+                                    </tr>
+                                </t>
+                            </t>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <td></td>
+                                <td class="text-right">Total</td>
+                                <td class="text-right"><span t-esc="int(total_qty)"/></td>
+                                <td class="text-right"><span t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div> 
+                <div class="payment-form">
+                    Formas de pago:
+                    <br/>
+                    <br/>
+                    <span t-field="o.payment_form_str"/>
+                </div> 
+                <br/>
+                <div class="contract-text">
+                    <span t-field="o.company_id.contract_text"/>
+                </div> 
+                <br/>
+                <div class="legal-text">
+                    <span t-field="o.company_id.legal_text"/>
+                </div> 
+                <br/>
+               <div class="text-center">
+                    <span t-esc="o.company_id.website.replace('http://', '')"/>
+                </div>
+                <br/>
+                <div class="sign-totals">
+                   <div class="row">
+                        <div class="col-3 square4">
+                                <strong>
+                                TOTAL: <span t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </strong>
+                                <br/>
+                                <strong>
+                                PRODUCTOS: <span t-esc="int(total_qty)"/> <span> Unidades</span>
+                                </strong>
+                        </div>
+                        <div class="col-5 square">
+                            <span>Firmado: </span>
+                            <div class="text-center">
+                                <img t-if="o.signature" t-att-src="image_data_uri(o.signature)" style="vertical-align:bottom;width:30mm;height:30mm"/>
+                            </div>
+                        </div>
+                        <div class="col-4 square4">
+                            <span t-field="o.partner_id.name" style="text-transform: uppercase;"/>
+                             <br/>
+                            <span>NIF: </span><span t-esc="o.partner_id.vat"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="page" style="page-break-before:always;">
+                <div class="contract-address">
+                        <t t-foreach="o.order_line" t-as="line">
+                            <t t-foreach="line.webcam_image_ids" t-as="img_line">
+                                <div>
+                                    <img t-if="img_line.image" t-att-src="image_data_uri(img_line.image)" style="vertical-align:center;width:80mm;height:60mm;float:left;margin:10px;"/>
+                                </div>
+                            </t>
+                        </t>
+                </div>
+                <br/>
+                <br/>
+                <br/>
+                <br/>
+                <div class="sign-totals">
+                   <div class="row">
+                        <div class="col-3 square4">
+                                <strong>
+                                TOTAL: <span t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </strong>
+                                <br/>
+                                <strong>
+                                PRODUCTOS: <span t-esc="int(total_qty)"/> <span> Unidades</span>
+                                </strong>
+                        </div>
+                        <div class="col-5 square">
+                            <span>Firmado: </span>
+                            <div class="text-center">
+                                <img t-if="o.signature" t-att-src="image_data_uri(o.signature)" style="vertical-align:bottom;width:30mm;height:30mm"/>
+                            </div>
+                        </div>
+                        <div class="col-4 square4">
+                            <span t-field="o.partner_id.name" style="text-transform: uppercase;"/>
+                             <br/>
+                            <span>NIF: </span><span t-esc="o.partner_id.vat"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <t t-if="o.cc_type == 'recoverable_sale'">
+                <div class="page" style="page-break-before:always;">
+                    <div class="contract-title">
+                        CONTRATO DE VENTA RECUPERABLE <span t-esc="num_c"/> de <span t-esc="num_t"/>
+                    </div>
+                    <t t-call="custom_documents_cc.report_purchase_contract_document_header" t-lang="lang"/>
+                    <br/>
+                    <div class="contract-table">
+                        <table class="c-table">
+                            <thead>
+                                <tr>
+                                    <th style="width:20%" name="th_description">Código</th>
+                                    <th style="width:60%" name="th_description">Description</th>
+                                    <th style="width:15%" name="th_quantity" class="text-right">Cantidad</th>
+                                    <!-- <th name="th_price_unit" class="text-right"><strong>Unit Price</strong></th> -->
+                                    <th style="width:15%" name="th_amount" class="text-right">Importe</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="current_subtotal" t-value="0"/>
+                                <t t-set="total_qty" t-value="0"/>
+                                <t t-foreach="o.order_line" t-as="line">
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_subtotal" groups="account.group_show_line_subtotals_tax_excluded"/>
+                                    <t t-set="current_subtotal" t-value="current_subtotal + line.price_total" groups="account.group_show_line_subtotals_tax_included"/>
+                                    <t t-set="total_qty" t-value="total_qty + line.product_qty"/>
+
+                                    <tr t-att-class="'bg-200 font-weight-bold o_line_section' if line.display_type == 'line_section' else 'font-italic o_line_note' if line.display_type == 'line_note' else ''">
+                                        <t t-if="not line.display_type">
+                                            <td id="code">
+                                                <span t-if="line.lot_ids" t-field="line.lot_ids[0].name"/>
+                                            </td>
+                                            <td id="product">
+                                                <strong><span t-field="line.product_id.name"/></strong>
+                                                <div t-if="line.name">
+                                                    <span>Descripción: </span><span t-field="line.name"/>
+                                                </div>
+                                                <div t-if="line.brand">
+                                                    <span>Marca: </span><span t-field="line.brand"/>
+                                                </div>
+                                                <div t-if="line.model">
+                                                    <span>Modelo: </span><span t-field="line.model"/>
+                                                </div>
+                                                <div t-if="line.id_product">
+                                                    <span>Número De Serie: </span><span t-field="line.id_product"/>
+                                                </div>
+                                            </td>
+                                        
+                                            <td class="text-right">
+                                                <span t-esc="int(line.product_qty)"/>
+                                                <!-- <span t-field="line.product_uom.name" groups="uom.group_uom"/> -->
+                                            </td>
+                                            <!-- <td class="text-right">
+                                                <span t-field="line.price_unit"/>
+                                            </td> -->
+                                            <td class="text-right">
+                                                <span t-field="line.price_subtotal"
+                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            </td>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_section'">
+                                            <td colspan="99" id="section">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                            <t t-set="current_section" t-value="line"/>
+                                            <t t-set="current_subtotal" t-value="0"/>
+                                        </t>
+                                        <t t-if="line.display_type == 'line_note'">
+                                            <td colspan="99" id="note">
+                                                <span t-field="line.name"/>
+                                            </td>
+                                        </t>
+                                    </tr>
+                                    <t t-if="current_section and (line_last or o.order_line[line_index+1].display_type == 'line_section')">
+                                        <tr class="is-subtotal text-right">
+                                            <td colspan="99" id="subtotal">
+                                                <strong class="mr16">Subtotal</strong>
+                                                <span
+                                                    t-esc="current_subtotal"
+                                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'
+                                                />
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </t>
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <td></td>
+                                    <td class="text-right">Total</td>
+                                    <td class="text-right"><span t-esc="int(total_qty)"/></td>
+                                    <td class="text-right"><span t-esc="o.amount_total" t-options='{"widget": "monetary", "display_currency": o.currency_id}'/></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                    <br/> 
+                    <div class="recoverable-text">
+                        <span t-raw="o.company_id.recoverable_text"/>
+                    </div>
+                    <br/>
+                    <t t-call="custom_documents_cc.sign_total_recoverable"  t-lang="lang"/>
+                </div>
+            </t>
+            <t t-if="o.cc_type == 'recoverable_sale'">
+                <div class="page" style="page-break-before:always;">
+                    <div class="recoverable-text">
+                        <span t-raw="o.company_id.recoverable_text2"/>
+                    </div>
+                    <br/>
+                    <t t-call="custom_documents_cc.sign_total_recoverable"  t-lang="lang"/>
+                    <br/>
+                    <div>
+                        <span t-esc="o.company_id.website.replace('http://', '')"/>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+
+    <template id="report_purchase_contract">
+        <t t-call="web.html_container">
+            <t t-set="num_c" t-value="0"/>
+            <t t-set="num_t" t-value="len(docs)"/>
+            <t t-foreach="docs" t-as="o">
+                <t t-set="num_c" t-value="num_c + 1"/>
+                <t t-set="lang" t-value="o.partner_id.lang"/>
+                <t t-call="custom_documents_cc.report_purchase_contract_document" t-lang="lang"/>
+            </t>
+        </t>
+    </template>
+
+     <record id="paperformat_a4_cc" model="report.paperformat">
+        <field name="name">European A4 CC</field>
+        <field name="default" eval="True"/>
+        <field name="format">A4</field>
+        <field name="page_height">0</field>
+        <field name="page_width">0</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">5</field>
+        <field name="margin_bottom">5</field>
+        <field name="margin_left">5</field>
+        <field name="margin_right">5</field>
+        <field name="header_line" eval="False"/>
+        <field name="header_spacing">0</field>
+        <field name="dpi">80</field>
+    </record>
+
+    <report 
+        id="action_report_purchase_contract"
+        string="Contract"
+        model="purchase.order" 
+        report_type="qweb-pdf"
+        file="custom_documents_cc.report_purchase_contract" 
+        name="custom_documents_cc.report_purchase_contract"
+        menu="True"
+        paperformat="custom_documents_cc.paperformat_a4_cc"
+        print_report_name="'Contract - %s' % (object.name)"
+    />
+</odoo>

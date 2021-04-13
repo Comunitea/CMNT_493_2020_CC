@@ -57,13 +57,13 @@
                 <field
                     name="limit_date"
                     attrs="{
-                    'required':  [('parent.cc_type', 'in', ('recoverable_sale'))],
+                    'required':  [('parent.cc_type', 'in', ('recoverable_sale')), ('display_type', 'not in', ('line_section', 'line_note'))],
                     'invisible': [('parent.cc_type', 'not in', ('recoverable_sale'))]}"
                 />
                 <field
                     name="police_date"
                     attrs="{
-                    'required':  [('police', '=', True)],
+                    'required':  [('police', '=', True), ('display_type', 'not in', ('line_section', 'line_note'))],
                     'invisible': [('police', '=', False)]}"
                 />
             </xpath>
@@ -147,6 +147,22 @@
                             widget="many2many_binary"
                             string="Attach a file"
                             nolabel="1"
+                            colspan="2"
+                        />
+                        <field name="webcam_image_ids" string="Take a Photo" nolabel="1">
+                            <tree>
+                                <field name="image"/>
+                            </tree>
+                            <form>
+                                <group string="Take a Photo">
+                                    <field name="image" widget="image"  nolabel="True"/>
+                                </group>
+                            </form>
+                        </field>
+                        <field
+                            name="take_image"
+                            widget="image"
+                            string="Take a Photo"
                             colspan="2"
                         />
                     </group>

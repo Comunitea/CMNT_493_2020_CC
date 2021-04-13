@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <template id="asset_common" name="custom_documents_cc pdf assets" inherit_id="web.report_assets_common">
+        <xpath expr="." position="inside">
+            <link rel="stylesheet" type="text/scss" href="/custom_documents_cc/static/scss/custom_cc.scss"/>
+        </xpath>
+    </template>
+
+</odoo>

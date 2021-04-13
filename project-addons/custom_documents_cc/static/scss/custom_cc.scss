@@ -1,0 +1,76 @@
+.contract-title {
+    font-size: 12px;
+    text-decoration: underline;
+}
+.contract-address {
+    font-size: 12px;
+}
+.payment-form {
+    font-size: 12px;
+}
+.contract-text {
+    font-size: 11px;
+}
+.legal-text {
+    font-size: 9px;
+}
+.recoverable-text {
+    font-size: 11px;
+    line-height: 2px;
+}
+.sign-total2 {
+    font-size: 11px;
+}
+
+.text-center{
+    text-align: center;
+}
+.square_sign{
+    height: 35mm;
+}
+.square{
+    border: 1px solid black;
+    height: 35mm;
+}
+.c-table{
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+    font-size: 12px;
+    thead, tfoot{
+        background-color: rgb(172, 172, 172);
+    }
+    th{
+        border: 1px solid black;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    td{
+        border: 1px solid black;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+}
+
+.police-table{
+    border-collapse: collapse;
+    border: 1px solid black;
+    width: 100%;
+    font-size: 12px;
+    thead, tfoot{
+        background-color: rgb(172, 172, 172);
+    }
+    th{
+        border: 1px solid black;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+    td{
+        border: 1px solid black;
+        padding-left: 4px;
+        padding-right: 4px;
+    }
+}
+.po-group{
+    background-color: rgb(172, 172, 172);
+}

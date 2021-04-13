@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<odoo>
+        <record id="view_police_report_wzd" model="ir.ui.view">
+            <field name="name">Police Report</field>
+            <field name="model">police.report.wzd</field>
+            <field name="arch" type="xml">
+                <form>
+                    <group string="Filter dates">
+                        <field  col="2" name="date_start"/>
+                        <field  col="2" name="date_end"/>
+                    </group>
+                    <group string="Options" colspan="4">
+                        <field name="num_order"/>
+                        <field name="num_order_jewlery"/>
+                        <field name="num_page"/>
+                        <field name="num_page_jewlery"/>
+                        <field name="jewlery"/>
+                    </group>
+                    <footer>
+                        <button
+                        name="confirm"
+                        string="Confirm"
+                        type="object"
+                        class="btn-primary"
+                    />
+                        <button
+                        string="Cancel"
+                        class="btn-secondary"
+                        special="cancel"
+                    />
+                    </footer>
+                </form>
+            </field>
+        </record>
+<!--
+        <act_window id="action_view_change_lot_state"
+                multi="True"
+                key2="client_action_multi"
+                name="Change Lot State"
+                src_model="stock.production.lot"
+                res_model="change.lot.state.wzd"
+                view_mode="form"
+                view_type="form"
+                target="new" /> -->
+
+        <record id="action_view_police_report_wzd" model="ir.actions.act_window">
+            <field name="name">Police Report</field>
+            <field name="res_model">police.report.wzd</field>
+            <!-- <field name="binding_model_id" ref="stock.model_stock_production_lot" /> -->
+            <field name="type">ir.actions.act_window</field>
+            <field name="view_mode">form</field>
+            <field name="view_id" ref="view_police_report_wzd" />
+            <field name="target">new</field>
+        </record>
+
+         <menuitem id="menu_action_view_police_report_wzd" action="action_view_police_report_wzd" 
+             parent="product_serial_number.menu_general_lot_filtered"
+            sequence="99"/>
+
+
+</odoo>

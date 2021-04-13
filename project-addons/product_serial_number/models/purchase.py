@@ -144,6 +144,7 @@ class PurchaseOrderLine(models.Model):
     id_product = fields.Char("ID. Product")
 
     lot_ids = fields.One2many("stock.production.lot", "purchase_line_id", "Lot_ids")
+    webcam_image_ids = fields.One2many("purchase.line.image", "purchase_line_id", "Images")
     lot_qty = fields.Float(
         string="Serial quantity",
         digits="Product Unit of Measure",
@@ -200,6 +201,7 @@ class PurchaseOrderLine(models.Model):
     dys_discount = fields.Float('Dysfuncionality Discount (%)')
     discounted_price = fields.Float('Discounted Price')
     dys_note = fields.Text('Dysfuncionality Note')
+    take_image = fields.Binary('Add Image')
 
     @api.depends("product_id")
     def _compute_product_dysfuncionality(self):
@@ -433,3 +435,11 @@ class PurchaseAttributeLine(models.Model):
         relation="product_attribute_value_purchase_attribute_line_rel",
         ondelete="restrict",
     )
+
+class PurchaseLineImagee(models.Model):
+    _name = "purchase.line.image"
+
+    purchase_line_id = fields.Many2one(
+        "purchase.order.line", string="Purchase", required=True, index=True
+    )
+    image = fields.Binary('Add Image')

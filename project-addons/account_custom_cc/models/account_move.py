@@ -542,6 +542,13 @@ class AccountMove(models.Model):
             if in_draft_mode:
                 tax_line._onchange_amount_currency()
                 tax_line._onchange_balance()
+    
+    @api.constrains('type', 'journal_id')
+    def _check_journal_type(self):
+        for record in self:
+            journal_type = record.journal_id.type
+            if record.is_sale_document() and journal_type != 'sale':
+                raise ValidationError(_("The chosen journal has a type that is not compatible with your invoice type. Sales operations should go to 'sale' journals, and purchase operations to 'purchase' ones."))
 
 
 class AccountInvoiceLine(models.Model):
