@@ -13,3 +13,5 @@ from . import sale
 from . import stock_production_lot
 from . import product_attribute
 from . import res_partner
+from . import product_attribute
+from . import res_users

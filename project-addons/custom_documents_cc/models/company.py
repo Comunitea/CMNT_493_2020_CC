@@ -10,3 +10,4 @@ class ResCompany(models.Model):
     legal_text = fields.Text('Legal Text')
     recoverable_text = fields.Text('Recoverable Text')
     recoverable_text2 = fields.Text('Recoverable Text 2')
+    police_report_logo = fields.Image('Police Report Logo')

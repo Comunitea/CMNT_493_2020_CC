@@ -10,11 +10,11 @@
                         <field  col="2" name="date_end"/>
                     </group>
                     <group string="Options" colspan="4">
+                        <field name="jewelry"/>
                         <field name="num_order"/>
-                        <field name="num_order_jewlery"/>
                         <field name="num_page"/>
-                        <field name="num_page_jewlery"/>
-                        <field name="jewlery"/>
+                        <!-- <field name="num_order_jewelry"/>
+                        <field name="num_page_jewelry"/> -->
                     </group>
                     <footer>
                         <button

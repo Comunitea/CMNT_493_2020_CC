@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Etiqueta producto -->
+    <template id="report_lot_label_purchase_document">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div style="height:100%;width: 79mm;margin-left: -12px;border: 0px solid black;">
+                    <div style="width: 100%;height:100%;border: 0px solid black;">
+                        <div style="font-size:17px;font-weight:bold;">
+                            <span t-field="lot.product_id.name"/>
+                        </div>
+                        <div style="font-size:12px;line-height:1em;">
+                            Marca: <span t-if="lot.brand" t-field="lot.brand"/>
+                            <br/>
+                            Modelo: <span t-if="lot.model" t-field="lot.model"/>
+                        </div>
+                        <div class="row" style="width:100%;font-size:18px;font-weight:bold;">
+                            <div class="col-8">
+                                    <span t-field="lot.name"/>
+                            </div>
+                            <div t-if="lot.ubic_acc"  class="col-5">
+                            ACC:(<span t-field="lot.ubic_acc"/>)
+                            </div>
+                        </div>
+                        <div style="font-size:10px;text-align:center;">
+                            <span t-field="lot.label_info_str"/>
+                        </div>
+                        <div style="width:100%">
+                        <img t-att-src="'/report/barcode/?type=%s&amp;value=%s&amp;width=%s&amp;height=%s' % ('Code128', lot.name, 600, 100)" style="width:100%;height:30px" alt="Barcode"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>     
+    </template>
+
+    <!-- Etiqueta Accesorio -->
+    <template id="report_lot_label_purchase_document_accessory">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div style="height:100%;width: 79mm;margin-left: -12px;border: 0px solid black;">
+                    <div style="width: 100%;height:100%;border: 0px solid black;">
+                        <div style="font-size:18px;font-weight:bold;">
+                            <span t-field="acc.name"/>
+                        </div>
+                        <div style="font-size:14px;line-height:1em;">
+                            Accesorio: SI
+                            <br/>
+                            Producto: <span t-field="lot.name"/>
+                        </div>
+                        <div style="font-size:35px;text-align:center;font-weight:bold;">
+                            <span t-if="lot.ubic_acc" t-field="lot.ubic_acc"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>     
+    </template>
+
+    <!-- Etiqueta bolsa -->
+    <template id="report_lot_label_purchase_document_bag">
+        <t t-call="web.basic_layout">
+            <div class="page">
+                <div style="height:100%;width: 79mm;margin-left: -12px;border: 0px solid black;">
+                    <div style="width: 100%;height:100%;border: 0px solid black;">
+                        <div style="font-size:18px;font-weight:bold;">
+                            <span t-field="lot.product_id.name"/>
+                        </div>
+                        <div style="font-size:14px;line-height:1em;">
+                            Producto: <span t-field="lot.name"/>
+                            <br/>
+                            Nº Accesorios: <span t-esc="len(lot.accessory_ids)"/>
+                        </div>
+                        <div style="font-size:35px;text-align:center;font-weight:bold;">
+                            <span t-if="lot.ubic_acc" t-field="lot.ubic_acc"/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </t>     
+    </template>
+
+    <template id="report_lot_label_purchase">
+            
+        <!-- <t t-call="web.html_container"> -->
+            <t t-foreach="docs" t-as="lot">
+                <!-- Etiqueta producto -->
+                <t t-call="custom_documents_cc.report_lot_label_purchase_document"/>
+
+                <!-- Etiqueta acesorios -->
+                <t t-foreach="lot.accessory_ids.filtered('mandatory')" t-as="acc">
+                    <t t-call="custom_documents_cc.report_lot_label_purchase_document_accessory"/>
+                </t>
+
+                <!-- Etiqueta bolsa -->
+                <t t-if="len(lot.accessory_ids) > 0">
+                    <t t-call="custom_documents_cc.report_lot_label_purchase_document_bag"/>
+                </t>
+            </t>
+        <!-- </t> -->
+    </template>
+
+     <record id="paperformat_lot_purchase_label" model="report.paperformat">
+        <field name="name">Lot Purchase label</field>
+        <field name="default" eval="True" />
+        <field name="format">custom</field>
+        <!-- 90mm -->
+        <field name="page_height">31</field>
+        <!-- 58mm -->
+        <field name="page_width">69</field> 
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">0</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="header_line" eval="False" />
+        <field name="header_spacing">0</field>
+        <field name="dpi">90</field>
+    </record>
+
+    <report 
+        id="action_report_lot_label_purchase"
+        string="Purchase Label"
+        model="stock.production.lot" 
+        report_type="qweb-pdf"
+        file="custom_documents_cc.report_lot_label_purchase" 
+        name="custom_documents_cc.report_lot_label_purchase"
+        menu="True"
+        paperformat="custom_documents_cc.paperformat_lot_purchase_label"
+        print_report_name="'Report Lot Purchase - %s' % (object.name)"
+    />
+</odoo>

@@ -14,7 +14,36 @@ class PurchaseOrder(models.Model):
         for order in self:
             order.count_lots = len(order.mapped("order_line.lot_ids"))
 
+    # @api.depends('order_line.renew_commission', 'order_line.price_subtotal')
+    def _compute_recoverable_tax(self):
+        for order in self:
+            recoverable_sale_total_untaxed = 0
+            recoverable_sale_total = 0
+            recoverable_tax = 0
+            if order.cc_type == 'recoverable_sale':
+                for line in order.order_line:
+                    # TODO no siempre 21%
+                    com_amount = line.renew_price - line.price_unit
+                    recoverable_sale_total += line.renew_price
+                    com_tax = com_amount - (com_amount / 1.21)
+                    recoverable_tax += com_tax
+                    recoverable_sale_total_untaxed += line.renew_price - com_tax
+
+            order.recoverable_sale_total = recoverable_sale_total
+            order.recoverable_sale_total_untaxed = recoverable_sale_total_untaxed
+            order.recoverable_tax = recoverable_tax
+            order.recoverable_tax_total = recoverable_sale_total_untaxed + recoverable_tax
+
     count_lots = fields.Integer("Lots", compute="_compute_count_lots")
+
+    recoverable_sale_total = fields.Float(
+        'Recoverable Sale Total', compute='_compute_recoverable_tax')
+    recoverable_sale_total_untaxed = fields.Float(
+        'Recoverable Sale Total Untaxed', compute='_compute_recoverable_tax')
+    recoverable_tax = fields.Float(
+        'Recoverable Tax', compute='_compute_recoverable_tax')
+    recoverable_tax_total = fields.Float(
+        'Recoverable Tax Total', compute='_compute_recoverable_tax')
 
     cc_type = fields.Selection(
         [
@@ -82,15 +111,24 @@ class PurchaseOrder(models.Model):
     #     return res
 
     def button_confirm(self):
-        if not self._context.get('skyp_dys'):
+        if not self._context.get("skyp_dys"):
             for line in self.mapped("order_line"):
                 if line.police and not line.police_date:
                     raise UserError(
-                        _("Product {} requires " "police date".format(line.product_id.name))
+                        _(
+                            "Product {} requires "
+                            "police date".format(line.product_id.name)
+                        )
                     )
-                if line.cc_type in ("recoverable_sale", "deposit") and not line.limit_date:
+                if (
+                    line.cc_type in ("recoverable_sale", "deposit")
+                    and not line.limit_date
+                ):
                     raise UserError(
-                        _("Product {} requires " "limit date".format(line.product_id.name))
+                        _(
+                            "Product {} requires "
+                            "limit date".format(line.product_id.name)
+                        )
                     )
                 if line.cc_type in ("recoverable_sale") and not line.renew_commission:
                     raise UserError(
@@ -102,26 +140,23 @@ class PurchaseOrder(models.Model):
                 line.check_constraints()
         res = super().button_confirm()
         return res
-    
-    @api.onchange('order_line')
+
+    @api.onchange("order_line")
     def onchange_dysfuncionality_ids(self):
         res = {}
         for line in self.order_line:
-            mandatory_acess = line.product_id.accessory_ids.filtered('mandatory')
+            mandatory_acess = line.product_id.accessory_ids.filtered("mandatory")
             if mandatory_acess:
-                diff_access = mandatory_acess - \
-                    line.accessory_ids.filtered('mandatory')
+                diff_access = mandatory_acess - line.accessory_ids.filtered("mandatory")
                 if diff_access:
-                    acc_names = ','.join(diff_access.mapped('name'))
-                    msg = _("Product %s should have "
-                    "this accesories: %s") % (line.product_id.name, acc_names)
-                    warning = {
-                        'title': _("Requires Accesories"),
-                        'message': msg
-                    }
-                    res['warning'] = warning
+                    acc_names = ",".join(diff_access.mapped("name"))
+                    msg = _("Product %s should have " "this accesories: %s") % (
+                        line.product_id.name,
+                        acc_names,
+                    )
+                    warning = {"title": _("Requires Accesories"), "message": msg}
+                    res["warning"] = warning
                     return res
-
 
 
 class PurchaseOrderLine(models.Model):
@@ -144,7 +179,9 @@ class PurchaseOrderLine(models.Model):
     id_product = fields.Char("ID. Product")
 
     lot_ids = fields.One2many("stock.production.lot", "purchase_line_id", "Lot_ids")
-    webcam_image_ids = fields.One2many("purchase.line.image", "purchase_line_id", "Images")
+    webcam_image_ids = fields.One2many(
+        "purchase.line.image", "purchase_line_id", "Images"
+    )
     lot_qty = fields.Float(
         string="Serial quantity",
         digits="Product Unit of Measure",
@@ -170,6 +207,8 @@ class PurchaseOrderLine(models.Model):
     )
 
     renew_commission = fields.Float("Renew commission")
+    renew_price = fields.Float("Renew price", compute='_compute_renew_price')
+    renew_price_untaxed = fields.Float("Renew price", compute='_compute_renew_price')
 
     product_dys_ids = fields.Many2many(
         string="Possible Product dysfuncionslities",
@@ -178,63 +217,89 @@ class PurchaseOrderLine(models.Model):
     )
 
     dysfuncionality_ids = fields.Many2many(
-        'dysfuncionality', 'purchase_disfuncionality_rel',
-        'line_id', 'dys_id', 'Dysfuncionalities',
+        "dysfuncionality",
+        "purchase_disfuncionality_rel",
+        "line_id",
+        "dys_id",
+        "Dysfuncionalities",
     )
 
     product_accessory_ids = fields.Many2many(
         string="Possible Product dysfuncionslities",
         comodel_name="accessory",
         compute="_compute_product_accessory",
-        store=False
+        store=False,
     )
     accessory_ids = fields.Many2many(
-        'accessory', 'purchase_accessory_rel',
-        'line_id', 'acc_id_id', 'Accessories',
+        "accessory",
+        "purchase_accessory_rel",
+        "line_id",
+        "acc_id_id",
+        "Accessories",
     )
 
-    product_state = fields.Selection([
-        ('n', 'Brand New'),
-        ('a', 'Perfect State'),
-        ('b', 'Good State'),
-        ('c', 'Used')], 'Product State', required=True, default='b')
-    dys_discount = fields.Float('Dysfuncionality Discount (%)')
-    discounted_price = fields.Float('Discounted Price')
-    dys_note = fields.Text('Dysfuncionality Note')
-    take_image = fields.Binary('Add Image')
+    product_state = fields.Selection(
+        [
+            ("n", "Brand New"),
+            ("a", "Perfect State"),
+            ("b", "Good State"),
+            ("c", "Used"),
+        ],
+        "Product State",
+        required=True,
+        default="b",
+    )
+    dys_discount = fields.Float("Dysfuncionality Discount (%)")
+    discounted_price = fields.Float("Discounted Price")
+    dys_note = fields.Text("Dysfuncionality Note")
+    take_image = fields.Binary("Add Image")
+
+    # jewelry fields
+    jew_weight = fields.Float("Weight")
+    jew_metal = fields.Char("Metal or material")
+    jew_grabation = fields.Char("Grabations")
+    jew_weight2 = fields.Float("Stone Weight")
+
+    jewelry = fields.Boolean("Jewelry", related="product_id.jewelry")
 
     @api.depends("product_id")
     def _compute_product_dysfuncionality(self):
         for line in self:
             line.product_dys_ids = line.product_id.dysfuncionality_ids
 
+    @api.depends("price_unit", "renew_commission")
+    def _compute_renew_price(self):
+        for line in self:
+            renew_price = line.price_unit * (1 + (line.renew_commission / 100))
+            line.renew_price = renew_price
+            com_amount = renew_price - line.price_unit
+            com_tax = com_amount - (com_amount / 1.21)
+            line.renew_price_untaxed = renew_price - com_tax
+
     @api.depends("product_id")
     def _compute_product_accessory(self):
         for line in self:
             line.product_accessory_ids = line.product_id.accessory_ids
-
 
     @api.constrains("sale_price", "price_unit")
     def _check_prices(self):
         """ Program code must be unique """
         for line in self:
             if line.sale_price < line.price_unit:
-                raise ValidationError(
-                    _("Sale price must be greater than cost price"))
-        
-    @api.onchange('dysfuncionality_ids')
+                raise ValidationError(_("Sale price must be greater than cost price"))
+
+    @api.onchange("dysfuncionality_ids")
     def onchange_warning_dysfuncionality_ids(self):
-        blocking_dys = self.dysfuncionality_ids.filtered('block_purchase')
+        blocking_dys = self.dysfuncionality_ids.filtered("block_purchase")
         res = {}
         if blocking_dys:
-            dys_names = ', '.join(blocking_dys.mapped('name'))
-            msg = _("Product %s has "
-                    "this dysfuncionalities that will block the purchase: %s") % (self.product_id.name, dys_names)
-            warning = {
-                'title': _("Blocked by dysfuncionalitys"),
-                'message': msg
-            }
-            res['warning'] = warning
+            dys_names = ", ".join(blocking_dys.mapped("name"))
+            msg = _(
+                "Product %s has "
+                "this dysfuncionalities that will block the purchase: %s"
+            ) % (self.product_id.name, dys_names)
+            warning = {"title": _("Blocked by dysfuncionalitys"), "message": msg}
+            res["warning"] = warning
 
         # dys_discounts = self.dysfuncionality_ids.mapped('discount')
         # dys_discount = sum(dys_discounts)
@@ -256,20 +321,21 @@ class PurchaseOrderLine(models.Model):
         # self.discounted_price = discounted_price
         return res
 
-    @api.onchange('accessory_ids', 'dysfuncionality_ids', 'price_unit')
+    @api.onchange("accessory_ids", "dysfuncionality_ids", "price_unit")
     def onchange_accessory_dys_discounts_ids(self):
-        dys_discounts = self.dysfuncionality_ids.mapped('discount')
+        dys_discounts = self.dysfuncionality_ids.mapped("discount")
         dys_discount = sum(dys_discounts)
 
         acc_discount = 0
-        mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
+        mandatory_acess = self.product_id.accessory_ids.filtered("mandatory")
         if mandatory_acess:
-            diff_access_ids = set(mandatory_acess.ids) - \
-                set(self.accessory_ids.filtered('mandatory').ids)
+            diff_access_ids = set(mandatory_acess.ids) - set(
+                self.accessory_ids.filtered("mandatory").ids
+            )
 
             if diff_access_ids:
-                diff_access = self.env['accessory'].browse(diff_access_ids)
-                acc_discounts = diff_access.mapped('discount')
+                diff_access = self.env["accessory"].browse(diff_access_ids)
+                acc_discounts = diff_access.mapped("discount")
                 acc_discount = sum(acc_discounts)
         total_discount = dys_discount + acc_discount
         self.dys_discount = total_discount
@@ -278,7 +344,6 @@ class PurchaseOrderLine(models.Model):
         if total_discount < 100.0:
             discounted_price = self.price_unit * (1 - (dys_discount / 100.0))
         self.discounted_price = discounted_price
-
 
     @api.onchange("product_id")
     def onchange_product_id(self):
@@ -304,9 +369,8 @@ class PurchaseOrderLine(models.Model):
             today = datetime.today()
             if self.product_id.police:
                 self.police_date = today + timedelta(days=self.product_id.police_days)
-            
 
-            if self.order_id and self.order_id.cc_type == 'recoverable_sale':
+            if self.order_id and self.order_id.cc_type == "recoverable_sale":
                 self.limit_date = today + timedelta(days=30)
         return res
 
@@ -386,18 +450,25 @@ class PurchaseOrderLine(models.Model):
             "lot_state": "police",
             "product_state": self.product_state,
             "dys_note": self.dys_note,
+            "jew_weight": self.jew_weight,
+            "jew_metal": self.jew_metal,
+            "jew_grabation": self.jew_grabation,
+            "jew_weight2": self.jew_weight2,
         }
         return res
-    
+
     def check_constraints(self):
         self.ensure_one()
-        blocking_dys = self.dysfuncionality_ids.filtered('block_purchase')
+        blocking_dys = self.dysfuncionality_ids.filtered("block_purchase")
         if blocking_dys:
-            dys_names = ', '.join(blocking_dys.mapped('name'))
+            dys_names = ", ".join(blocking_dys.mapped("name"))
             raise UserError(
-                _("Can not confirm order because product %s has "
-                  "this dysfuncionalities: %s") % 
-                (self.product_id.name, dys_names))
+                _(
+                    "Can not confirm order because product %s has "
+                    "this dysfuncionalities: %s"
+                )
+                % (self.product_id.name, dys_names)
+            )
 
         # mandatory_acess = self.product_id.accessory_ids.filtered('mandatory')
         # # if mandatory_acess and self.accessory_ids not in mandatory_acess:
@@ -408,8 +479,9 @@ class PurchaseOrderLine(models.Model):
         #         acc_names = ','.join(diff_access.mapped('name'))
         #         raise UserError(
         #             _("Can not confirm order because product %s requires "
-        #             "next accesories: %s") % 
+        #             "next accesories: %s") %
         #             (self.product_id.name, acc_names))
+
 
 class PurchaseAttributeLine(models.Model):
     _name = "purchase.attribute.line"
@@ -436,10 +508,11 @@ class PurchaseAttributeLine(models.Model):
         ondelete="restrict",
     )
 
+
 class PurchaseLineImagee(models.Model):
     _name = "purchase.line.image"
 
     purchase_line_id = fields.Many2one(
         "purchase.order.line", string="Purchase", required=True, index=True
     )
-    image = fields.Binary('Add Image')
+    image = fields.Binary("Add Image")

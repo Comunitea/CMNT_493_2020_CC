@@ -37,6 +37,7 @@
         "views/stock_location_view.xml",
         "views/dysfuncionality_view.xml",
         "views/accessory_view.xml",
+        "views/res_users_view.xml",
     ],
     "installable": True,
 }

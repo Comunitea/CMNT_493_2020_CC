@@ -8,7 +8,7 @@ class ProductionLot(models.Model):
     _name = "stock.production.lot"
     _inherit = [_name, "base_multi_image.owner"]
 
-    _order="create_date desc"
+    _order = "create_date desc"
 
     standard_price = fields.Float("Cost", digits="Product Price")
     list_price = fields.Float(
@@ -24,7 +24,9 @@ class ProductionLot(models.Model):
     ean13 = fields.Char("EAN3")
     model = fields.Char("Model")
     brand = fields.Char("Brand")
-    id_product = fields.Char("ID. Product")
+    id_product = fields.Char("Nº Serie")
+    ubic_acc = fields.Char("Accesory location")
+    label_info_str = fields.Char("Label info", compute="_compute_label_info")
 
     purchase_line_id = fields.Many2one("purchase.order.line", "Purchase line")
     cc_type = fields.Selection(related="purchase_line_id.cc_type", store=True)
@@ -52,13 +54,17 @@ class ProductionLot(models.Model):
     recovered = fields.Boolean("Product recovered")
     num_renew = fields.Integer("Nº renews")
 
-    lot_state = fields.Selection([
-        ('police', 'Police'),
-        ('recoverable', 'Recoverable'),
-        ('for_sale', 'For Sale'),
-        ('sold', 'Sold'),
-    ], string="Lot State", readonly=False)
-    jewelry = fields.Boolean("Jewelry", related='product_id.jewelry', store=True)
+    lot_state = fields.Selection(
+        [
+            ("police", "Police"),
+            ("recoverable", "Recoverable"),
+            ("for_sale", "For Sale"),
+            ("sold", "Sold"),
+        ],
+        string="Lot State",
+        readonly=False,
+    )
+    jewelry = fields.Boolean("Jewelry", related="product_id.jewelry", store=True)
 
     product_dys_ids = fields.Many2many(
         string="Possible Product dysfuncionslities",
@@ -67,28 +73,76 @@ class ProductionLot(models.Model):
     )
 
     dysfuncionality_ids = fields.Many2many(
-        'dysfuncionality', 'lot_disfuncionality_rel',
-        'line_id', 'dys_id', 'Dysfuncionalities',
+        "dysfuncionality",
+        "lot_disfuncionality_rel",
+        "line_id",
+        "dys_id",
+        "Dysfuncionalities",
     )
 
     product_accessory_ids = fields.Many2many(
         string="Possible Product dysfuncionslities",
         comodel_name="accessory",
         compute="_compute_product_accessory",
-        store=False
+        store=False,
     )
     accessory_ids = fields.Many2many(
-        'accessory', 'lot_accessory_rel',
-        'line_id', 'acc_id_id', 'Disfuncionality',
+        "accessory",
+        "lot_accessory_rel",
+        "line_id",
+        "acc_id_id",
+        "Disfuncionality",
     )
 
-    product_state = fields.Selection([
-        ('n', 'Brand New'),
-        ('a', 'Perfect State'),
-        ('b', 'Good State'),
-        ('c', 'Used')], 'Product State', required=True, default='b')
-    
-    dys_note = fields.Text('Dysfuncionality Note')
+    product_state = fields.Selection(
+        [
+            ("n", "Brand New"),
+            ("a", "Perfect State"),
+            ("b", "Good State"),
+            ("c", "Used"),
+        ],
+        "Product State",
+        required=True,
+        default="b",
+    )
+
+    dys_note = fields.Text("Dysfuncionality Note")
+
+    jew_weight = fields.Float("Weight")
+    jew_metal = fields.Char("Metal or material")
+    jew_grabation = fields.Char("Grabations")
+    jew_weight2 = fields.Char("Stone Weight")
+
+    def _compute_label_info(self):
+        for lot in self:
+            info_str = ""
+            if lot.purchase_line_id:
+                po = lot.purchase_line_id.order_id
+                if po.operating_unit_id:
+                    info_str += po.operating_unit_id.store_code
+                if po.user_id:
+                    info_str += " (" + po.user_id.user_code + ")"
+                if po.date_order:
+                    date_order_str = po.date_order.strftime('%d%m%y')
+                    blacksmith_map = {
+                        '0': 'B',
+                        '1': 'L',
+                        '2': 'A',
+                        '3': 'C',
+                        '4': 'K',
+                        '5': 'S',
+                        '6': 'M',
+                        '7': 'I',
+                        '8': 'T',
+                        '9': 'H',
+                    }
+                    blacksmit_str = ""
+                    for ch in date_order_str:
+                        if ch in blacksmith_map:
+                            blacksmit_str += blacksmith_map[ch]
+                    info_str += " (" + blacksmit_str + ")"
+
+            lot.label_info_str = info_str
 
     @api.depends("product_id")
     def _compute_product_dysfuncionality(self):
@@ -127,7 +181,7 @@ class ProductionLot(models.Model):
             #     if not is_stock_location:
             #         res = False
             # lot.salable = res
-           lot.salable = True if lot.lot_state == 'for_sale' else False
+            lot.salable = True if lot.lot_state == "for_sale" else False
 
     @api.model
     def create(self, vals):

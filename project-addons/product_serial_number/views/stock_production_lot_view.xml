@@ -27,6 +27,7 @@
                 />
                 <field name="limit_date" />
                 <field name="lot_location_id" />
+                <field name="ubic_acc" />
             </field>
             <group name="main_group" position="inside">
                 <group>
@@ -36,6 +37,12 @@
                     <field name="salable" />
                     <field name="jewelry" />
                     <field name="product_state" widget="statusbar" options="{'clickable': '1'}"/>
+                </group>
+                <group string="jewelry" attrs="{'invisible': [('jewelry', '!=', True)]}">
+                    <field name="jew_weight" />
+                    <field name="jew_metal"/>
+                    <field name="jew_grabation"/>
+                    <field name="jew_weight2"/>
                 </group>
             </group>
             <group name="main_group" position="after">
@@ -87,6 +94,7 @@
                             <field name="model" />
                             <field name="id_product" />
                             <field name="purchase_line_id" />
+                            <field name="label_info_str" />
                         </group>
                     </group>
                 </page>

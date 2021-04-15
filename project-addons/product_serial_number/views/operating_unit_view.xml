@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="code" position="after">
                     <field name="lot_seq" />
+                    <field name="store_code"/>
                 </field>
             </field>
         </record>

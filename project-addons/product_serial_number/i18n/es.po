@@ -6,8 +6,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Odoo Server 13.0\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2021-03-31 11:34+0000\n"
-"PO-Revision-Date: 2021-03-31 11:34+0000\n"
+"POT-Creation-Date: 2021-04-15 20:37+0000\n"
+"PO-Revision-Date: 2021-04-15 20:37+0000\n"
 "Last-Translator: \n"
 "Language-Team: \n"
 "MIME-Version: 1.0\n"
@@ -50,6 +50,11 @@ msgid "Accesories"
 msgstr "Accesorios"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__ubic_acc
+msgid "Accesory location"
+msgstr "Ubicación accesorios"
+
+#. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.action_accessory
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__accessory_ids
 #: model:ir.ui.menu,name:product_serial_number.menu_accessory
@@ -67,6 +72,12 @@ msgstr "Accesorio"
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__active
 msgid "Active"
 msgstr "Activo"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__image
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__take_image
+msgid "Add Image"
+msgstr "Añadir imágen (webcam)"
 
 #. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
@@ -117,7 +128,7 @@ msgstr "Secuencia para lotes"
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__available_in_pos
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__available_in_pos
 msgid "Available in POS"
-msgstr "Disponible en TpV"
+msgstr "Disponible en PdV"
 
 #. module: product_serial_number
 #: model:ir.actions.act_window,name:product_serial_number.action_view_batch_change_lot_state
@@ -232,6 +243,7 @@ msgstr "Creado hasta"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__create_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__create_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__create_uid
 msgid "Created by"
 msgstr "Creado por"
@@ -244,6 +256,7 @@ msgstr "Creado por"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__create_date
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__create_date
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__create_date
 msgid "Created on"
 msgstr "Creado en"
@@ -304,6 +317,7 @@ msgstr "Disfuncionalidad"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__display_name
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__display_name
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__display_name
 msgid "Display Name"
 msgstr "Nombre mostrado"
@@ -406,6 +420,12 @@ msgid "Good State"
 msgstr "Buen estado"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__jew_grabation
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__jew_grabation
+msgid "Grabations"
+msgstr "Grabaciones"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory__id
 #: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__id
 #: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd__id
@@ -413,18 +433,19 @@ msgstr "Buen estado"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__id
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__id
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__id
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__id
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__id
 msgid "ID"
 msgstr ""
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__id_product
-#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__id_product
 msgid "ID. Product"
 msgstr "ID Producto"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__multi_image_ids
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__webcam_image_ids
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__multi_image_ids
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
@@ -456,6 +477,7 @@ msgstr "La categoría es joyería"
 #: model:ir.model.fields,field_description:product_serial_number.field_product_category__jewelry
 #: model:ir.model.fields,field_description:product_serial_number.field_product_product__jewelry
 #: model:ir.model.fields,field_description:product_serial_number.field_product_template__jewelry
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__jewelry
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__jewelry
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_product_template_search_view
 #: model_terms:ir.ui.view,arch_db:product_serial_number.cc_search_product_lot_filter
@@ -468,6 +490,11 @@ msgid "Jewelry Mark"
 msgstr "Marcado como joyería"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__label_info_str
+msgid "Label info"
+msgstr "Info etiqueta"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_accessory____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_change_lot_state_wzd____last_update
@@ -475,6 +502,7 @@ msgstr "Marcado como joyería"
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line____last_update
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image____last_update
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd____last_update
 msgid "Last Modified on"
 msgstr ""
@@ -487,6 +515,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__write_uid
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__write_uid
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__write_uid
 msgid "Last Updated by"
 msgstr ""
@@ -499,6 +528,7 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__write_date
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__write_date
 #: model:ir.model.fields,field_description:product_serial_number.field_transfer_lot_wzd__write_date
 msgid "Last Updated on"
 msgstr ""
@@ -653,6 +683,12 @@ msgid "Manually lot changed state from %s to %s"
 msgstr "Cambio de estado manual de: %s a %s"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__jew_metal
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__jew_metal
+msgid "Metal or material"
+msgstr "Metal o material"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__model
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__model
 msgid "Model"
@@ -686,7 +722,8 @@ msgstr "No se encontraron lotes"
 #: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
 #, python-format
 msgid "No lots founded for Jewerly (Recoverable) to Recoverable"
-msgstr "No se encontraron lotes para: Policía (Joyería Recuperable) a Recuperable"
+msgstr ""
+"No se encontraron lotes para: Policía (Joyería Recuperable) a Recuperable"
 
 #. module: product_serial_number
 #: code:addons/product_serial_number/wizard/batch_change_lot_state_wzd.py:0
@@ -715,6 +752,11 @@ msgstr "No se encontraron lotes para: Recuperable a Venta"
 #. module: product_serial_number
 #: model:ir.model.fields.selection,name:product_serial_number.selection__stock_location__cc_type__normal
 msgid "Normal"
+msgstr ""
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__id_product
+msgid "Nº Serie"
 msgstr ""
 
 #. module: product_serial_number
@@ -829,7 +871,9 @@ msgstr "Producto"
 #: code:addons/product_serial_number/models/purchase.py:0
 #, python-format
 msgid "Product %s has this dysfuncionalities that will block the purchase: %s"
-msgstr "El product %s tiene las siguientes disfuncionalidades que bloquearán la compra: %s"
+msgstr ""
+"El product %s tiene las siguientes disfuncionalidades que bloquearán la "
+"compra: %s"
 
 #. module: product_serial_number
 #: code:addons/product_serial_number/models/purchase.py:0
@@ -915,6 +959,7 @@ msgstr "Precio propuesto"
 
 #. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__purchase_line_id
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_line_image__purchase_line_id
 msgid "Purchase"
 msgstr "Línea de Compra"
 
@@ -995,6 +1040,26 @@ msgid "Recoverable"
 msgstr "Recuperable"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__recoverable_sale_total
+msgid "Recoverable Sale Total"
+msgstr "Total venta recuperable"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__recoverable_sale_total_untaxed
+msgid "Recoverable Sale Total Untaxed"
+msgstr "Total venta recuperable (sin IVA)"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__recoverable_tax
+msgid "Recoverable Tax"
+msgstr "IVA Recuperable"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order__recoverable_tax_total
+msgid "Recoverable Tax Total"
+msgstr "Total con IVA recuperable"
+
+#. module: product_serial_number
 #: model_terms:ir.ui.view,arch_db:product_serial_number.view_id
 msgid "Recoverable purchases"
 msgstr "Compras recuperables"
@@ -1011,6 +1076,11 @@ msgstr "Recuperable a Venta"
 #: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__renew_commission
 msgid "Renew commission"
 msgstr "Comisión de renovación"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__renew_price
+msgid "Renew price"
+msgstr "Precio Venta Recuperable"
 
 #. module: product_serial_number
 #: model:product.product,name:product_serial_number.product_renovate_commission
@@ -1101,6 +1171,22 @@ msgid "Special purchases"
 msgstr "Compras especiales"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__jew_weight2
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__jew_weight2
+msgid "Stone Weight"
+msgstr "Peso piedra"
+
+#. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_operating_unit__store_code
+msgid "Store code"
+msgstr "Código tienda"
+
+#. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_purchase_order_form
+msgid "Take a Photo"
+msgstr "Tomar una foto"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_batch_change_lot_state_wzd__date_end
 msgid "To"
 msgstr "Hasta"
@@ -1128,6 +1214,16 @@ msgid "Used"
 msgstr "Usado"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_res_users__user_code
+msgid "User Code"
+msgstr "Código usuario"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_res_users
+msgid "Users"
+msgstr "Usuarios"
+
+#. module: product_serial_number
 #: model:ir.model.fields,field_description:product_serial_number.field_lot_attribute_line__value_ids
 #: model:ir.model.fields,field_description:product_serial_number.field_purchase_attribute_line__value_ids
 msgid "Values"
@@ -1139,9 +1235,15 @@ msgid "Variants Creation Mode"
 msgstr "Modo de Creación de Variantes"
 
 #. module: product_serial_number
+#: model:ir.model.fields,field_description:product_serial_number.field_purchase_order_line__jew_weight
+#: model:ir.model.fields,field_description:product_serial_number.field_stock_production_lot__jew_weight
+msgid "Weight"
+msgstr "Peso"
+
+#. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_accessory
 msgid "accessory"
-msgstr ""
+msgstr "accesorio"
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_batch_change_lot_state_wzd
@@ -1159,6 +1261,11 @@ msgid "dysfuncionality"
 msgstr ""
 
 #. module: product_serial_number
+#: model_terms:ir.ui.view,arch_db:product_serial_number.cc_view_production_lot_form
+msgid "jewelry"
+msgstr "joyería"
+
+#. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_location_info
 msgid "location.info"
 msgstr ""
@@ -1167,6 +1274,11 @@ msgstr ""
 #: model:ir.model.fields,field_description:product_serial_number.field_location_info__name
 msgid "name"
 msgstr "nombre"
+
+#. module: product_serial_number
+#: model:ir.model,name:product_serial_number.model_purchase_line_image
+msgid "purchase.line.image"
+msgstr ""
 
 #. module: product_serial_number
 #: model:ir.model,name:product_serial_number.model_transfer_lot_wzd

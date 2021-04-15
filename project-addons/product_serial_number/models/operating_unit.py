@@ -8,3 +8,4 @@ class OperatingUnit(models.Model):
     _inherit = "operating.unit"
 
     lot_seq = fields.Many2one("ir.sequence", "Auto Lot sequence")
+    store_code = fields.Char("Store code")

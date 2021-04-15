@@ -1,0 +1,672 @@
+# Translation of Odoo Server.
+# This file contains the translation of the following modules:
+# 	* custom_documents_cc
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Odoo Server 13.0\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2021-04-15 20:30+0000\n"
+"PO-Revision-Date: 2021-04-15 20:30+0000\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: \n"
+"Plural-Forms: \n"
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,print_report_name:custom_documents_cc.action_report_purchase_contract
+msgid "'Contract - %s' % (object.name)"
+msgstr "'Contrato - %s' % (object.name)"
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,print_report_name:custom_documents_cc.action_report_lot_label_purchase
+msgid "'Report Lot Purchase - %s' % (object.name)"
+msgstr "'Etiqueta de compra - %s' % (object.name)"
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,print_report_name:custom_documents_cc.action_report_police
+msgid "'Report Police - %s' % (object.name)"
+msgstr "'Informe Policía - %s' % (object.name)"
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,print_report_name:custom_documents_cc.action_report_police_jewelry
+msgid "'Report Police jewelry - %s' % (object.name)"
+msgstr "'Informe Policía joyería - %s' % (object.name)"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid ", Móvil:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid ""
+"<br/>\n"
+"                            <span>NIF: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document
+msgid ""
+"<br/>\n"
+"                            Modelo:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document_bag
+msgid ""
+"<br/>\n"
+"                            Nº Accesorios:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<span> Unidades</span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "<span>(en adelante COMPRADOR)</span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "<span>(en adelante VENDEDOR)</span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid ""
+"<span>CASH CONVERTERS</span>\n"
+"                    <br/>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "<span>Control: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<span>Descripción: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.sign_total_recoverable
+msgid "<span>EL COMPRADOR</span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.sign_total_recoverable
+msgid ""
+"<span>EL VENDEDOR</span>\n"
+"                    <br/>\n"
+"                    <span>Firmado:</span>\n"
+"                    <br/>\n"
+"                    <span>NIF:</span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "<span>Fecha: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<span>Firmado: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "<span>Gali Converters, S.L. CC006</span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "<span>Grupo: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<span>Marca: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<span>Modelo: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "<span>NIF: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<span>Número De Serie: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "<span>Tel: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "<span>Usuario: </span>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "<strong class=\"mr16\">Subtotal</strong>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document
+msgid "ACC:("
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document_accessory
+msgid ""
+"Accesorio: SI\n"
+"                            <br/>\n"
+"                            Producto:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Apellidos y Nombre del interesado"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document_header
+msgid "Barcode"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "CONTRATO DE COMPRA"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "CONTRATO DE VENTA RECUPERABLE"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_police_report_wzd
+msgid "Cancel"
+msgstr "Cancelar"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Cantidad"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Clase Objeto"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model,name:custom_documents_cc.model_res_company
+msgid "Companies"
+msgstr "Compañías"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.cc_contract_document_purchase_order_form
+msgid "Conditions"
+msgstr "Condicciones"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.cc_contract_document_purchase_order_form
+msgid "Condicciones 2"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_police_report_wzd
+msgid "Confirm"
+msgstr "Confirmar"
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,name:custom_documents_cc.action_report_purchase_contract
+msgid "Contract"
+msgstr "Contrato"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__contract_text
+#: model:ir.model.fields,field_description:custom_documents_cc.field_res_company__contract_text
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_company_form_documents
+msgid "Contract Text"
+msgstr "Texto contrato"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+msgid "Coste"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__create_uid
+msgid "Created by"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__create_date
+msgid "Created on"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_company_form_documents
+msgid "Custom Reports"
+msgstr "Informes personalizados"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_company_form_documents
+msgid "Custom reports"
+msgstr "Informes personalizados"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Código"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "DNI o Passaporte"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Descripción"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__display_name
+#: model:ir.model.fields,field_description:custom_documents_cc.field_report_custom_documents_cc_report_police__display_name
+#: model:ir.model.fields,field_description:custom_documents_cc.field_report_custom_documents_cc_report_police_jewelry__display_name
+msgid "Display Name"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Domicilio calle o plaza y num"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+msgid "Empleado:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Fecha"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Fecha desde:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Fecha hasta:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Fecha venta"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_police_report_wzd
+msgid "Filter dates"
+msgstr "Filtrar fechas"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid ""
+"Formas de pago:\n"
+"                    <br/>\n"
+"                    <br/>"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__date_start
+msgid "From"
+msgstr "Desde"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "GRABACIONES:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Grabaciones"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Grupo Compra"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__id
+#: model:ir.model.fields,field_description:custom_documents_cc.field_report_custom_documents_cc_report_police__id
+#: model:ir.model.fields,field_description:custom_documents_cc.field_report_custom_documents_cc_report_police_jewelry__id
+msgid "ID"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "IVA"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Imforme de Diario de Compras"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Importe"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd____last_update
+#: model:ir.model.fields,field_description:custom_documents_cc.field_report_custom_documents_cc_report_police____last_update
+#: model:ir.model.fields,field_description:custom_documents_cc.field_report_custom_documents_cc_report_police_jewelry____last_update
+msgid "Last Modified on"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__write_uid
+msgid "Last Updated by"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__write_date
+msgid "Last Updated on"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__legal_text
+#: model:ir.model.fields,field_description:custom_documents_cc.field_res_company__legal_text
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.cc_contract_document_purchase_order_form
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_company_form_documents
+msgid "Legal Text"
+msgstr "Texto legal"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Localidad"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Logo"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "MARCA:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "METAL O METALES:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "MODELO:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document
+msgid "Marca:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Metal o metales"
+msgstr ""
+
+#. module: custom_documents_cc
+#: code:addons/custom_documents_cc/wizard/police_report_wzd.py:0
+#, python-format
+msgid "No lots founded"
+msgstr "No se encontraron lotes"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Nº Orden"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__num_order
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__num_order
+msgid "Nº Order"
+msgstr "Nº Orden"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__num_order_jewelry
+msgid "Nº Order Jewerly"
+msgstr "Nº Order joyería"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__num_page
+msgid "Nº Page"
+msgstr "Nº página"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__num_page_jewelry
+msgid "Nº Page Jewerly"
+msgstr "Nº página joyería"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Nº SERIE:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_police_report_wzd
+msgid "Options"
+msgstr "Opciones"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "PESO PIEDRA:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "PESO:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "PRODUCTOS:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+msgid "PVR"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__payment_form_str
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__payment_form_str_report
+msgid "Payment Form string"
+msgstr "Resumen forma de pago"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Peso"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Peso total"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.actions.act_window,name:custom_documents_cc.action_view_police_report_wzd
+#: model:ir.actions.report,name:custom_documents_cc.action_report_police
+#: model:ir.ui.menu,name:custom_documents_cc.menu_action_view_police_report_wzd
+msgid "Police Report"
+msgstr "Informe Policía"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_res_company__police_report_logo
+msgid "Police Report Logo"
+msgstr "Logo informe policía"
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,name:custom_documents_cc.action_report_police_jewelry
+msgid "Police Report jewelry"
+msgstr "Informe Policía - Joyería"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Precio Abonado"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model,name:custom_documents_cc.model_product_attribute
+msgid "Product Attribute"
+msgstr "Atributo de producto"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+msgid "Producto"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_lot_label_purchase_document_bag
+msgid "Producto:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "Prov o País"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.actions.report,name:custom_documents_cc.action_report_lot_label_purchase
+msgid "Purchase Label"
+msgstr "Etiqueta de compra"
+
+#. module: custom_documents_cc
+#: model:ir.model,name:custom_documents_cc.model_purchase_order
+msgid "Purchase Order"
+msgstr "Pedido de compra"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.cc_contract_document_purchase_order_form
+msgid "Recoverable Conditions"
+msgstr "Condiciones Recuperable"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.cc_contract_document_purchase_order_form
+msgid "Condiciones Recuperable 2"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__recoverable_text
+#: model:ir.model.fields,field_description:custom_documents_cc.field_res_company__recoverable_text
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_company_form_documents
+msgid "Recoverable Text"
+msgstr "Texto recuperable"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__recoverable_text2
+#: model:ir.model.fields,field_description:custom_documents_cc.field_res_company__recoverable_text2
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.view_company_form_documents
+msgid "Recoverable Text 2"
+msgstr "Texto recuperable 2"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_purchase_order__signature
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.cc_contract_document_purchase_order_form
+msgid "Signature"
+msgstr "Firma"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "TOTAL:"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__date_end
+msgid "To"
+msgstr "Hasta"
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_product_attribute__to_print
+msgid "To print"
+msgstr "Imprimible"
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Total"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "Total con IVA"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_document
+msgid "Uds."
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_purchase_contract_document
+msgid "de"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model_terms:ir.ui.view,arch_db:custom_documents_cc.report_police_jewelry_document
+msgid "gr"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model.fields,field_description:custom_documents_cc.field_police_report_wzd__jewelry
+msgid "jewelry"
+msgstr "joyería"
+
+#. module: custom_documents_cc
+#: model:ir.model,name:custom_documents_cc.model_police_report_wzd
+msgid "police.report.wzd"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model,name:custom_documents_cc.model_report_custom_documents_cc_report_police
+msgid "report.custom_documents_cc.report_police"
+msgstr ""
+
+#. module: custom_documents_cc
+#: model:ir.model,name:custom_documents_cc.model_report_custom_documents_cc_report_police_jewelry
+msgid "report.custom_documents_cc.report_police_jewelry"
+msgstr ""
